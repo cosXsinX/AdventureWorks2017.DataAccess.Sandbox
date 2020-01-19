@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class AddressDao : AbstractDao<AddressModel>
+    public class AddressDao : AbstractDaoWithPrimaryKey<AddressModel,AddressModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              AddressID,
@@ -32,7 +32,10 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              result.ModifiedDate = (DateTime)(dataReader["ModifiedDate"]);
             return result;
         }
-        
+
+        private string PrimaryKeyWhereArgs => "AddressId = @AddressId"; //AND;
+
+
         public override string InsertQuery => @"Insert Into Person.Address
 (
 AddressLine1,
@@ -95,7 +98,7 @@ rowguid=@rowguid
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, AddressModel updated)
         {
-            sqlCommand.Parameters.AddWithValue("@SpatialLocation", updated.SpatialLocation);
+            sqlCommand.Parameters.Add(new SqlParameter("@SpatialLocation", updated.SpatialLocation) { UdtTypeName = "Geography" });
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
@@ -123,6 +126,8 @@ PostalCode=@PostalCode  AND
 rowguid=@rowguid 
 ";
 
+        
+
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, AddressModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@AddressID", deleted.AddressID);
@@ -132,6 +137,13 @@ rowguid=@rowguid
             sqlCommand.Parameters.AddWithValue("@StateProvinceID", deleted.StateProvinceID);
             sqlCommand.Parameters.AddWithValue("@PostalCode", deleted.PostalCode);
             sqlCommand.Parameters.AddWithValue("@rowguid", deleted.rowguid);
+        }
+
+        public override string ByPrimaryWhereConditionWithArgs => "AddressID=@AddressID";
+
+        public override void MapPrimaryParameters(AddressModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@AddressID", key.AddressID);
         }
     }
 }

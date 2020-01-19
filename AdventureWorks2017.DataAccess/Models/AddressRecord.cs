@@ -4,6 +4,11 @@ using System.Text;
 
 namespace AdventureWorks2017.Models
 {
+    public struct AddressModelPrimaryKey
+    {
+        public int AddressID { get; set; }
+    }
+
     public class AddressModel
     {
         public int AddressID { get; set; }

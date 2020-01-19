@@ -24,6 +24,8 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
 
+        
+
         public abstract string SelectQuery {get;}
 
         protected abstract T ToModel(SqlDataReader dataReader);
