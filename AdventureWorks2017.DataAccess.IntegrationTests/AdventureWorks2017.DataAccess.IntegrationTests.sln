@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29503.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventureWorks2017.DataAccess.IntegrationTests", "AdventureWorks2017.DataAccess.IntegrationTests.csproj", "{92164C92-63AB-46CA-AEF0-2043C21E7CA6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{92164C92-63AB-46CA-AEF0-2043C21E7CA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92164C92-63AB-46CA-AEF0-2043C21E7CA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92164C92-63AB-46CA-AEF0-2043C21E7CA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92164C92-63AB-46CA-AEF0-2043C21E7CA6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8B0E112B-8DF1-42AB-AD9E-4D69C37F1BB2}
+	EndGlobalSection
+EndGlobal
