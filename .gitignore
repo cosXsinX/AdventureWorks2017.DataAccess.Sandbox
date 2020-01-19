@@ -1,0 +1,9 @@
+﻿################################################################################
+# Ce fichier .gitignore a été automatiquement créé par Microsoft(R) Visual Studio.
+################################################################################
+
+/AdventureWorks2017.DataAccess/obj
+/AdventureWorks2017.DataAccess/.vs/AdventureWorks2017.DataAccess/v16
+/AdventureWorks2017.DataAccess.IntegrationTests/bin/Debug/netcoreapp3.0
+/AdventureWorks2017.DataAccess.IntegrationTests/obj
+/AdventureWorks2017.DataAccess.IntegrationTests/AdventureWorks2017.DataAccess.IntegrationTests.csproj.user
