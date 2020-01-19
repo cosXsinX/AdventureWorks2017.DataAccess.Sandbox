@@ -4,13 +4,13 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class CultureDao : AbstractDao<CultureModel>
+    public class CultureDao : AbstractDaoWithPrimaryKey<CultureModel,CultureModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              CultureID,
              Name,
              ModifiedDate
- from Culture";
+ from Production.Culture";
 
         protected override CultureModel ToModel(SqlDataReader dataReader)
         {
@@ -21,7 +21,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Culture
+        public override string InsertQuery => @"Insert Into Production.Culture
 (
 CultureID,
 Name,
@@ -48,38 +48,47 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Culture
+            @"Update Production.Culture
 Set
+    Name=@Name,
     ModifiedDate=@ModifiedDate
 
 Where
-CultureID=@CultureID  AND 
-Name=@Name 
+CultureID=@CultureID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, CultureModel updated)
         {
+            sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, CultureModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@CultureID", updated.CultureID);
-            sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    Culture
+    Production.Culture
 where
-CultureID=@CultureID  AND 
-Name=@Name 
+CultureID=@CultureID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, CultureModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@CultureID", deleted.CultureID);
-            sqlCommand.Parameters.AddWithValue("@Name", deleted.Name);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"CultureID=@CultureID 
+";
+
+        public override void MapPrimaryParameters(CultureModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@CultureID", key.CultureID);
+
+        }
+
     }
 }

@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class EmailAddressDao : AbstractDao<EmailAddressModel>
+    public class EmailAddressDao : AbstractDaoWithPrimaryKey<EmailAddressModel,EmailAddressModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              BusinessEntityID,
@@ -12,7 +12,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              EmailAddress,
              rowguid,
              ModifiedDate
- from EmailAddress";
+ from Person.EmailAddress";
 
         protected override EmailAddressModel ToModel(SqlDataReader dataReader)
         {
@@ -25,7 +25,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into EmailAddress
+        public override string InsertQuery => @"Insert Into Person.EmailAddress
 (
 BusinessEntityID,
 EmailAddress,
@@ -58,19 +58,20 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update EmailAddress
+            @"Update Person.EmailAddress
 Set
+    EmailAddress=@EmailAddress,
     rowguid=@rowguid,
     ModifiedDate=@ModifiedDate
 
 Where
 BusinessEntityID=@BusinessEntityID  AND 
-EmailAddressID=@EmailAddressID  AND 
-EmailAddress=@EmailAddress 
+EmailAddressID=@EmailAddressID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, EmailAddressModel updated)
         {
+            sqlCommand.Parameters.AddWithValue("@EmailAddress", updated.EmailAddress);
             sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
@@ -79,23 +80,33 @@ EmailAddress=@EmailAddress
         {
             sqlCommand.Parameters.AddWithValue("@BusinessEntityID", updated.BusinessEntityID);
             sqlCommand.Parameters.AddWithValue("@EmailAddressID", updated.EmailAddressID);
-            sqlCommand.Parameters.AddWithValue("@EmailAddress", updated.EmailAddress);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    EmailAddress
+    Person.EmailAddress
 where
 BusinessEntityID=@BusinessEntityID  AND 
-EmailAddressID=@EmailAddressID  AND 
-EmailAddress=@EmailAddress 
+EmailAddressID=@EmailAddressID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, EmailAddressModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@BusinessEntityID", deleted.BusinessEntityID);
             sqlCommand.Parameters.AddWithValue("@EmailAddressID", deleted.EmailAddressID);
-            sqlCommand.Parameters.AddWithValue("@EmailAddress", deleted.EmailAddress);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"BusinessEntityID=@BusinessEntityID  AND 
+EmailAddressID=@EmailAddressID 
+";
+
+        public override void MapPrimaryParameters(EmailAddressModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@BusinessEntityID", key.BusinessEntityID);
+            sqlCommand.Parameters.AddWithValue("@EmailAddressID", key.EmailAddressID);
+
+        }
+
     }
 }

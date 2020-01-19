@@ -4,6 +4,12 @@ using System.Text;
 
 namespace AdventureWorks2017.Models
 {
+    public struct ScrapReasonModelPrimaryKey
+    {
+        public short ScrapReasonID { get; set; }
+
+    }
+
     public class ScrapReasonModel
     {
         public short ScrapReasonID { get; set; }

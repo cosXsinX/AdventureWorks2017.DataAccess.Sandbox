@@ -4,14 +4,14 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class PersonPhoneDao : AbstractDao<PersonPhoneModel>
+    public class PersonPhoneDao : AbstractDaoWithPrimaryKey<PersonPhoneModel,PersonPhoneModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              BusinessEntityID,
              PhoneNumber,
              PhoneNumberTypeID,
              ModifiedDate
- from PersonPhone";
+ from Person.PersonPhone";
 
         protected override PersonPhoneModel ToModel(SqlDataReader dataReader)
         {
@@ -23,7 +23,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into PersonPhone
+        public override string InsertQuery => @"Insert Into Person.PersonPhone
 (
 BusinessEntityID,
 PhoneNumber,
@@ -53,7 +53,7 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update PersonPhone
+            @"Update Person.PersonPhone
 Set
     ModifiedDate=@ModifiedDate
 
@@ -77,7 +77,7 @@ PhoneNumberTypeID=@PhoneNumberTypeID
 
         public override string DeleteQuery =>
 @"delete from
-    PersonPhone
+    Person.PersonPhone
 where
 BusinessEntityID=@BusinessEntityID  AND 
 PhoneNumber=@PhoneNumber  AND 
@@ -90,5 +90,20 @@ PhoneNumberTypeID=@PhoneNumberTypeID
             sqlCommand.Parameters.AddWithValue("@PhoneNumber", deleted.PhoneNumber);
             sqlCommand.Parameters.AddWithValue("@PhoneNumberTypeID", deleted.PhoneNumberTypeID);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"BusinessEntityID=@BusinessEntityID  AND 
+PhoneNumber=@PhoneNumber  AND 
+PhoneNumberTypeID=@PhoneNumberTypeID 
+";
+
+        public override void MapPrimaryParameters(PersonPhoneModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@BusinessEntityID", key.BusinessEntityID);
+            sqlCommand.Parameters.AddWithValue("@PhoneNumber", key.PhoneNumber);
+            sqlCommand.Parameters.AddWithValue("@PhoneNumberTypeID", key.PhoneNumberTypeID);
+
+        }
+
     }
 }

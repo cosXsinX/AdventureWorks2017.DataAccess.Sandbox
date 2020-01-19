@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class PersonDao : AbstractDao<PersonModel>
+    public class PersonDao : AbstractDaoWithPrimaryKey<PersonModel,PersonModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              BusinessEntityID,
@@ -20,7 +20,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              Demographics,
              rowguid,
              ModifiedDate
- from Person";
+ from Person.Person";
 
         protected override PersonModel ToModel(SqlDataReader dataReader)
         {
@@ -41,7 +41,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Person
+        public override string InsertQuery => @"Insert Into Person.Person
 (
 BusinessEntityID,
 PersonType,
@@ -98,23 +98,23 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Person
+            @"Update Person.Person
 Set
     PersonType=@PersonType,
     NameStyle=@NameStyle,
     Title=@Title,
+    FirstName=@FirstName,
+    MiddleName=@MiddleName,
+    LastName=@LastName,
     Suffix=@Suffix,
     EmailPromotion=@EmailPromotion,
+    AdditionalContactInfo=@AdditionalContactInfo,
+    Demographics=@Demographics,
+    rowguid=@rowguid,
     ModifiedDate=@ModifiedDate
 
 Where
-BusinessEntityID=@BusinessEntityID  AND 
-FirstName=@FirstName  AND 
-MiddleName=@MiddleName  AND 
-LastName=@LastName  AND 
-AdditionalContactInfo=@AdditionalContactInfo  AND 
-Demographics=@Demographics  AND 
-rowguid=@rowguid 
+BusinessEntityID=@BusinessEntityID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, PersonModel updated)
@@ -122,44 +122,43 @@ rowguid=@rowguid
             sqlCommand.Parameters.AddWithValue("@PersonType", updated.PersonType);
             sqlCommand.Parameters.AddWithValue("@NameStyle", updated.NameStyle);
             sqlCommand.Parameters.AddWithValue("@Title", updated.Title);
+            sqlCommand.Parameters.AddWithValue("@FirstName", updated.FirstName);
+            sqlCommand.Parameters.AddWithValue("@MiddleName", updated.MiddleName);
+            sqlCommand.Parameters.AddWithValue("@LastName", updated.LastName);
             sqlCommand.Parameters.AddWithValue("@Suffix", updated.Suffix);
             sqlCommand.Parameters.AddWithValue("@EmailPromotion", updated.EmailPromotion);
+            sqlCommand.Parameters.AddWithValue("@AdditionalContactInfo", updated.AdditionalContactInfo);
+            sqlCommand.Parameters.AddWithValue("@Demographics", updated.Demographics);
+            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, PersonModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@BusinessEntityID", updated.BusinessEntityID);
-            sqlCommand.Parameters.AddWithValue("@FirstName", updated.FirstName);
-            sqlCommand.Parameters.AddWithValue("@MiddleName", updated.MiddleName);
-            sqlCommand.Parameters.AddWithValue("@LastName", updated.LastName);
-            sqlCommand.Parameters.AddWithValue("@AdditionalContactInfo", updated.AdditionalContactInfo);
-            sqlCommand.Parameters.AddWithValue("@Demographics", updated.Demographics);
-            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    Person
+    Person.Person
 where
-BusinessEntityID=@BusinessEntityID  AND 
-FirstName=@FirstName  AND 
-MiddleName=@MiddleName  AND 
-LastName=@LastName  AND 
-AdditionalContactInfo=@AdditionalContactInfo  AND 
-Demographics=@Demographics  AND 
-rowguid=@rowguid 
+BusinessEntityID=@BusinessEntityID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, PersonModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@BusinessEntityID", deleted.BusinessEntityID);
-            sqlCommand.Parameters.AddWithValue("@FirstName", deleted.FirstName);
-            sqlCommand.Parameters.AddWithValue("@MiddleName", deleted.MiddleName);
-            sqlCommand.Parameters.AddWithValue("@LastName", deleted.LastName);
-            sqlCommand.Parameters.AddWithValue("@AdditionalContactInfo", deleted.AdditionalContactInfo);
-            sqlCommand.Parameters.AddWithValue("@Demographics", deleted.Demographics);
-            sqlCommand.Parameters.AddWithValue("@rowguid", deleted.rowguid);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"BusinessEntityID=@BusinessEntityID 
+";
+
+        public override void MapPrimaryParameters(PersonModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@BusinessEntityID", key.BusinessEntityID);
+
+        }
+
     }
 }

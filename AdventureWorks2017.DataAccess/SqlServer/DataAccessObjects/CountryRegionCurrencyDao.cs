@@ -4,13 +4,13 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class CountryRegionCurrencyDao : AbstractDao<CountryRegionCurrencyModel>
+    public class CountryRegionCurrencyDao : AbstractDaoWithPrimaryKey<CountryRegionCurrencyModel,CountryRegionCurrencyModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              CountryRegionCode,
              CurrencyCode,
              ModifiedDate
- from CountryRegionCurrency";
+ from Sales.CountryRegionCurrency";
 
         protected override CountryRegionCurrencyModel ToModel(SqlDataReader dataReader)
         {
@@ -21,7 +21,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into CountryRegionCurrency
+        public override string InsertQuery => @"Insert Into Sales.CountryRegionCurrency
 (
 CountryRegionCode,
 CurrencyCode,
@@ -48,7 +48,7 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update CountryRegionCurrency
+            @"Update Sales.CountryRegionCurrency
 Set
     ModifiedDate=@ModifiedDate
 
@@ -70,7 +70,7 @@ CurrencyCode=@CurrencyCode
 
         public override string DeleteQuery =>
 @"delete from
-    CountryRegionCurrency
+    Sales.CountryRegionCurrency
 where
 CountryRegionCode=@CountryRegionCode  AND 
 CurrencyCode=@CurrencyCode 
@@ -81,5 +81,18 @@ CurrencyCode=@CurrencyCode
             sqlCommand.Parameters.AddWithValue("@CountryRegionCode", deleted.CountryRegionCode);
             sqlCommand.Parameters.AddWithValue("@CurrencyCode", deleted.CurrencyCode);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"CountryRegionCode=@CountryRegionCode  AND 
+CurrencyCode=@CurrencyCode 
+";
+
+        public override void MapPrimaryParameters(CountryRegionCurrencyModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@CountryRegionCode", key.CountryRegionCode);
+            sqlCommand.Parameters.AddWithValue("@CurrencyCode", key.CurrencyCode);
+
+        }
+
     }
 }

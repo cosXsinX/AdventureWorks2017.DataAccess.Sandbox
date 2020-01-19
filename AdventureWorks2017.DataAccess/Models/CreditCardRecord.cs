@@ -4,6 +4,12 @@ using System.Text;
 
 namespace AdventureWorks2017.Models
 {
+    public struct CreditCardModelPrimaryKey
+    {
+        public int CreditCardID { get; set; }
+
+    }
+
     public class CreditCardModel
     {
         public int CreditCardID { get; set; }

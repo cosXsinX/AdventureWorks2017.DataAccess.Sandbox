@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class ProductSubcategoryDao : AbstractDao<ProductSubcategoryModel>
+    public class ProductSubcategoryDao : AbstractDaoWithPrimaryKey<ProductSubcategoryModel,ProductSubcategoryModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              ProductSubcategoryID,
@@ -12,7 +12,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              Name,
              rowguid,
              ModifiedDate
- from ProductSubcategory";
+ from Production.ProductSubcategory";
 
         protected override ProductSubcategoryModel ToModel(SqlDataReader dataReader)
         {
@@ -25,7 +25,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into ProductSubcategory
+        public override string InsertQuery => @"Insert Into Production.ProductSubcategory
 (
 ProductCategoryID,
 Name,
@@ -58,44 +58,51 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update ProductSubcategory
+            @"Update Production.ProductSubcategory
 Set
     ProductCategoryID=@ProductCategoryID,
+    Name=@Name,
+    rowguid=@rowguid,
     ModifiedDate=@ModifiedDate
 
 Where
-ProductSubcategoryID=@ProductSubcategoryID  AND 
-Name=@Name  AND 
-rowguid=@rowguid 
+ProductSubcategoryID=@ProductSubcategoryID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ProductSubcategoryModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@ProductCategoryID", updated.ProductCategoryID);
+            sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
+            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, ProductSubcategoryModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@ProductSubcategoryID", updated.ProductSubcategoryID);
-            sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
-            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    ProductSubcategory
+    Production.ProductSubcategory
 where
-ProductSubcategoryID=@ProductSubcategoryID  AND 
-Name=@Name  AND 
-rowguid=@rowguid 
+ProductSubcategoryID=@ProductSubcategoryID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ProductSubcategoryModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@ProductSubcategoryID", deleted.ProductSubcategoryID);
-            sqlCommand.Parameters.AddWithValue("@Name", deleted.Name);
-            sqlCommand.Parameters.AddWithValue("@rowguid", deleted.rowguid);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"ProductSubcategoryID=@ProductSubcategoryID 
+";
+
+        public override void MapPrimaryParameters(ProductSubcategoryModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@ProductSubcategoryID", key.ProductSubcategoryID);
+
+        }
+
     }
 }

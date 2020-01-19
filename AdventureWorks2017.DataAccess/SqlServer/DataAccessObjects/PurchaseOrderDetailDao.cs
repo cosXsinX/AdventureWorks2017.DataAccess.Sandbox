@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class PurchaseOrderDetailDao : AbstractDao<PurchaseOrderDetailModel>
+    public class PurchaseOrderDetailDao : AbstractDaoWithPrimaryKey<PurchaseOrderDetailModel,PurchaseOrderDetailModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              PurchaseOrderID,
@@ -18,7 +18,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              RejectedQty,
              StockedQty,
              ModifiedDate
- from PurchaseOrderDetail";
+ from Purchasing.PurchaseOrderDetail";
 
         protected override PurchaseOrderDetailModel ToModel(SqlDataReader dataReader)
         {
@@ -37,7 +37,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into PurchaseOrderDetail
+        public override string InsertQuery => @"Insert Into Purchasing.PurchaseOrderDetail
 (
 PurchaseOrderID,
 DueDate,
@@ -88,10 +88,11 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update PurchaseOrderDetail
+            @"Update Purchasing.PurchaseOrderDetail
 Set
     DueDate=@DueDate,
     OrderQty=@OrderQty,
+    ProductID=@ProductID,
     UnitPrice=@UnitPrice,
     LineTotal=@LineTotal,
     ReceivedQty=@ReceivedQty,
@@ -101,14 +102,14 @@ Set
 
 Where
 PurchaseOrderID=@PurchaseOrderID  AND 
-PurchaseOrderDetailID=@PurchaseOrderDetailID  AND 
-ProductID=@ProductID 
+PurchaseOrderDetailID=@PurchaseOrderDetailID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, PurchaseOrderDetailModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@DueDate", updated.DueDate);
             sqlCommand.Parameters.AddWithValue("@OrderQty", updated.OrderQty);
+            sqlCommand.Parameters.AddWithValue("@ProductID", updated.ProductID);
             sqlCommand.Parameters.AddWithValue("@UnitPrice", updated.UnitPrice);
             sqlCommand.Parameters.AddWithValue("@LineTotal", updated.LineTotal);
             sqlCommand.Parameters.AddWithValue("@ReceivedQty", updated.ReceivedQty);
@@ -121,23 +122,33 @@ ProductID=@ProductID
         {
             sqlCommand.Parameters.AddWithValue("@PurchaseOrderID", updated.PurchaseOrderID);
             sqlCommand.Parameters.AddWithValue("@PurchaseOrderDetailID", updated.PurchaseOrderDetailID);
-            sqlCommand.Parameters.AddWithValue("@ProductID", updated.ProductID);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    PurchaseOrderDetail
+    Purchasing.PurchaseOrderDetail
 where
 PurchaseOrderID=@PurchaseOrderID  AND 
-PurchaseOrderDetailID=@PurchaseOrderDetailID  AND 
-ProductID=@ProductID 
+PurchaseOrderDetailID=@PurchaseOrderDetailID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, PurchaseOrderDetailModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@PurchaseOrderID", deleted.PurchaseOrderID);
             sqlCommand.Parameters.AddWithValue("@PurchaseOrderDetailID", deleted.PurchaseOrderDetailID);
-            sqlCommand.Parameters.AddWithValue("@ProductID", deleted.ProductID);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"PurchaseOrderID=@PurchaseOrderID  AND 
+PurchaseOrderDetailID=@PurchaseOrderDetailID 
+";
+
+        public override void MapPrimaryParameters(PurchaseOrderDetailModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@PurchaseOrderID", key.PurchaseOrderID);
+            sqlCommand.Parameters.AddWithValue("@PurchaseOrderDetailID", key.PurchaseOrderDetailID);
+
+        }
+
     }
 }

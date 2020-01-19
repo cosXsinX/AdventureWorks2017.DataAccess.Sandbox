@@ -4,6 +4,12 @@ using System.Text;
 
 namespace AdventureWorks2017.Models
 {
+    public struct UnitMeasureModelPrimaryKey
+    {
+        public string UnitMeasureCode { get; set; }
+
+    }
+
     public class UnitMeasureModel
     {
         public string UnitMeasureCode { get; set; }

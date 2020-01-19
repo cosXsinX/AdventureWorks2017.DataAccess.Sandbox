@@ -4,14 +4,14 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class SalesReasonDao : AbstractDao<SalesReasonModel>
+    public class SalesReasonDao : AbstractDaoWithPrimaryKey<SalesReasonModel,SalesReasonModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              SalesReasonID,
              Name,
              ReasonType,
              ModifiedDate
- from SalesReason";
+ from Sales.SalesReason";
 
         protected override SalesReasonModel ToModel(SqlDataReader dataReader)
         {
@@ -23,7 +23,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into SalesReason
+        public override string InsertQuery => @"Insert Into Sales.SalesReason
 (
 Name,
 ReasonType,
@@ -53,7 +53,7 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update SalesReason
+            @"Update Sales.SalesReason
 Set
     Name=@Name,
     ReasonType=@ReasonType,
@@ -77,7 +77,7 @@ SalesReasonID=@SalesReasonID
 
         public override string DeleteQuery =>
 @"delete from
-    SalesReason
+    Sales.SalesReason
 where
 SalesReasonID=@SalesReasonID 
 ";
@@ -86,5 +86,16 @@ SalesReasonID=@SalesReasonID
         {
             sqlCommand.Parameters.AddWithValue("@SalesReasonID", deleted.SalesReasonID);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"SalesReasonID=@SalesReasonID 
+";
+
+        public override void MapPrimaryParameters(SalesReasonModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@SalesReasonID", key.SalesReasonID);
+
+        }
+
     }
 }

@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class StateProvinceDao : AbstractDao<StateProvinceModel>
+    public class StateProvinceDao : AbstractDaoWithPrimaryKey<StateProvinceModel,StateProvinceModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              StateProvinceID,
@@ -15,7 +15,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              TerritoryID,
              rowguid,
              ModifiedDate
- from StateProvince";
+ from Person.StateProvince";
 
         protected override StateProvinceModel ToModel(SqlDataReader dataReader)
         {
@@ -31,7 +31,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into StateProvince
+        public override string InsertQuery => @"Insert Into Person.StateProvince
 (
 StateProvinceCode,
 CountryRegionCode,
@@ -73,54 +73,57 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update StateProvince
+            @"Update Person.StateProvince
 Set
+    StateProvinceCode=@StateProvinceCode,
+    CountryRegionCode=@CountryRegionCode,
     IsOnlyStateProvinceFlag=@IsOnlyStateProvinceFlag,
+    Name=@Name,
     TerritoryID=@TerritoryID,
+    rowguid=@rowguid,
     ModifiedDate=@ModifiedDate
 
 Where
-StateProvinceID=@StateProvinceID  AND 
-StateProvinceCode=@StateProvinceCode  AND 
-CountryRegionCode=@CountryRegionCode  AND 
-Name=@Name  AND 
-rowguid=@rowguid 
+StateProvinceID=@StateProvinceID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, StateProvinceModel updated)
         {
+            sqlCommand.Parameters.AddWithValue("@StateProvinceCode", updated.StateProvinceCode);
+            sqlCommand.Parameters.AddWithValue("@CountryRegionCode", updated.CountryRegionCode);
             sqlCommand.Parameters.AddWithValue("@IsOnlyStateProvinceFlag", updated.IsOnlyStateProvinceFlag);
+            sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
             sqlCommand.Parameters.AddWithValue("@TerritoryID", updated.TerritoryID);
+            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, StateProvinceModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@StateProvinceID", updated.StateProvinceID);
-            sqlCommand.Parameters.AddWithValue("@StateProvinceCode", updated.StateProvinceCode);
-            sqlCommand.Parameters.AddWithValue("@CountryRegionCode", updated.CountryRegionCode);
-            sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
-            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    StateProvince
+    Person.StateProvince
 where
-StateProvinceID=@StateProvinceID  AND 
-StateProvinceCode=@StateProvinceCode  AND 
-CountryRegionCode=@CountryRegionCode  AND 
-Name=@Name  AND 
-rowguid=@rowguid 
+StateProvinceID=@StateProvinceID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, StateProvinceModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@StateProvinceID", deleted.StateProvinceID);
-            sqlCommand.Parameters.AddWithValue("@StateProvinceCode", deleted.StateProvinceCode);
-            sqlCommand.Parameters.AddWithValue("@CountryRegionCode", deleted.CountryRegionCode);
-            sqlCommand.Parameters.AddWithValue("@Name", deleted.Name);
-            sqlCommand.Parameters.AddWithValue("@rowguid", deleted.rowguid);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"StateProvinceID=@StateProvinceID 
+";
+
+        public override void MapPrimaryParameters(StateProvinceModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@StateProvinceID", key.StateProvinceID);
+
+        }
+
     }
 }

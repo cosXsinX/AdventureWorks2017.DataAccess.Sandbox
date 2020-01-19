@@ -4,6 +4,12 @@ using System.Text;
 
 namespace AdventureWorks2017.Models
 {
+    public struct LocationModelPrimaryKey
+    {
+        public short LocationID { get; set; }
+
+    }
+
     public class LocationModel
     {
         public short LocationID { get; set; }

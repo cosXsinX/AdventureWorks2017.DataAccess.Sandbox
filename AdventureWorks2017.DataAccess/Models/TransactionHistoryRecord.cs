@@ -4,6 +4,12 @@ using System.Text;
 
 namespace AdventureWorks2017.Models
 {
+    public struct TransactionHistoryModelPrimaryKey
+    {
+        public int TransactionID { get; set; }
+
+    }
+
     public class TransactionHistoryModel
     {
         public int TransactionID { get; set; }

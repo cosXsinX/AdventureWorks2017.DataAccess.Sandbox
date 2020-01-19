@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class VendorDao : AbstractDao<VendorModel>
+    public class VendorDao : AbstractDaoWithPrimaryKey<VendorModel,VendorModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              BusinessEntityID,
@@ -15,7 +15,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              ActiveFlag,
              PurchasingWebServiceURL,
              ModifiedDate
- from Vendor";
+ from Purchasing.Vendor";
 
         protected override VendorModel ToModel(SqlDataReader dataReader)
         {
@@ -31,7 +31,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Vendor
+        public override string InsertQuery => @"Insert Into Purchasing.Vendor
 (
 BusinessEntityID,
 AccountNumber,
@@ -73,8 +73,9 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Vendor
+            @"Update Purchasing.Vendor
 Set
+    AccountNumber=@AccountNumber,
     Name=@Name,
     CreditRating=@CreditRating,
     PreferredVendorStatus=@PreferredVendorStatus,
@@ -83,12 +84,12 @@ Set
     ModifiedDate=@ModifiedDate
 
 Where
-BusinessEntityID=@BusinessEntityID  AND 
-AccountNumber=@AccountNumber 
+BusinessEntityID=@BusinessEntityID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, VendorModel updated)
         {
+            sqlCommand.Parameters.AddWithValue("@AccountNumber", updated.AccountNumber);
             sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
             sqlCommand.Parameters.AddWithValue("@CreditRating", updated.CreditRating);
             sqlCommand.Parameters.AddWithValue("@PreferredVendorStatus", updated.PreferredVendorStatus);
@@ -100,21 +101,29 @@ AccountNumber=@AccountNumber
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, VendorModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@BusinessEntityID", updated.BusinessEntityID);
-            sqlCommand.Parameters.AddWithValue("@AccountNumber", updated.AccountNumber);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    Vendor
+    Purchasing.Vendor
 where
-BusinessEntityID=@BusinessEntityID  AND 
-AccountNumber=@AccountNumber 
+BusinessEntityID=@BusinessEntityID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, VendorModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@BusinessEntityID", deleted.BusinessEntityID);
-            sqlCommand.Parameters.AddWithValue("@AccountNumber", deleted.AccountNumber);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"BusinessEntityID=@BusinessEntityID 
+";
+
+        public override void MapPrimaryParameters(VendorModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@BusinessEntityID", key.BusinessEntityID);
+
+        }
+
     }
 }

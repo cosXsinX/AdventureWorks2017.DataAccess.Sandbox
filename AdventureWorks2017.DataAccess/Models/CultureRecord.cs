@@ -4,6 +4,12 @@ using System.Text;
 
 namespace AdventureWorks2017.Models
 {
+    public struct CultureModelPrimaryKey
+    {
+        public string CultureID { get; set; }
+
+    }
+
     public class CultureModel
     {
         public string CultureID { get; set; }

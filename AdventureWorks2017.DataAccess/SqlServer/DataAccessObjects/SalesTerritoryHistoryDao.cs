@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class SalesTerritoryHistoryDao : AbstractDao<SalesTerritoryHistoryModel>
+    public class SalesTerritoryHistoryDao : AbstractDaoWithPrimaryKey<SalesTerritoryHistoryModel,SalesTerritoryHistoryModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              BusinessEntityID,
@@ -13,7 +13,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              EndDate,
              rowguid,
              ModifiedDate
- from SalesTerritoryHistory";
+ from Sales.SalesTerritoryHistory";
 
         protected override SalesTerritoryHistoryModel ToModel(SqlDataReader dataReader)
         {
@@ -27,7 +27,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into SalesTerritoryHistory
+        public override string InsertQuery => @"Insert Into Sales.SalesTerritoryHistory
 (
 BusinessEntityID,
 TerritoryID,
@@ -63,21 +63,22 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update SalesTerritoryHistory
+            @"Update Sales.SalesTerritoryHistory
 Set
     EndDate=@EndDate,
+    rowguid=@rowguid,
     ModifiedDate=@ModifiedDate
 
 Where
 BusinessEntityID=@BusinessEntityID  AND 
 TerritoryID=@TerritoryID  AND 
-StartDate=@StartDate  AND 
-rowguid=@rowguid 
+StartDate=@StartDate 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, SalesTerritoryHistoryModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@EndDate", updated.EndDate);
+            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
@@ -86,17 +87,15 @@ rowguid=@rowguid
             sqlCommand.Parameters.AddWithValue("@BusinessEntityID", updated.BusinessEntityID);
             sqlCommand.Parameters.AddWithValue("@TerritoryID", updated.TerritoryID);
             sqlCommand.Parameters.AddWithValue("@StartDate", updated.StartDate);
-            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    SalesTerritoryHistory
+    Sales.SalesTerritoryHistory
 where
 BusinessEntityID=@BusinessEntityID  AND 
 TerritoryID=@TerritoryID  AND 
-StartDate=@StartDate  AND 
-rowguid=@rowguid 
+StartDate=@StartDate 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, SalesTerritoryHistoryModel deleted)
@@ -104,7 +103,21 @@ rowguid=@rowguid
             sqlCommand.Parameters.AddWithValue("@BusinessEntityID", deleted.BusinessEntityID);
             sqlCommand.Parameters.AddWithValue("@TerritoryID", deleted.TerritoryID);
             sqlCommand.Parameters.AddWithValue("@StartDate", deleted.StartDate);
-            sqlCommand.Parameters.AddWithValue("@rowguid", deleted.rowguid);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"BusinessEntityID=@BusinessEntityID  AND 
+TerritoryID=@TerritoryID  AND 
+StartDate=@StartDate 
+";
+
+        public override void MapPrimaryParameters(SalesTerritoryHistoryModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@BusinessEntityID", key.BusinessEntityID);
+            sqlCommand.Parameters.AddWithValue("@TerritoryID", key.TerritoryID);
+            sqlCommand.Parameters.AddWithValue("@StartDate", key.StartDate);
+
+        }
+
     }
 }

@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class ShiftDao : AbstractDao<ShiftModel>
+    public class ShiftDao : AbstractDaoWithPrimaryKey<ShiftModel,ShiftModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              ShiftID,
@@ -12,7 +12,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              StartTime,
              EndTime,
              ModifiedDate
- from Shift";
+ from HumanResources.Shift";
 
         protected override ShiftModel ToModel(SqlDataReader dataReader)
         {
@@ -25,7 +25,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Shift
+        public override string InsertQuery => @"Insert Into HumanResources.Shift
 (
 Name,
 StartTime,
@@ -58,46 +58,51 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Shift
+            @"Update HumanResources.Shift
 Set
+    Name=@Name,
+    StartTime=@StartTime,
+    EndTime=@EndTime,
     ModifiedDate=@ModifiedDate
 
 Where
-ShiftID=@ShiftID  AND 
-Name=@Name  AND 
-StartTime=@StartTime  AND 
-EndTime=@EndTime 
+ShiftID=@ShiftID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ShiftModel updated)
         {
+            sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
+            sqlCommand.Parameters.AddWithValue("@StartTime", updated.StartTime);
+            sqlCommand.Parameters.AddWithValue("@EndTime", updated.EndTime);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, ShiftModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@ShiftID", updated.ShiftID);
-            sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
-            sqlCommand.Parameters.AddWithValue("@StartTime", updated.StartTime);
-            sqlCommand.Parameters.AddWithValue("@EndTime", updated.EndTime);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    Shift
+    HumanResources.Shift
 where
-ShiftID=@ShiftID  AND 
-Name=@Name  AND 
-StartTime=@StartTime  AND 
-EndTime=@EndTime 
+ShiftID=@ShiftID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ShiftModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@ShiftID", deleted.ShiftID);
-            sqlCommand.Parameters.AddWithValue("@Name", deleted.Name);
-            sqlCommand.Parameters.AddWithValue("@StartTime", deleted.StartTime);
-            sqlCommand.Parameters.AddWithValue("@EndTime", deleted.EndTime);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"ShiftID=@ShiftID 
+";
+
+        public override void MapPrimaryParameters(ShiftModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@ShiftID", key.ShiftID);
+
+        }
+
     }
 }

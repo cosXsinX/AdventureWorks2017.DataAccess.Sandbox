@@ -4,6 +4,12 @@ using System.Text;
 
 namespace AdventureWorks2017.Models
 {
+    public struct CustomerModelPrimaryKey
+    {
+        public int CustomerID { get; set; }
+
+    }
+
     public class CustomerModel
     {
         public int CustomerID { get; set; }

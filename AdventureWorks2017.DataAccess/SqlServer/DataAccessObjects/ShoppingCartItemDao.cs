@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class ShoppingCartItemDao : AbstractDao<ShoppingCartItemModel>
+    public class ShoppingCartItemDao : AbstractDaoWithPrimaryKey<ShoppingCartItemModel,ShoppingCartItemModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              ShoppingCartItemID,
@@ -13,7 +13,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              ProductID,
              DateCreated,
              ModifiedDate
- from ShoppingCartItem";
+ from Sales.ShoppingCartItem";
 
         protected override ShoppingCartItemModel ToModel(SqlDataReader dataReader)
         {
@@ -27,7 +27,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into ShoppingCartItem
+        public override string InsertQuery => @"Insert Into Sales.ShoppingCartItem
 (
 ShoppingCartID,
 Quantity,
@@ -63,21 +63,23 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update ShoppingCartItem
+            @"Update Sales.ShoppingCartItem
 Set
+    ShoppingCartID=@ShoppingCartID,
     Quantity=@Quantity,
+    ProductID=@ProductID,
     DateCreated=@DateCreated,
     ModifiedDate=@ModifiedDate
 
 Where
-ShoppingCartItemID=@ShoppingCartItemID  AND 
-ShoppingCartID=@ShoppingCartID  AND 
-ProductID=@ProductID 
+ShoppingCartItemID=@ShoppingCartItemID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ShoppingCartItemModel updated)
         {
+            sqlCommand.Parameters.AddWithValue("@ShoppingCartID", updated.ShoppingCartID);
             sqlCommand.Parameters.AddWithValue("@Quantity", updated.Quantity);
+            sqlCommand.Parameters.AddWithValue("@ProductID", updated.ProductID);
             sqlCommand.Parameters.AddWithValue("@DateCreated", updated.DateCreated);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
@@ -85,24 +87,29 @@ ProductID=@ProductID
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, ShoppingCartItemModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@ShoppingCartItemID", updated.ShoppingCartItemID);
-            sqlCommand.Parameters.AddWithValue("@ShoppingCartID", updated.ShoppingCartID);
-            sqlCommand.Parameters.AddWithValue("@ProductID", updated.ProductID);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    ShoppingCartItem
+    Sales.ShoppingCartItem
 where
-ShoppingCartItemID=@ShoppingCartItemID  AND 
-ShoppingCartID=@ShoppingCartID  AND 
-ProductID=@ProductID 
+ShoppingCartItemID=@ShoppingCartItemID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ShoppingCartItemModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@ShoppingCartItemID", deleted.ShoppingCartItemID);
-            sqlCommand.Parameters.AddWithValue("@ShoppingCartID", deleted.ShoppingCartID);
-            sqlCommand.Parameters.AddWithValue("@ProductID", deleted.ProductID);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"ShoppingCartItemID=@ShoppingCartItemID 
+";
+
+        public override void MapPrimaryParameters(ShoppingCartItemModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@ShoppingCartItemID", key.ShoppingCartItemID);
+
+        }
+
     }
 }

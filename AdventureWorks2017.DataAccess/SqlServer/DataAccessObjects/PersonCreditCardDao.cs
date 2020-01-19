@@ -4,13 +4,13 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class PersonCreditCardDao : AbstractDao<PersonCreditCardModel>
+    public class PersonCreditCardDao : AbstractDaoWithPrimaryKey<PersonCreditCardModel,PersonCreditCardModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              BusinessEntityID,
              CreditCardID,
              ModifiedDate
- from PersonCreditCard";
+ from Sales.PersonCreditCard";
 
         protected override PersonCreditCardModel ToModel(SqlDataReader dataReader)
         {
@@ -21,7 +21,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into PersonCreditCard
+        public override string InsertQuery => @"Insert Into Sales.PersonCreditCard
 (
 BusinessEntityID,
 CreditCardID,
@@ -48,7 +48,7 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update PersonCreditCard
+            @"Update Sales.PersonCreditCard
 Set
     ModifiedDate=@ModifiedDate
 
@@ -70,7 +70,7 @@ CreditCardID=@CreditCardID
 
         public override string DeleteQuery =>
 @"delete from
-    PersonCreditCard
+    Sales.PersonCreditCard
 where
 BusinessEntityID=@BusinessEntityID  AND 
 CreditCardID=@CreditCardID 
@@ -81,5 +81,18 @@ CreditCardID=@CreditCardID
             sqlCommand.Parameters.AddWithValue("@BusinessEntityID", deleted.BusinessEntityID);
             sqlCommand.Parameters.AddWithValue("@CreditCardID", deleted.CreditCardID);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"BusinessEntityID=@BusinessEntityID  AND 
+CreditCardID=@CreditCardID 
+";
+
+        public override void MapPrimaryParameters(PersonCreditCardModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@BusinessEntityID", key.BusinessEntityID);
+            sqlCommand.Parameters.AddWithValue("@CreditCardID", key.CreditCardID);
+
+        }
+
     }
 }

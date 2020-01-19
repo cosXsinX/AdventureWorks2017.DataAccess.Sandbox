@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class BillOfMaterialsDao : AbstractDao<BillOfMaterialsModel>
+    public class BillOfMaterialsDao : AbstractDaoWithPrimaryKey<BillOfMaterialsModel,BillOfMaterialsModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              BillOfMaterialsID,
@@ -16,7 +16,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              BOMLevel,
              PerAssemblyQty,
              ModifiedDate
- from BillOfMaterials";
+ from Production.BillOfMaterials";
 
         protected override BillOfMaterialsModel ToModel(SqlDataReader dataReader)
         {
@@ -33,7 +33,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into BillOfMaterials
+        public override string InsertQuery => @"Insert Into Production.BillOfMaterials
 (
 ProductAssemblyID,
 ComponentID,
@@ -78,24 +78,28 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update BillOfMaterials
+            @"Update Production.BillOfMaterials
 Set
+    ProductAssemblyID=@ProductAssemblyID,
+    ComponentID=@ComponentID,
+    StartDate=@StartDate,
     EndDate=@EndDate,
+    UnitMeasureCode=@UnitMeasureCode,
     BOMLevel=@BOMLevel,
     PerAssemblyQty=@PerAssemblyQty,
     ModifiedDate=@ModifiedDate
 
 Where
-BillOfMaterialsID=@BillOfMaterialsID  AND 
-ProductAssemblyID=@ProductAssemblyID  AND 
-ComponentID=@ComponentID  AND 
-StartDate=@StartDate  AND 
-UnitMeasureCode=@UnitMeasureCode 
+BillOfMaterialsID=@BillOfMaterialsID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, BillOfMaterialsModel updated)
         {
+            sqlCommand.Parameters.AddWithValue("@ProductAssemblyID", updated.ProductAssemblyID);
+            sqlCommand.Parameters.AddWithValue("@ComponentID", updated.ComponentID);
+            sqlCommand.Parameters.AddWithValue("@StartDate", updated.StartDate);
             sqlCommand.Parameters.AddWithValue("@EndDate", updated.EndDate);
+            sqlCommand.Parameters.AddWithValue("@UnitMeasureCode", updated.UnitMeasureCode);
             sqlCommand.Parameters.AddWithValue("@BOMLevel", updated.BOMLevel);
             sqlCommand.Parameters.AddWithValue("@PerAssemblyQty", updated.PerAssemblyQty);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
@@ -104,30 +108,29 @@ UnitMeasureCode=@UnitMeasureCode
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, BillOfMaterialsModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@BillOfMaterialsID", updated.BillOfMaterialsID);
-            sqlCommand.Parameters.AddWithValue("@ProductAssemblyID", updated.ProductAssemblyID);
-            sqlCommand.Parameters.AddWithValue("@ComponentID", updated.ComponentID);
-            sqlCommand.Parameters.AddWithValue("@StartDate", updated.StartDate);
-            sqlCommand.Parameters.AddWithValue("@UnitMeasureCode", updated.UnitMeasureCode);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    BillOfMaterials
+    Production.BillOfMaterials
 where
-BillOfMaterialsID=@BillOfMaterialsID  AND 
-ProductAssemblyID=@ProductAssemblyID  AND 
-ComponentID=@ComponentID  AND 
-StartDate=@StartDate  AND 
-UnitMeasureCode=@UnitMeasureCode 
+BillOfMaterialsID=@BillOfMaterialsID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, BillOfMaterialsModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@BillOfMaterialsID", deleted.BillOfMaterialsID);
-            sqlCommand.Parameters.AddWithValue("@ProductAssemblyID", deleted.ProductAssemblyID);
-            sqlCommand.Parameters.AddWithValue("@ComponentID", deleted.ComponentID);
-            sqlCommand.Parameters.AddWithValue("@StartDate", deleted.StartDate);
-            sqlCommand.Parameters.AddWithValue("@UnitMeasureCode", deleted.UnitMeasureCode);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"BillOfMaterialsID=@BillOfMaterialsID 
+";
+
+        public override void MapPrimaryParameters(BillOfMaterialsModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@BillOfMaterialsID", key.BillOfMaterialsID);
+
+        }
+
     }
 }

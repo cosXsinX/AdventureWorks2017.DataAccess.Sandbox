@@ -4,13 +4,13 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class CountryRegionDao : AbstractDao<CountryRegionModel>
+    public class CountryRegionDao : AbstractDaoWithPrimaryKey<CountryRegionModel,CountryRegionModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              CountryRegionCode,
              Name,
              ModifiedDate
- from CountryRegion";
+ from Person.CountryRegion";
 
         protected override CountryRegionModel ToModel(SqlDataReader dataReader)
         {
@@ -21,7 +21,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into CountryRegion
+        public override string InsertQuery => @"Insert Into Person.CountryRegion
 (
 CountryRegionCode,
 Name,
@@ -48,38 +48,47 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update CountryRegion
+            @"Update Person.CountryRegion
 Set
+    Name=@Name,
     ModifiedDate=@ModifiedDate
 
 Where
-CountryRegionCode=@CountryRegionCode  AND 
-Name=@Name 
+CountryRegionCode=@CountryRegionCode 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, CountryRegionModel updated)
         {
+            sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, CountryRegionModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@CountryRegionCode", updated.CountryRegionCode);
-            sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    CountryRegion
+    Person.CountryRegion
 where
-CountryRegionCode=@CountryRegionCode  AND 
-Name=@Name 
+CountryRegionCode=@CountryRegionCode 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, CountryRegionModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@CountryRegionCode", deleted.CountryRegionCode);
-            sqlCommand.Parameters.AddWithValue("@Name", deleted.Name);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"CountryRegionCode=@CountryRegionCode 
+";
+
+        public override void MapPrimaryParameters(CountryRegionModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@CountryRegionCode", key.CountryRegionCode);
+
+        }
+
     }
 }

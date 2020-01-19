@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class WorkOrderRoutingDao : AbstractDao<WorkOrderRoutingModel>
+    public class WorkOrderRoutingDao : AbstractDaoWithPrimaryKey<WorkOrderRoutingModel,WorkOrderRoutingModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              WorkOrderID,
@@ -19,7 +19,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              PlannedCost,
              ActualCost,
              ModifiedDate
- from WorkOrderRouting";
+ from Production.WorkOrderRouting";
 
         protected override WorkOrderRoutingModel ToModel(SqlDataReader dataReader)
         {
@@ -39,7 +39,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into WorkOrderRouting
+        public override string InsertQuery => @"Insert Into Production.WorkOrderRouting
 (
 WorkOrderID,
 ProductID,
@@ -93,7 +93,7 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update WorkOrderRouting
+            @"Update Production.WorkOrderRouting
 Set
     LocationID=@LocationID,
     ScheduledStartDate=@ScheduledStartDate,
@@ -133,7 +133,7 @@ OperationSequence=@OperationSequence
 
         public override string DeleteQuery =>
 @"delete from
-    WorkOrderRouting
+    Production.WorkOrderRouting
 where
 WorkOrderID=@WorkOrderID  AND 
 ProductID=@ProductID  AND 
@@ -146,5 +146,20 @@ OperationSequence=@OperationSequence
             sqlCommand.Parameters.AddWithValue("@ProductID", deleted.ProductID);
             sqlCommand.Parameters.AddWithValue("@OperationSequence", deleted.OperationSequence);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"WorkOrderID=@WorkOrderID  AND 
+ProductID=@ProductID  AND 
+OperationSequence=@OperationSequence 
+";
+
+        public override void MapPrimaryParameters(WorkOrderRoutingModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@WorkOrderID", key.WorkOrderID);
+            sqlCommand.Parameters.AddWithValue("@ProductID", key.ProductID);
+            sqlCommand.Parameters.AddWithValue("@OperationSequence", key.OperationSequence);
+
+        }
+
     }
 }

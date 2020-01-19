@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class SalesTaxRateDao : AbstractDao<SalesTaxRateModel>
+    public class SalesTaxRateDao : AbstractDaoWithPrimaryKey<SalesTaxRateModel,SalesTaxRateModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              SalesTaxRateID,
@@ -14,7 +14,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              Name,
              rowguid,
              ModifiedDate
- from SalesTaxRate";
+ from Sales.SalesTaxRate";
 
         protected override SalesTaxRateModel ToModel(SqlDataReader dataReader)
         {
@@ -29,7 +29,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into SalesTaxRate
+        public override string InsertQuery => @"Insert Into Sales.SalesTaxRate
 (
 StateProvinceID,
 TaxType,
@@ -68,50 +68,55 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update SalesTaxRate
+            @"Update Sales.SalesTaxRate
 Set
+    StateProvinceID=@StateProvinceID,
+    TaxType=@TaxType,
     TaxRate=@TaxRate,
     Name=@Name,
+    rowguid=@rowguid,
     ModifiedDate=@ModifiedDate
 
 Where
-SalesTaxRateID=@SalesTaxRateID  AND 
-StateProvinceID=@StateProvinceID  AND 
-TaxType=@TaxType  AND 
-rowguid=@rowguid 
+SalesTaxRateID=@SalesTaxRateID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, SalesTaxRateModel updated)
         {
+            sqlCommand.Parameters.AddWithValue("@StateProvinceID", updated.StateProvinceID);
+            sqlCommand.Parameters.AddWithValue("@TaxType", updated.TaxType);
             sqlCommand.Parameters.AddWithValue("@TaxRate", updated.TaxRate);
             sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
+            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, SalesTaxRateModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@SalesTaxRateID", updated.SalesTaxRateID);
-            sqlCommand.Parameters.AddWithValue("@StateProvinceID", updated.StateProvinceID);
-            sqlCommand.Parameters.AddWithValue("@TaxType", updated.TaxType);
-            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    SalesTaxRate
+    Sales.SalesTaxRate
 where
-SalesTaxRateID=@SalesTaxRateID  AND 
-StateProvinceID=@StateProvinceID  AND 
-TaxType=@TaxType  AND 
-rowguid=@rowguid 
+SalesTaxRateID=@SalesTaxRateID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, SalesTaxRateModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@SalesTaxRateID", deleted.SalesTaxRateID);
-            sqlCommand.Parameters.AddWithValue("@StateProvinceID", deleted.StateProvinceID);
-            sqlCommand.Parameters.AddWithValue("@TaxType", deleted.TaxType);
-            sqlCommand.Parameters.AddWithValue("@rowguid", deleted.rowguid);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"SalesTaxRateID=@SalesTaxRateID 
+";
+
+        public override void MapPrimaryParameters(SalesTaxRateModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@SalesTaxRateID", key.SalesTaxRateID);
+
+        }
+
     }
 }

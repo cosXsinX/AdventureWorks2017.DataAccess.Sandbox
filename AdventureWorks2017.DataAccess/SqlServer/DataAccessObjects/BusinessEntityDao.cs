@@ -4,13 +4,13 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class BusinessEntityDao : AbstractDao<BusinessEntityModel>
+    public class BusinessEntityDao : AbstractDaoWithPrimaryKey<BusinessEntityModel,BusinessEntityModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              BusinessEntityID,
              rowguid,
              ModifiedDate
- from BusinessEntity";
+ from Person.BusinessEntity";
 
         protected override BusinessEntityModel ToModel(SqlDataReader dataReader)
         {
@@ -21,7 +21,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into BusinessEntity
+        public override string InsertQuery => @"Insert Into Person.BusinessEntity
 (
 rowguid,
 ModifiedDate
@@ -48,38 +48,47 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update BusinessEntity
+            @"Update Person.BusinessEntity
 Set
+    rowguid=@rowguid,
     ModifiedDate=@ModifiedDate
 
 Where
-BusinessEntityID=@BusinessEntityID  AND 
-rowguid=@rowguid 
+BusinessEntityID=@BusinessEntityID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, BusinessEntityModel updated)
         {
+            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, BusinessEntityModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@BusinessEntityID", updated.BusinessEntityID);
-            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    BusinessEntity
+    Person.BusinessEntity
 where
-BusinessEntityID=@BusinessEntityID  AND 
-rowguid=@rowguid 
+BusinessEntityID=@BusinessEntityID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, BusinessEntityModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@BusinessEntityID", deleted.BusinessEntityID);
-            sqlCommand.Parameters.AddWithValue("@rowguid", deleted.rowguid);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"BusinessEntityID=@BusinessEntityID 
+";
+
+        public override void MapPrimaryParameters(BusinessEntityModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@BusinessEntityID", key.BusinessEntityID);
+
+        }
+
     }
 }

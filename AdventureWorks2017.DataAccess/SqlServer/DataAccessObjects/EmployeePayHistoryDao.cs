@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class EmployeePayHistoryDao : AbstractDao<EmployeePayHistoryModel>
+    public class EmployeePayHistoryDao : AbstractDaoWithPrimaryKey<EmployeePayHistoryModel,EmployeePayHistoryModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              BusinessEntityID,
@@ -12,7 +12,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              Rate,
              PayFrequency,
              ModifiedDate
- from EmployeePayHistory";
+ from HumanResources.EmployeePayHistory";
 
         protected override EmployeePayHistoryModel ToModel(SqlDataReader dataReader)
         {
@@ -25,7 +25,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into EmployeePayHistory
+        public override string InsertQuery => @"Insert Into HumanResources.EmployeePayHistory
 (
 BusinessEntityID,
 RateChangeDate,
@@ -58,7 +58,7 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update EmployeePayHistory
+            @"Update HumanResources.EmployeePayHistory
 Set
     Rate=@Rate,
     PayFrequency=@PayFrequency,
@@ -84,7 +84,7 @@ RateChangeDate=@RateChangeDate
 
         public override string DeleteQuery =>
 @"delete from
-    EmployeePayHistory
+    HumanResources.EmployeePayHistory
 where
 BusinessEntityID=@BusinessEntityID  AND 
 RateChangeDate=@RateChangeDate 
@@ -95,5 +95,18 @@ RateChangeDate=@RateChangeDate
             sqlCommand.Parameters.AddWithValue("@BusinessEntityID", deleted.BusinessEntityID);
             sqlCommand.Parameters.AddWithValue("@RateChangeDate", deleted.RateChangeDate);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"BusinessEntityID=@BusinessEntityID  AND 
+RateChangeDate=@RateChangeDate 
+";
+
+        public override void MapPrimaryParameters(EmployeePayHistoryModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@BusinessEntityID", key.BusinessEntityID);
+            sqlCommand.Parameters.AddWithValue("@RateChangeDate", key.RateChangeDate);
+
+        }
+
     }
 }

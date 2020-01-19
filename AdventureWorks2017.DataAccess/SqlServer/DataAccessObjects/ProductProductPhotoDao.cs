@@ -4,14 +4,14 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class ProductProductPhotoDao : AbstractDao<ProductProductPhotoModel>
+    public class ProductProductPhotoDao : AbstractDaoWithPrimaryKey<ProductProductPhotoModel,ProductProductPhotoModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              ProductID,
              ProductPhotoID,
              Primary,
              ModifiedDate
- from ProductProductPhoto";
+ from Production.ProductProductPhoto";
 
         protected override ProductProductPhotoModel ToModel(SqlDataReader dataReader)
         {
@@ -23,7 +23,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into ProductProductPhoto
+        public override string InsertQuery => @"Insert Into Production.ProductProductPhoto
 (
 ProductID,
 ProductPhotoID,
@@ -53,7 +53,7 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update ProductProductPhoto
+            @"Update Production.ProductProductPhoto
 Set
     Primary=@Primary,
     ModifiedDate=@ModifiedDate
@@ -77,7 +77,7 @@ ProductPhotoID=@ProductPhotoID
 
         public override string DeleteQuery =>
 @"delete from
-    ProductProductPhoto
+    Production.ProductProductPhoto
 where
 ProductID=@ProductID  AND 
 ProductPhotoID=@ProductPhotoID 
@@ -88,5 +88,18 @@ ProductPhotoID=@ProductPhotoID
             sqlCommand.Parameters.AddWithValue("@ProductID", deleted.ProductID);
             sqlCommand.Parameters.AddWithValue("@ProductPhotoID", deleted.ProductPhotoID);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"ProductID=@ProductID  AND 
+ProductPhotoID=@ProductPhotoID 
+";
+
+        public override void MapPrimaryParameters(ProductProductPhotoModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@ProductID", key.ProductID);
+            sqlCommand.Parameters.AddWithValue("@ProductPhotoID", key.ProductPhotoID);
+
+        }
+
     }
 }

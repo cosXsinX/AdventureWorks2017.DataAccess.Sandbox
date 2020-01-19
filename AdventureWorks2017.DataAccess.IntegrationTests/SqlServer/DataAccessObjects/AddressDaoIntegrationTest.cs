@@ -1,7 +1,6 @@
 using AdventureWorks2017.DataAccess.IntegrationTests.SqlServer.DataAccessObjects;
 using AdventureWorks2017.Models;
 using AdventureWorks2017.SqlServer.DataAccessObjects;
-using Microsoft.SqlServer.Types;
 using NUnit.Framework;
 using System;
 using System.Data.SqlClient;

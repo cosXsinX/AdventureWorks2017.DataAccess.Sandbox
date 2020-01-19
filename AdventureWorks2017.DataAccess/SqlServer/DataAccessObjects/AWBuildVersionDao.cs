@@ -4,14 +4,14 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class AWBuildVersionDao : AbstractDao<AWBuildVersionModel>
+    public class AWBuildVersionDao : AbstractDaoWithPrimaryKey<AWBuildVersionModel,AWBuildVersionModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              SystemInformationID,
              Database Version,
              VersionDate,
              ModifiedDate
- from AWBuildVersion";
+ from dbo.AWBuildVersion";
 
         protected override AWBuildVersionModel ToModel(SqlDataReader dataReader)
         {
@@ -23,7 +23,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into AWBuildVersion
+        public override string InsertQuery => @"Insert Into dbo.AWBuildVersion
 (
 Database Version,
 VersionDate,
@@ -53,7 +53,7 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update AWBuildVersion
+            @"Update dbo.AWBuildVersion
 Set
     Database Version=@Database Version,
     VersionDate=@VersionDate,
@@ -77,7 +77,7 @@ SystemInformationID=@SystemInformationID
 
         public override string DeleteQuery =>
 @"delete from
-    AWBuildVersion
+    dbo.AWBuildVersion
 where
 SystemInformationID=@SystemInformationID 
 ";
@@ -86,5 +86,16 @@ SystemInformationID=@SystemInformationID
         {
             sqlCommand.Parameters.AddWithValue("@SystemInformationID", deleted.SystemInformationID);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"SystemInformationID=@SystemInformationID 
+";
+
+        public override void MapPrimaryParameters(AWBuildVersionModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@SystemInformationID", key.SystemInformationID);
+
+        }
+
     }
 }

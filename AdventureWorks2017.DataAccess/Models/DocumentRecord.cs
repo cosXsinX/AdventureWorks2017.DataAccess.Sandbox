@@ -4,6 +4,12 @@ using System.Text;
 
 namespace AdventureWorks2017.Models
 {
+    public struct DocumentModelPrimaryKey
+    {
+        public string DocumentNode { get; set; }
+
+    }
+
     public class DocumentModel
     {
         public string DocumentNode { get; set; }

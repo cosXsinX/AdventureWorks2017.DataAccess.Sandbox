@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class EmployeeDao : AbstractDao<EmployeeModel>
+    public class EmployeeDao : AbstractDaoWithPrimaryKey<EmployeeModel,EmployeeModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              BusinessEntityID,
@@ -23,7 +23,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              CurrentFlag,
              rowguid,
              ModifiedDate
- from Employee";
+ from HumanResources.Employee";
 
         protected override EmployeeModel ToModel(SqlDataReader dataReader)
         {
@@ -47,7 +47,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Employee
+        public override string InsertQuery => @"Insert Into HumanResources.Employee
 (
 BusinessEntityID,
 NationalIDNumber,
@@ -113,8 +113,12 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Employee
+            @"Update HumanResources.Employee
 Set
+    NationalIDNumber=@NationalIDNumber,
+    LoginID=@LoginID,
+    OrganizationNode=@OrganizationNode,
+    OrganizationLevel=@OrganizationLevel,
     JobTitle=@JobTitle,
     BirthDate=@BirthDate,
     MaritalStatus=@MaritalStatus,
@@ -124,19 +128,19 @@ Set
     VacationHours=@VacationHours,
     SickLeaveHours=@SickLeaveHours,
     CurrentFlag=@CurrentFlag,
+    rowguid=@rowguid,
     ModifiedDate=@ModifiedDate
 
 Where
-BusinessEntityID=@BusinessEntityID  AND 
-NationalIDNumber=@NationalIDNumber  AND 
-LoginID=@LoginID  AND 
-OrganizationNode=@OrganizationNode  AND 
-OrganizationLevel=@OrganizationLevel  AND 
-rowguid=@rowguid 
+BusinessEntityID=@BusinessEntityID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, EmployeeModel updated)
         {
+            sqlCommand.Parameters.AddWithValue("@NationalIDNumber", updated.NationalIDNumber);
+            sqlCommand.Parameters.AddWithValue("@LoginID", updated.LoginID);
+            sqlCommand.Parameters.AddWithValue("@OrganizationNode", updated.OrganizationNode);
+            sqlCommand.Parameters.AddWithValue("@OrganizationLevel", updated.OrganizationLevel);
             sqlCommand.Parameters.AddWithValue("@JobTitle", updated.JobTitle);
             sqlCommand.Parameters.AddWithValue("@BirthDate", updated.BirthDate);
             sqlCommand.Parameters.AddWithValue("@MaritalStatus", updated.MaritalStatus);
@@ -146,39 +150,36 @@ rowguid=@rowguid
             sqlCommand.Parameters.AddWithValue("@VacationHours", updated.VacationHours);
             sqlCommand.Parameters.AddWithValue("@SickLeaveHours", updated.SickLeaveHours);
             sqlCommand.Parameters.AddWithValue("@CurrentFlag", updated.CurrentFlag);
+            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, EmployeeModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@BusinessEntityID", updated.BusinessEntityID);
-            sqlCommand.Parameters.AddWithValue("@NationalIDNumber", updated.NationalIDNumber);
-            sqlCommand.Parameters.AddWithValue("@LoginID", updated.LoginID);
-            sqlCommand.Parameters.AddWithValue("@OrganizationNode", updated.OrganizationNode);
-            sqlCommand.Parameters.AddWithValue("@OrganizationLevel", updated.OrganizationLevel);
-            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    Employee
+    HumanResources.Employee
 where
-BusinessEntityID=@BusinessEntityID  AND 
-NationalIDNumber=@NationalIDNumber  AND 
-LoginID=@LoginID  AND 
-OrganizationNode=@OrganizationNode  AND 
-OrganizationLevel=@OrganizationLevel  AND 
-rowguid=@rowguid 
+BusinessEntityID=@BusinessEntityID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, EmployeeModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@BusinessEntityID", deleted.BusinessEntityID);
-            sqlCommand.Parameters.AddWithValue("@NationalIDNumber", deleted.NationalIDNumber);
-            sqlCommand.Parameters.AddWithValue("@LoginID", deleted.LoginID);
-            sqlCommand.Parameters.AddWithValue("@OrganizationNode", deleted.OrganizationNode);
-            sqlCommand.Parameters.AddWithValue("@OrganizationLevel", deleted.OrganizationLevel);
-            sqlCommand.Parameters.AddWithValue("@rowguid", deleted.rowguid);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"BusinessEntityID=@BusinessEntityID 
+";
+
+        public override void MapPrimaryParameters(EmployeeModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@BusinessEntityID", key.BusinessEntityID);
+
+        }
+
     }
 }

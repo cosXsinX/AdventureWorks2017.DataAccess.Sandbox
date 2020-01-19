@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class ProductDao : AbstractDao<ProductModel>
+    public class ProductDao : AbstractDaoWithPrimaryKey<ProductModel,ProductModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              ProductID,
@@ -32,7 +32,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              DiscontinuedDate,
              rowguid,
              ModifiedDate
- from Product";
+ from Production.Product";
 
         protected override ProductModel ToModel(SqlDataReader dataReader)
         {
@@ -65,7 +65,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Product
+        public override string InsertQuery => @"Insert Into Production.Product
 (
 Name,
 ProductNumber,
@@ -158,8 +158,10 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Product
+            @"Update Production.Product
 Set
+    Name=@Name,
+    ProductNumber=@ProductNumber,
     MakeFlag=@MakeFlag,
     FinishedGoodsFlag=@FinishedGoodsFlag,
     Color=@Color,
@@ -180,17 +182,17 @@ Set
     SellStartDate=@SellStartDate,
     SellEndDate=@SellEndDate,
     DiscontinuedDate=@DiscontinuedDate,
+    rowguid=@rowguid,
     ModifiedDate=@ModifiedDate
 
 Where
-ProductID=@ProductID  AND 
-Name=@Name  AND 
-ProductNumber=@ProductNumber  AND 
-rowguid=@rowguid 
+ProductID=@ProductID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ProductModel updated)
         {
+            sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
+            sqlCommand.Parameters.AddWithValue("@ProductNumber", updated.ProductNumber);
             sqlCommand.Parameters.AddWithValue("@MakeFlag", updated.MakeFlag);
             sqlCommand.Parameters.AddWithValue("@FinishedGoodsFlag", updated.FinishedGoodsFlag);
             sqlCommand.Parameters.AddWithValue("@Color", updated.Color);
@@ -211,33 +213,36 @@ rowguid=@rowguid
             sqlCommand.Parameters.AddWithValue("@SellStartDate", updated.SellStartDate);
             sqlCommand.Parameters.AddWithValue("@SellEndDate", updated.SellEndDate);
             sqlCommand.Parameters.AddWithValue("@DiscontinuedDate", updated.DiscontinuedDate);
+            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, ProductModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@ProductID", updated.ProductID);
-            sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
-            sqlCommand.Parameters.AddWithValue("@ProductNumber", updated.ProductNumber);
-            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    Product
+    Production.Product
 where
-ProductID=@ProductID  AND 
-Name=@Name  AND 
-ProductNumber=@ProductNumber  AND 
-rowguid=@rowguid 
+ProductID=@ProductID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ProductModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@ProductID", deleted.ProductID);
-            sqlCommand.Parameters.AddWithValue("@Name", deleted.Name);
-            sqlCommand.Parameters.AddWithValue("@ProductNumber", deleted.ProductNumber);
-            sqlCommand.Parameters.AddWithValue("@rowguid", deleted.rowguid);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"ProductID=@ProductID 
+";
+
+        public override void MapPrimaryParameters(ProductModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@ProductID", key.ProductID);
+
+        }
+
     }
 }

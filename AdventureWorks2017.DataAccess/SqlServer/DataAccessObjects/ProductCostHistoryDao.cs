@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class ProductCostHistoryDao : AbstractDao<ProductCostHistoryModel>
+    public class ProductCostHistoryDao : AbstractDaoWithPrimaryKey<ProductCostHistoryModel,ProductCostHistoryModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              ProductID,
@@ -12,7 +12,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              EndDate,
              StandardCost,
              ModifiedDate
- from ProductCostHistory";
+ from Production.ProductCostHistory";
 
         protected override ProductCostHistoryModel ToModel(SqlDataReader dataReader)
         {
@@ -25,7 +25,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into ProductCostHistory
+        public override string InsertQuery => @"Insert Into Production.ProductCostHistory
 (
 ProductID,
 StartDate,
@@ -58,7 +58,7 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update ProductCostHistory
+            @"Update Production.ProductCostHistory
 Set
     EndDate=@EndDate,
     StandardCost=@StandardCost,
@@ -84,7 +84,7 @@ StartDate=@StartDate
 
         public override string DeleteQuery =>
 @"delete from
-    ProductCostHistory
+    Production.ProductCostHistory
 where
 ProductID=@ProductID  AND 
 StartDate=@StartDate 
@@ -95,5 +95,18 @@ StartDate=@StartDate
             sqlCommand.Parameters.AddWithValue("@ProductID", deleted.ProductID);
             sqlCommand.Parameters.AddWithValue("@StartDate", deleted.StartDate);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"ProductID=@ProductID  AND 
+StartDate=@StartDate 
+";
+
+        public override void MapPrimaryParameters(ProductCostHistoryModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@ProductID", key.ProductID);
+            sqlCommand.Parameters.AddWithValue("@StartDate", key.StartDate);
+
+        }
+
     }
 }

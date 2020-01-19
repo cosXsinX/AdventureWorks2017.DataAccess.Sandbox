@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class SalesPersonQuotaHistoryDao : AbstractDao<SalesPersonQuotaHistoryModel>
+    public class SalesPersonQuotaHistoryDao : AbstractDaoWithPrimaryKey<SalesPersonQuotaHistoryModel,SalesPersonQuotaHistoryModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              BusinessEntityID,
@@ -12,7 +12,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              SalesQuota,
              rowguid,
              ModifiedDate
- from SalesPersonQuotaHistory";
+ from Sales.SalesPersonQuotaHistory";
 
         protected override SalesPersonQuotaHistoryModel ToModel(SqlDataReader dataReader)
         {
@@ -25,7 +25,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into SalesPersonQuotaHistory
+        public override string InsertQuery => @"Insert Into Sales.SalesPersonQuotaHistory
 (
 BusinessEntityID,
 QuotaDate,
@@ -58,20 +58,21 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update SalesPersonQuotaHistory
+            @"Update Sales.SalesPersonQuotaHistory
 Set
     SalesQuota=@SalesQuota,
+    rowguid=@rowguid,
     ModifiedDate=@ModifiedDate
 
 Where
 BusinessEntityID=@BusinessEntityID  AND 
-QuotaDate=@QuotaDate  AND 
-rowguid=@rowguid 
+QuotaDate=@QuotaDate 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, SalesPersonQuotaHistoryModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@SalesQuota", updated.SalesQuota);
+            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
@@ -79,23 +80,33 @@ rowguid=@rowguid
         {
             sqlCommand.Parameters.AddWithValue("@BusinessEntityID", updated.BusinessEntityID);
             sqlCommand.Parameters.AddWithValue("@QuotaDate", updated.QuotaDate);
-            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    SalesPersonQuotaHistory
+    Sales.SalesPersonQuotaHistory
 where
 BusinessEntityID=@BusinessEntityID  AND 
-QuotaDate=@QuotaDate  AND 
-rowguid=@rowguid 
+QuotaDate=@QuotaDate 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, SalesPersonQuotaHistoryModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@BusinessEntityID", deleted.BusinessEntityID);
             sqlCommand.Parameters.AddWithValue("@QuotaDate", deleted.QuotaDate);
-            sqlCommand.Parameters.AddWithValue("@rowguid", deleted.rowguid);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"BusinessEntityID=@BusinessEntityID  AND 
+QuotaDate=@QuotaDate 
+";
+
+        public override void MapPrimaryParameters(SalesPersonQuotaHistoryModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@BusinessEntityID", key.BusinessEntityID);
+            sqlCommand.Parameters.AddWithValue("@QuotaDate", key.QuotaDate);
+
+        }
+
     }
 }

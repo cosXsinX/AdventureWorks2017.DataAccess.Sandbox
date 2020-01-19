@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class ProductPhotoDao : AbstractDao<ProductPhotoModel>
+    public class ProductPhotoDao : AbstractDaoWithPrimaryKey<ProductPhotoModel,ProductPhotoModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              ProductPhotoID,
@@ -13,7 +13,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              LargePhoto,
              LargePhotoFileName,
              ModifiedDate
- from ProductPhoto";
+ from Production.ProductPhoto";
 
         protected override ProductPhotoModel ToModel(SqlDataReader dataReader)
         {
@@ -27,7 +27,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into ProductPhoto
+        public override string InsertQuery => @"Insert Into Production.ProductPhoto
 (
 ThumbNailPhoto,
 ThumbnailPhotoFileName,
@@ -63,7 +63,7 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update ProductPhoto
+            @"Update Production.ProductPhoto
 Set
     ThumbNailPhoto=@ThumbNailPhoto,
     ThumbnailPhotoFileName=@ThumbnailPhotoFileName,
@@ -91,7 +91,7 @@ ProductPhotoID=@ProductPhotoID
 
         public override string DeleteQuery =>
 @"delete from
-    ProductPhoto
+    Production.ProductPhoto
 where
 ProductPhotoID=@ProductPhotoID 
 ";
@@ -100,5 +100,16 @@ ProductPhotoID=@ProductPhotoID
         {
             sqlCommand.Parameters.AddWithValue("@ProductPhotoID", deleted.ProductPhotoID);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"ProductPhotoID=@ProductPhotoID 
+";
+
+        public override void MapPrimaryParameters(ProductPhotoModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@ProductPhotoID", key.ProductPhotoID);
+
+        }
+
     }
 }

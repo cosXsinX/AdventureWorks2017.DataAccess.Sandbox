@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class CurrencyRateDao : AbstractDao<CurrencyRateModel>
+    public class CurrencyRateDao : AbstractDaoWithPrimaryKey<CurrencyRateModel,CurrencyRateModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              CurrencyRateID,
@@ -14,7 +14,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              AverageRate,
              EndOfDayRate,
              ModifiedDate
- from CurrencyRate";
+ from Sales.CurrencyRate";
 
         protected override CurrencyRateModel ToModel(SqlDataReader dataReader)
         {
@@ -29,7 +29,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into CurrencyRate
+        public override string InsertQuery => @"Insert Into Sales.CurrencyRate
 (
 CurrencyRateDate,
 FromCurrencyCode,
@@ -68,21 +68,24 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update CurrencyRate
+            @"Update Sales.CurrencyRate
 Set
+    CurrencyRateDate=@CurrencyRateDate,
+    FromCurrencyCode=@FromCurrencyCode,
+    ToCurrencyCode=@ToCurrencyCode,
     AverageRate=@AverageRate,
     EndOfDayRate=@EndOfDayRate,
     ModifiedDate=@ModifiedDate
 
 Where
-CurrencyRateID=@CurrencyRateID  AND 
-CurrencyRateDate=@CurrencyRateDate  AND 
-FromCurrencyCode=@FromCurrencyCode  AND 
-ToCurrencyCode=@ToCurrencyCode 
+CurrencyRateID=@CurrencyRateID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, CurrencyRateModel updated)
         {
+            sqlCommand.Parameters.AddWithValue("@CurrencyRateDate", updated.CurrencyRateDate);
+            sqlCommand.Parameters.AddWithValue("@FromCurrencyCode", updated.FromCurrencyCode);
+            sqlCommand.Parameters.AddWithValue("@ToCurrencyCode", updated.ToCurrencyCode);
             sqlCommand.Parameters.AddWithValue("@AverageRate", updated.AverageRate);
             sqlCommand.Parameters.AddWithValue("@EndOfDayRate", updated.EndOfDayRate);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
@@ -91,27 +94,29 @@ ToCurrencyCode=@ToCurrencyCode
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, CurrencyRateModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@CurrencyRateID", updated.CurrencyRateID);
-            sqlCommand.Parameters.AddWithValue("@CurrencyRateDate", updated.CurrencyRateDate);
-            sqlCommand.Parameters.AddWithValue("@FromCurrencyCode", updated.FromCurrencyCode);
-            sqlCommand.Parameters.AddWithValue("@ToCurrencyCode", updated.ToCurrencyCode);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    CurrencyRate
+    Sales.CurrencyRate
 where
-CurrencyRateID=@CurrencyRateID  AND 
-CurrencyRateDate=@CurrencyRateDate  AND 
-FromCurrencyCode=@FromCurrencyCode  AND 
-ToCurrencyCode=@ToCurrencyCode 
+CurrencyRateID=@CurrencyRateID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, CurrencyRateModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@CurrencyRateID", deleted.CurrencyRateID);
-            sqlCommand.Parameters.AddWithValue("@CurrencyRateDate", deleted.CurrencyRateDate);
-            sqlCommand.Parameters.AddWithValue("@FromCurrencyCode", deleted.FromCurrencyCode);
-            sqlCommand.Parameters.AddWithValue("@ToCurrencyCode", deleted.ToCurrencyCode);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"CurrencyRateID=@CurrencyRateID 
+";
+
+        public override void MapPrimaryParameters(CurrencyRateModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@CurrencyRateID", key.CurrencyRateID);
+
+        }
+
     }
 }

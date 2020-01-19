@@ -4,13 +4,13 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class SalesOrderHeaderSalesReasonDao : AbstractDao<SalesOrderHeaderSalesReasonModel>
+    public class SalesOrderHeaderSalesReasonDao : AbstractDaoWithPrimaryKey<SalesOrderHeaderSalesReasonModel,SalesOrderHeaderSalesReasonModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              SalesOrderID,
              SalesReasonID,
              ModifiedDate
- from SalesOrderHeaderSalesReason";
+ from Sales.SalesOrderHeaderSalesReason";
 
         protected override SalesOrderHeaderSalesReasonModel ToModel(SqlDataReader dataReader)
         {
@@ -21,7 +21,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into SalesOrderHeaderSalesReason
+        public override string InsertQuery => @"Insert Into Sales.SalesOrderHeaderSalesReason
 (
 SalesOrderID,
 SalesReasonID,
@@ -48,7 +48,7 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update SalesOrderHeaderSalesReason
+            @"Update Sales.SalesOrderHeaderSalesReason
 Set
     ModifiedDate=@ModifiedDate
 
@@ -70,7 +70,7 @@ SalesReasonID=@SalesReasonID
 
         public override string DeleteQuery =>
 @"delete from
-    SalesOrderHeaderSalesReason
+    Sales.SalesOrderHeaderSalesReason
 where
 SalesOrderID=@SalesOrderID  AND 
 SalesReasonID=@SalesReasonID 
@@ -81,5 +81,18 @@ SalesReasonID=@SalesReasonID
             sqlCommand.Parameters.AddWithValue("@SalesOrderID", deleted.SalesOrderID);
             sqlCommand.Parameters.AddWithValue("@SalesReasonID", deleted.SalesReasonID);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"SalesOrderID=@SalesOrderID  AND 
+SalesReasonID=@SalesReasonID 
+";
+
+        public override void MapPrimaryParameters(SalesOrderHeaderSalesReasonModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@SalesOrderID", key.SalesOrderID);
+            sqlCommand.Parameters.AddWithValue("@SalesReasonID", key.SalesReasonID);
+
+        }
+
     }
 }

@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class ProductReviewDao : AbstractDao<ProductReviewModel>
+    public class ProductReviewDao : AbstractDaoWithPrimaryKey<ProductReviewModel,ProductReviewModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              ProductReviewID,
@@ -15,7 +15,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              Rating,
              Comments,
              ModifiedDate
- from ProductReview";
+ from Production.ProductReview";
 
         protected override ProductReviewModel ToModel(SqlDataReader dataReader)
         {
@@ -31,7 +31,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into ProductReview
+        public override string InsertQuery => @"Insert Into Production.ProductReview
 (
 ProductID,
 ReviewerName,
@@ -73,52 +73,57 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update ProductReview
+            @"Update Production.ProductReview
 Set
+    ProductID=@ProductID,
+    ReviewerName=@ReviewerName,
     ReviewDate=@ReviewDate,
     EmailAddress=@EmailAddress,
     Rating=@Rating,
+    Comments=@Comments,
     ModifiedDate=@ModifiedDate
 
 Where
-ProductReviewID=@ProductReviewID  AND 
-ProductID=@ProductID  AND 
-ReviewerName=@ReviewerName  AND 
-Comments=@Comments 
+ProductReviewID=@ProductReviewID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ProductReviewModel updated)
         {
+            sqlCommand.Parameters.AddWithValue("@ProductID", updated.ProductID);
+            sqlCommand.Parameters.AddWithValue("@ReviewerName", updated.ReviewerName);
             sqlCommand.Parameters.AddWithValue("@ReviewDate", updated.ReviewDate);
             sqlCommand.Parameters.AddWithValue("@EmailAddress", updated.EmailAddress);
             sqlCommand.Parameters.AddWithValue("@Rating", updated.Rating);
+            sqlCommand.Parameters.AddWithValue("@Comments", updated.Comments);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, ProductReviewModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@ProductReviewID", updated.ProductReviewID);
-            sqlCommand.Parameters.AddWithValue("@ProductID", updated.ProductID);
-            sqlCommand.Parameters.AddWithValue("@ReviewerName", updated.ReviewerName);
-            sqlCommand.Parameters.AddWithValue("@Comments", updated.Comments);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    ProductReview
+    Production.ProductReview
 where
-ProductReviewID=@ProductReviewID  AND 
-ProductID=@ProductID  AND 
-ReviewerName=@ReviewerName  AND 
-Comments=@Comments 
+ProductReviewID=@ProductReviewID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ProductReviewModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@ProductReviewID", deleted.ProductReviewID);
-            sqlCommand.Parameters.AddWithValue("@ProductID", deleted.ProductID);
-            sqlCommand.Parameters.AddWithValue("@ReviewerName", deleted.ReviewerName);
-            sqlCommand.Parameters.AddWithValue("@Comments", deleted.Comments);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"ProductReviewID=@ProductReviewID 
+";
+
+        public override void MapPrimaryParameters(ProductReviewModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@ProductReviewID", key.ProductReviewID);
+
+        }
+
     }
 }

@@ -4,6 +4,12 @@ using System.Text;
 
 namespace AdventureWorks2017.Models
 {
+    public struct AWBuildVersionModelPrimaryKey
+    {
+        public byte SystemInformationID { get; set; }
+
+    }
+
     public class AWBuildVersionModel
     {
         public byte SystemInformationID { get; set; }

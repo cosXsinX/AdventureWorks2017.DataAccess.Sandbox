@@ -4,13 +4,13 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class ProductModelIllustrationDao : AbstractDao<ProductModelIllustrationModel>
+    public class ProductModelIllustrationDao : AbstractDaoWithPrimaryKey<ProductModelIllustrationModel,ProductModelIllustrationModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              ProductModelID,
              IllustrationID,
              ModifiedDate
- from ProductModelIllustration";
+ from Production.ProductModelIllustration";
 
         protected override ProductModelIllustrationModel ToModel(SqlDataReader dataReader)
         {
@@ -21,7 +21,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into ProductModelIllustration
+        public override string InsertQuery => @"Insert Into Production.ProductModelIllustration
 (
 ProductModelID,
 IllustrationID,
@@ -48,7 +48,7 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update ProductModelIllustration
+            @"Update Production.ProductModelIllustration
 Set
     ModifiedDate=@ModifiedDate
 
@@ -70,7 +70,7 @@ IllustrationID=@IllustrationID
 
         public override string DeleteQuery =>
 @"delete from
-    ProductModelIllustration
+    Production.ProductModelIllustration
 where
 ProductModelID=@ProductModelID  AND 
 IllustrationID=@IllustrationID 
@@ -81,5 +81,18 @@ IllustrationID=@IllustrationID
             sqlCommand.Parameters.AddWithValue("@ProductModelID", deleted.ProductModelID);
             sqlCommand.Parameters.AddWithValue("@IllustrationID", deleted.IllustrationID);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"ProductModelID=@ProductModelID  AND 
+IllustrationID=@IllustrationID 
+";
+
+        public override void MapPrimaryParameters(ProductModelIllustrationModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@ProductModelID", key.ProductModelID);
+            sqlCommand.Parameters.AddWithValue("@IllustrationID", key.IllustrationID);
+
+        }
+
     }
 }

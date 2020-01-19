@@ -4,6 +4,12 @@ using System.Text;
 
 namespace AdventureWorks2017.Models
 {
+    public struct CurrencyRateModelPrimaryKey
+    {
+        public int CurrencyRateID { get; set; }
+
+    }
+
     public class CurrencyRateModel
     {
         public int CurrencyRateID { get; set; }

@@ -4,6 +4,13 @@ using System.Text;
 
 namespace AdventureWorks2017.Models
 {
+    public struct EmployeePayHistoryModelPrimaryKey
+    {
+        public int BusinessEntityID { get; set; }
+        public DateTime RateChangeDate { get; set; }
+
+    }
+
     public class EmployeePayHistoryModel
     {
         public int BusinessEntityID { get; set; }

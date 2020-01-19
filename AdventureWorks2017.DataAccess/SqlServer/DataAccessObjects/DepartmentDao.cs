@@ -4,14 +4,14 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class DepartmentDao : AbstractDao<DepartmentModel>
+    public class DepartmentDao : AbstractDaoWithPrimaryKey<DepartmentModel,DepartmentModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              DepartmentID,
              Name,
              GroupName,
              ModifiedDate
- from Department";
+ from HumanResources.Department";
 
         protected override DepartmentModel ToModel(SqlDataReader dataReader)
         {
@@ -23,7 +23,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Department
+        public override string InsertQuery => @"Insert Into HumanResources.Department
 (
 Name,
 GroupName,
@@ -53,18 +53,19 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Department
+            @"Update HumanResources.Department
 Set
+    Name=@Name,
     GroupName=@GroupName,
     ModifiedDate=@ModifiedDate
 
 Where
-DepartmentID=@DepartmentID  AND 
-Name=@Name 
+DepartmentID=@DepartmentID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, DepartmentModel updated)
         {
+            sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
             sqlCommand.Parameters.AddWithValue("@GroupName", updated.GroupName);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
@@ -72,21 +73,29 @@ Name=@Name
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, DepartmentModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@DepartmentID", updated.DepartmentID);
-            sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    Department
+    HumanResources.Department
 where
-DepartmentID=@DepartmentID  AND 
-Name=@Name 
+DepartmentID=@DepartmentID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, DepartmentModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@DepartmentID", deleted.DepartmentID);
-            sqlCommand.Parameters.AddWithValue("@Name", deleted.Name);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"DepartmentID=@DepartmentID 
+";
+
+        public override void MapPrimaryParameters(DepartmentModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@DepartmentID", key.DepartmentID);
+
+        }
+
     }
 }

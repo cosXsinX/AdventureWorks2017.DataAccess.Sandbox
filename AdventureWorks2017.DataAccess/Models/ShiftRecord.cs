@@ -4,6 +4,12 @@ using System.Text;
 
 namespace AdventureWorks2017.Models
 {
+    public struct ShiftModelPrimaryKey
+    {
+        public byte ShiftID { get; set; }
+
+    }
+
     public class ShiftModel
     {
         public byte ShiftID { get; set; }

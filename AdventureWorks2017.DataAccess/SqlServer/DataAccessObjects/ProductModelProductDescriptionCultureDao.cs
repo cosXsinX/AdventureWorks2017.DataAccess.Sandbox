@@ -4,14 +4,14 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class ProductModelProductDescriptionCultureDao : AbstractDao<ProductModelProductDescriptionCultureModel>
+    public class ProductModelProductDescriptionCultureDao : AbstractDaoWithPrimaryKey<ProductModelProductDescriptionCultureModel,ProductModelProductDescriptionCultureModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              ProductModelID,
              ProductDescriptionID,
              CultureID,
              ModifiedDate
- from ProductModelProductDescriptionCulture";
+ from Production.ProductModelProductDescriptionCulture";
 
         protected override ProductModelProductDescriptionCultureModel ToModel(SqlDataReader dataReader)
         {
@@ -23,7 +23,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into ProductModelProductDescriptionCulture
+        public override string InsertQuery => @"Insert Into Production.ProductModelProductDescriptionCulture
 (
 ProductModelID,
 ProductDescriptionID,
@@ -53,7 +53,7 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update ProductModelProductDescriptionCulture
+            @"Update Production.ProductModelProductDescriptionCulture
 Set
     ModifiedDate=@ModifiedDate
 
@@ -77,7 +77,7 @@ CultureID=@CultureID
 
         public override string DeleteQuery =>
 @"delete from
-    ProductModelProductDescriptionCulture
+    Production.ProductModelProductDescriptionCulture
 where
 ProductModelID=@ProductModelID  AND 
 ProductDescriptionID=@ProductDescriptionID  AND 
@@ -90,5 +90,20 @@ CultureID=@CultureID
             sqlCommand.Parameters.AddWithValue("@ProductDescriptionID", deleted.ProductDescriptionID);
             sqlCommand.Parameters.AddWithValue("@CultureID", deleted.CultureID);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"ProductModelID=@ProductModelID  AND 
+ProductDescriptionID=@ProductDescriptionID  AND 
+CultureID=@CultureID 
+";
+
+        public override void MapPrimaryParameters(ProductModelProductDescriptionCultureModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@ProductModelID", key.ProductModelID);
+            sqlCommand.Parameters.AddWithValue("@ProductDescriptionID", key.ProductDescriptionID);
+            sqlCommand.Parameters.AddWithValue("@CultureID", key.CultureID);
+
+        }
+
     }
 }

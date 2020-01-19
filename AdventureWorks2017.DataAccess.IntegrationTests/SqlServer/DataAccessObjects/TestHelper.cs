@@ -1,4 +1,4 @@
-﻿using Microsoft.SqlServer.Types;
+using Microsoft.SqlServer.Types;
 
 namespace AdventureWorks2017.DataAccess.IntegrationTests.SqlServer.DataAccessObjects
 {

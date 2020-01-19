@@ -4,6 +4,12 @@ using System.Text;
 
 namespace AdventureWorks2017.Models
 {
+    public struct ShipMethodModelPrimaryKey
+    {
+        public int ShipMethodID { get; set; }
+
+    }
+
     public class ShipMethodModel
     {
         public int ShipMethodID { get; set; }

@@ -4,6 +4,13 @@ using System.Text;
 
 namespace AdventureWorks2017.Models
 {
+    public struct ProductListPriceHistoryModelPrimaryKey
+    {
+        public int ProductID { get; set; }
+        public DateTime StartDate { get; set; }
+
+    }
+
     public class ProductListPriceHistoryModel
     {
         public int ProductID { get; set; }

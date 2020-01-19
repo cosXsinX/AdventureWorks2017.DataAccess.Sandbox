@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class WorkOrderDao : AbstractDao<WorkOrderModel>
+    public class WorkOrderDao : AbstractDaoWithPrimaryKey<WorkOrderModel,WorkOrderModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              WorkOrderID,
@@ -17,7 +17,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              DueDate,
              ScrapReasonID,
              ModifiedDate
- from WorkOrder";
+ from Production.WorkOrder";
 
         protected override WorkOrderModel ToModel(SqlDataReader dataReader)
         {
@@ -35,7 +35,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into WorkOrder
+        public override string InsertQuery => @"Insert Into Production.WorkOrder
 (
 ProductID,
 OrderQty,
@@ -83,54 +83,61 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update WorkOrder
+            @"Update Production.WorkOrder
 Set
+    ProductID=@ProductID,
     OrderQty=@OrderQty,
     StockedQty=@StockedQty,
     ScrappedQty=@ScrappedQty,
     StartDate=@StartDate,
     EndDate=@EndDate,
     DueDate=@DueDate,
+    ScrapReasonID=@ScrapReasonID,
     ModifiedDate=@ModifiedDate
 
 Where
-WorkOrderID=@WorkOrderID  AND 
-ProductID=@ProductID  AND 
-ScrapReasonID=@ScrapReasonID 
+WorkOrderID=@WorkOrderID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, WorkOrderModel updated)
         {
+            sqlCommand.Parameters.AddWithValue("@ProductID", updated.ProductID);
             sqlCommand.Parameters.AddWithValue("@OrderQty", updated.OrderQty);
             sqlCommand.Parameters.AddWithValue("@StockedQty", updated.StockedQty);
             sqlCommand.Parameters.AddWithValue("@ScrappedQty", updated.ScrappedQty);
             sqlCommand.Parameters.AddWithValue("@StartDate", updated.StartDate);
             sqlCommand.Parameters.AddWithValue("@EndDate", updated.EndDate);
             sqlCommand.Parameters.AddWithValue("@DueDate", updated.DueDate);
+            sqlCommand.Parameters.AddWithValue("@ScrapReasonID", updated.ScrapReasonID);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, WorkOrderModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@WorkOrderID", updated.WorkOrderID);
-            sqlCommand.Parameters.AddWithValue("@ProductID", updated.ProductID);
-            sqlCommand.Parameters.AddWithValue("@ScrapReasonID", updated.ScrapReasonID);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    WorkOrder
+    Production.WorkOrder
 where
-WorkOrderID=@WorkOrderID  AND 
-ProductID=@ProductID  AND 
-ScrapReasonID=@ScrapReasonID 
+WorkOrderID=@WorkOrderID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, WorkOrderModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@WorkOrderID", deleted.WorkOrderID);
-            sqlCommand.Parameters.AddWithValue("@ProductID", deleted.ProductID);
-            sqlCommand.Parameters.AddWithValue("@ScrapReasonID", deleted.ScrapReasonID);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"WorkOrderID=@WorkOrderID 
+";
+
+        public override void MapPrimaryParameters(WorkOrderModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@WorkOrderID", key.WorkOrderID);
+
+        }
+
     }
 }

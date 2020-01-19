@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class CreditCardDao : AbstractDao<CreditCardModel>
+    public class CreditCardDao : AbstractDaoWithPrimaryKey<CreditCardModel,CreditCardModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              CreditCardID,
@@ -13,7 +13,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              ExpMonth,
              ExpYear,
              ModifiedDate
- from CreditCard";
+ from Sales.CreditCard";
 
         protected override CreditCardModel ToModel(SqlDataReader dataReader)
         {
@@ -27,7 +27,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into CreditCard
+        public override string InsertQuery => @"Insert Into Sales.CreditCard
 (
 CardType,
 CardNumber,
@@ -63,21 +63,22 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update CreditCard
+            @"Update Sales.CreditCard
 Set
     CardType=@CardType,
+    CardNumber=@CardNumber,
     ExpMonth=@ExpMonth,
     ExpYear=@ExpYear,
     ModifiedDate=@ModifiedDate
 
 Where
-CreditCardID=@CreditCardID  AND 
-CardNumber=@CardNumber 
+CreditCardID=@CreditCardID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, CreditCardModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@CardType", updated.CardType);
+            sqlCommand.Parameters.AddWithValue("@CardNumber", updated.CardNumber);
             sqlCommand.Parameters.AddWithValue("@ExpMonth", updated.ExpMonth);
             sqlCommand.Parameters.AddWithValue("@ExpYear", updated.ExpYear);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
@@ -86,21 +87,29 @@ CardNumber=@CardNumber
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, CreditCardModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@CreditCardID", updated.CreditCardID);
-            sqlCommand.Parameters.AddWithValue("@CardNumber", updated.CardNumber);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    CreditCard
+    Sales.CreditCard
 where
-CreditCardID=@CreditCardID  AND 
-CardNumber=@CardNumber 
+CreditCardID=@CreditCardID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, CreditCardModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@CreditCardID", deleted.CreditCardID);
-            sqlCommand.Parameters.AddWithValue("@CardNumber", deleted.CardNumber);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"CreditCardID=@CreditCardID 
+";
+
+        public override void MapPrimaryParameters(CreditCardModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@CreditCardID", key.CreditCardID);
+
+        }
+
     }
 }

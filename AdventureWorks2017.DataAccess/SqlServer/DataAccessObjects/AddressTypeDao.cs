@@ -4,14 +4,14 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class AddressTypeDao : AbstractDao<AddressTypeModel>
+    public class AddressTypeDao : AbstractDaoWithPrimaryKey<AddressTypeModel,AddressTypeModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              AddressTypeID,
              Name,
              rowguid,
              ModifiedDate
- from AddressType";
+ from Person.AddressType";
 
         protected override AddressTypeModel ToModel(SqlDataReader dataReader)
         {
@@ -23,7 +23,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into AddressType
+        public override string InsertQuery => @"Insert Into Person.AddressType
 (
 Name,
 rowguid,
@@ -53,42 +53,49 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update AddressType
+            @"Update Person.AddressType
 Set
+    Name=@Name,
+    rowguid=@rowguid,
     ModifiedDate=@ModifiedDate
 
 Where
-AddressTypeID=@AddressTypeID  AND 
-Name=@Name  AND 
-rowguid=@rowguid 
+AddressTypeID=@AddressTypeID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, AddressTypeModel updated)
         {
+            sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
+            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, AddressTypeModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@AddressTypeID", updated.AddressTypeID);
-            sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
-            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    AddressType
+    Person.AddressType
 where
-AddressTypeID=@AddressTypeID  AND 
-Name=@Name  AND 
-rowguid=@rowguid 
+AddressTypeID=@AddressTypeID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, AddressTypeModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@AddressTypeID", deleted.AddressTypeID);
-            sqlCommand.Parameters.AddWithValue("@Name", deleted.Name);
-            sqlCommand.Parameters.AddWithValue("@rowguid", deleted.rowguid);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"AddressTypeID=@AddressTypeID 
+";
+
+        public override void MapPrimaryParameters(AddressTypeModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@AddressTypeID", key.AddressTypeID);
+
+        }
+
     }
 }

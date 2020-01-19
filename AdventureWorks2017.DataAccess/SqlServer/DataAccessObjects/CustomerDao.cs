@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class CustomerDao : AbstractDao<CustomerModel>
+    public class CustomerDao : AbstractDaoWithPrimaryKey<CustomerModel,CustomerModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              CustomerID,
@@ -14,7 +14,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              AccountNumber,
              rowguid,
              ModifiedDate
- from Customer";
+ from Sales.Customer";
 
         protected override CustomerModel ToModel(SqlDataReader dataReader)
         {
@@ -29,7 +29,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Customer
+        public override string InsertQuery => @"Insert Into Sales.Customer
 (
 PersonID,
 StoreID,
@@ -68,50 +68,55 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Customer
+            @"Update Sales.Customer
 Set
     PersonID=@PersonID,
     StoreID=@StoreID,
+    TerritoryID=@TerritoryID,
+    AccountNumber=@AccountNumber,
+    rowguid=@rowguid,
     ModifiedDate=@ModifiedDate
 
 Where
-CustomerID=@CustomerID  AND 
-TerritoryID=@TerritoryID  AND 
-AccountNumber=@AccountNumber  AND 
-rowguid=@rowguid 
+CustomerID=@CustomerID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, CustomerModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@PersonID", updated.PersonID);
             sqlCommand.Parameters.AddWithValue("@StoreID", updated.StoreID);
+            sqlCommand.Parameters.AddWithValue("@TerritoryID", updated.TerritoryID);
+            sqlCommand.Parameters.AddWithValue("@AccountNumber", updated.AccountNumber);
+            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, CustomerModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@CustomerID", updated.CustomerID);
-            sqlCommand.Parameters.AddWithValue("@TerritoryID", updated.TerritoryID);
-            sqlCommand.Parameters.AddWithValue("@AccountNumber", updated.AccountNumber);
-            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    Customer
+    Sales.Customer
 where
-CustomerID=@CustomerID  AND 
-TerritoryID=@TerritoryID  AND 
-AccountNumber=@AccountNumber  AND 
-rowguid=@rowguid 
+CustomerID=@CustomerID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, CustomerModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@CustomerID", deleted.CustomerID);
-            sqlCommand.Parameters.AddWithValue("@TerritoryID", deleted.TerritoryID);
-            sqlCommand.Parameters.AddWithValue("@AccountNumber", deleted.AccountNumber);
-            sqlCommand.Parameters.AddWithValue("@rowguid", deleted.rowguid);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"CustomerID=@CustomerID 
+";
+
+        public override void MapPrimaryParameters(CustomerModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@CustomerID", key.CustomerID);
+
+        }
+
     }
 }

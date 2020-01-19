@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class DatabaseLogDao : AbstractDao<DatabaseLogModel>
+    public class DatabaseLogDao : AbstractDaoWithPrimaryKey<DatabaseLogModel,DatabaseLogModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              DatabaseLogID,
@@ -15,7 +15,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              Object,
              TSQL,
              XmlEvent
- from DatabaseLog";
+ from dbo.DatabaseLog";
 
         protected override DatabaseLogModel ToModel(SqlDataReader dataReader)
         {
@@ -31,7 +31,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into DatabaseLog
+        public override string InsertQuery => @"Insert Into dbo.DatabaseLog
 (
 PostTime,
 DatabaseUser,
@@ -73,7 +73,7 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update DatabaseLog
+            @"Update dbo.DatabaseLog
 Set
     PostTime=@PostTime,
     DatabaseUser=@DatabaseUser,
@@ -105,7 +105,7 @@ DatabaseLogID=@DatabaseLogID
 
         public override string DeleteQuery =>
 @"delete from
-    DatabaseLog
+    dbo.DatabaseLog
 where
 DatabaseLogID=@DatabaseLogID 
 ";
@@ -114,5 +114,16 @@ DatabaseLogID=@DatabaseLogID
         {
             sqlCommand.Parameters.AddWithValue("@DatabaseLogID", deleted.DatabaseLogID);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"DatabaseLogID=@DatabaseLogID 
+";
+
+        public override void MapPrimaryParameters(DatabaseLogModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@DatabaseLogID", key.DatabaseLogID);
+
+        }
+
     }
 }

@@ -4,6 +4,12 @@ using System.Text;
 
 namespace AdventureWorks2017.Models
 {
+    public struct DatabaseLogModelPrimaryKey
+    {
+        public int DatabaseLogID { get; set; }
+
+    }
+
     public class DatabaseLogModel
     {
         public int DatabaseLogID { get; set; }

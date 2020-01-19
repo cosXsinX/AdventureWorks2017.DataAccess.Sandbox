@@ -4,13 +4,13 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class IllustrationDao : AbstractDao<IllustrationModel>
+    public class IllustrationDao : AbstractDaoWithPrimaryKey<IllustrationModel,IllustrationModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              IllustrationID,
              Diagram,
              ModifiedDate
- from Illustration";
+ from Production.Illustration";
 
         protected override IllustrationModel ToModel(SqlDataReader dataReader)
         {
@@ -21,7 +21,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Illustration
+        public override string InsertQuery => @"Insert Into Production.Illustration
 (
 Diagram,
 ModifiedDate
@@ -48,7 +48,7 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Illustration
+            @"Update Production.Illustration
 Set
     Diagram=@Diagram,
     ModifiedDate=@ModifiedDate
@@ -70,7 +70,7 @@ IllustrationID=@IllustrationID
 
         public override string DeleteQuery =>
 @"delete from
-    Illustration
+    Production.Illustration
 where
 IllustrationID=@IllustrationID 
 ";
@@ -79,5 +79,16 @@ IllustrationID=@IllustrationID
         {
             sqlCommand.Parameters.AddWithValue("@IllustrationID", deleted.IllustrationID);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"IllustrationID=@IllustrationID 
+";
+
+        public override void MapPrimaryParameters(IllustrationModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@IllustrationID", key.IllustrationID);
+
+        }
+
     }
 }

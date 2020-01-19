@@ -4,13 +4,13 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class ScrapReasonDao : AbstractDao<ScrapReasonModel>
+    public class ScrapReasonDao : AbstractDaoWithPrimaryKey<ScrapReasonModel,ScrapReasonModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              ScrapReasonID,
              Name,
              ModifiedDate
- from ScrapReason";
+ from Production.ScrapReason";
 
         protected override ScrapReasonModel ToModel(SqlDataReader dataReader)
         {
@@ -21,7 +21,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into ScrapReason
+        public override string InsertQuery => @"Insert Into Production.ScrapReason
 (
 Name,
 ModifiedDate
@@ -48,38 +48,47 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update ScrapReason
+            @"Update Production.ScrapReason
 Set
+    Name=@Name,
     ModifiedDate=@ModifiedDate
 
 Where
-ScrapReasonID=@ScrapReasonID  AND 
-Name=@Name 
+ScrapReasonID=@ScrapReasonID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ScrapReasonModel updated)
         {
+            sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, ScrapReasonModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@ScrapReasonID", updated.ScrapReasonID);
-            sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    ScrapReason
+    Production.ScrapReason
 where
-ScrapReasonID=@ScrapReasonID  AND 
-Name=@Name 
+ScrapReasonID=@ScrapReasonID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ScrapReasonModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@ScrapReasonID", deleted.ScrapReasonID);
-            sqlCommand.Parameters.AddWithValue("@Name", deleted.Name);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"ScrapReasonID=@ScrapReasonID 
+";
+
+        public override void MapPrimaryParameters(ScrapReasonModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@ScrapReasonID", key.ScrapReasonID);
+
+        }
+
     }
 }

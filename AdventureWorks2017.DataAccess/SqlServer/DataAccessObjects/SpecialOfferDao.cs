@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class SpecialOfferDao : AbstractDao<SpecialOfferModel>
+    public class SpecialOfferDao : AbstractDaoWithPrimaryKey<SpecialOfferModel,SpecialOfferModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              SpecialOfferID,
@@ -18,7 +18,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              MaxQty,
              rowguid,
              ModifiedDate
- from SpecialOffer";
+ from Sales.SpecialOffer";
 
         protected override SpecialOfferModel ToModel(SqlDataReader dataReader)
         {
@@ -37,7 +37,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into SpecialOffer
+        public override string InsertQuery => @"Insert Into Sales.SpecialOffer
 (
 Description,
 DiscountPct,
@@ -88,7 +88,7 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update SpecialOffer
+            @"Update Sales.SpecialOffer
 Set
     Description=@Description,
     DiscountPct=@DiscountPct,
@@ -98,11 +98,11 @@ Set
     EndDate=@EndDate,
     MinQty=@MinQty,
     MaxQty=@MaxQty,
+    rowguid=@rowguid,
     ModifiedDate=@ModifiedDate
 
 Where
-SpecialOfferID=@SpecialOfferID  AND 
-rowguid=@rowguid 
+SpecialOfferID=@SpecialOfferID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, SpecialOfferModel updated)
@@ -115,27 +115,36 @@ rowguid=@rowguid
             sqlCommand.Parameters.AddWithValue("@EndDate", updated.EndDate);
             sqlCommand.Parameters.AddWithValue("@MinQty", updated.MinQty);
             sqlCommand.Parameters.AddWithValue("@MaxQty", updated.MaxQty);
+            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, SpecialOfferModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@SpecialOfferID", updated.SpecialOfferID);
-            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    SpecialOffer
+    Sales.SpecialOffer
 where
-SpecialOfferID=@SpecialOfferID  AND 
-rowguid=@rowguid 
+SpecialOfferID=@SpecialOfferID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, SpecialOfferModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@SpecialOfferID", deleted.SpecialOfferID);
-            sqlCommand.Parameters.AddWithValue("@rowguid", deleted.rowguid);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"SpecialOfferID=@SpecialOfferID 
+";
+
+        public override void MapPrimaryParameters(SpecialOfferModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@SpecialOfferID", key.SpecialOfferID);
+
+        }
+
     }
 }

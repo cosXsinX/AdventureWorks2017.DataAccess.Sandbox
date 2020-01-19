@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class SalesOrderHeaderDao : AbstractDao<SalesOrderHeaderModel>
+    public class SalesOrderHeaderDao : AbstractDaoWithPrimaryKey<SalesOrderHeaderModel,SalesOrderHeaderModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              SalesOrderID,
@@ -33,7 +33,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              Comment,
              rowguid,
              ModifiedDate
- from SalesOrderHeader";
+ from Sales.SalesOrderHeader";
 
         protected override SalesOrderHeaderModel ToModel(SqlDataReader dataReader)
         {
@@ -67,7 +67,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into SalesOrderHeader
+        public override string InsertQuery => @"Insert Into Sales.SalesOrderHeader
 (
 RevisionNumber,
 OrderDate,
@@ -163,7 +163,7 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update SalesOrderHeader
+            @"Update Sales.SalesOrderHeader
 Set
     RevisionNumber=@RevisionNumber,
     OrderDate=@OrderDate,
@@ -171,8 +171,11 @@ Set
     ShipDate=@ShipDate,
     Status=@Status,
     OnlineOrderFlag=@OnlineOrderFlag,
+    SalesOrderNumber=@SalesOrderNumber,
     PurchaseOrderNumber=@PurchaseOrderNumber,
     AccountNumber=@AccountNumber,
+    CustomerID=@CustomerID,
+    SalesPersonID=@SalesPersonID,
     TerritoryID=@TerritoryID,
     BillToAddressID=@BillToAddressID,
     ShipToAddressID=@ShipToAddressID,
@@ -185,14 +188,11 @@ Set
     Freight=@Freight,
     TotalDue=@TotalDue,
     Comment=@Comment,
+    rowguid=@rowguid,
     ModifiedDate=@ModifiedDate
 
 Where
-SalesOrderID=@SalesOrderID  AND 
-SalesOrderNumber=@SalesOrderNumber  AND 
-CustomerID=@CustomerID  AND 
-SalesPersonID=@SalesPersonID  AND 
-rowguid=@rowguid 
+SalesOrderID=@SalesOrderID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, SalesOrderHeaderModel updated)
@@ -203,8 +203,11 @@ rowguid=@rowguid
             sqlCommand.Parameters.AddWithValue("@ShipDate", updated.ShipDate);
             sqlCommand.Parameters.AddWithValue("@Status", updated.Status);
             sqlCommand.Parameters.AddWithValue("@OnlineOrderFlag", updated.OnlineOrderFlag);
+            sqlCommand.Parameters.AddWithValue("@SalesOrderNumber", updated.SalesOrderNumber);
             sqlCommand.Parameters.AddWithValue("@PurchaseOrderNumber", updated.PurchaseOrderNumber);
             sqlCommand.Parameters.AddWithValue("@AccountNumber", updated.AccountNumber);
+            sqlCommand.Parameters.AddWithValue("@CustomerID", updated.CustomerID);
+            sqlCommand.Parameters.AddWithValue("@SalesPersonID", updated.SalesPersonID);
             sqlCommand.Parameters.AddWithValue("@TerritoryID", updated.TerritoryID);
             sqlCommand.Parameters.AddWithValue("@BillToAddressID", updated.BillToAddressID);
             sqlCommand.Parameters.AddWithValue("@ShipToAddressID", updated.ShipToAddressID);
@@ -217,36 +220,36 @@ rowguid=@rowguid
             sqlCommand.Parameters.AddWithValue("@Freight", updated.Freight);
             sqlCommand.Parameters.AddWithValue("@TotalDue", updated.TotalDue);
             sqlCommand.Parameters.AddWithValue("@Comment", updated.Comment);
+            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, SalesOrderHeaderModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@SalesOrderID", updated.SalesOrderID);
-            sqlCommand.Parameters.AddWithValue("@SalesOrderNumber", updated.SalesOrderNumber);
-            sqlCommand.Parameters.AddWithValue("@CustomerID", updated.CustomerID);
-            sqlCommand.Parameters.AddWithValue("@SalesPersonID", updated.SalesPersonID);
-            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    SalesOrderHeader
+    Sales.SalesOrderHeader
 where
-SalesOrderID=@SalesOrderID  AND 
-SalesOrderNumber=@SalesOrderNumber  AND 
-CustomerID=@CustomerID  AND 
-SalesPersonID=@SalesPersonID  AND 
-rowguid=@rowguid 
+SalesOrderID=@SalesOrderID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, SalesOrderHeaderModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@SalesOrderID", deleted.SalesOrderID);
-            sqlCommand.Parameters.AddWithValue("@SalesOrderNumber", deleted.SalesOrderNumber);
-            sqlCommand.Parameters.AddWithValue("@CustomerID", deleted.CustomerID);
-            sqlCommand.Parameters.AddWithValue("@SalesPersonID", deleted.SalesPersonID);
-            sqlCommand.Parameters.AddWithValue("@rowguid", deleted.rowguid);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"SalesOrderID=@SalesOrderID 
+";
+
+        public override void MapPrimaryParameters(SalesOrderHeaderModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@SalesOrderID", key.SalesOrderID);
+
+        }
+
     }
 }

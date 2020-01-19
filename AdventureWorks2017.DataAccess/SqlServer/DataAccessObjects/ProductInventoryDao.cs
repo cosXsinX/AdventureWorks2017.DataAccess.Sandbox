@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class ProductInventoryDao : AbstractDao<ProductInventoryModel>
+    public class ProductInventoryDao : AbstractDaoWithPrimaryKey<ProductInventoryModel,ProductInventoryModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              ProductID,
@@ -14,7 +14,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              Quantity,
              rowguid,
              ModifiedDate
- from ProductInventory";
+ from Production.ProductInventory";
 
         protected override ProductInventoryModel ToModel(SqlDataReader dataReader)
         {
@@ -29,7 +29,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into ProductInventory
+        public override string InsertQuery => @"Insert Into Production.ProductInventory
 (
 ProductID,
 LocationID,
@@ -68,7 +68,7 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update ProductInventory
+            @"Update Production.ProductInventory
 Set
     Shelf=@Shelf,
     Bin=@Bin,
@@ -98,7 +98,7 @@ LocationID=@LocationID
 
         public override string DeleteQuery =>
 @"delete from
-    ProductInventory
+    Production.ProductInventory
 where
 ProductID=@ProductID  AND 
 LocationID=@LocationID 
@@ -109,5 +109,18 @@ LocationID=@LocationID
             sqlCommand.Parameters.AddWithValue("@ProductID", deleted.ProductID);
             sqlCommand.Parameters.AddWithValue("@LocationID", deleted.LocationID);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"ProductID=@ProductID  AND 
+LocationID=@LocationID 
+";
+
+        public override void MapPrimaryParameters(ProductInventoryModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@ProductID", key.ProductID);
+            sqlCommand.Parameters.AddWithValue("@LocationID", key.LocationID);
+
+        }
+
     }
 }

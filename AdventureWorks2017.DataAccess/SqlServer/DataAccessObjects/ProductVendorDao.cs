@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class ProductVendorDao : AbstractDao<ProductVendorModel>
+    public class ProductVendorDao : AbstractDaoWithPrimaryKey<ProductVendorModel,ProductVendorModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              ProductID,
@@ -18,7 +18,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              OnOrderQty,
              UnitMeasureCode,
              ModifiedDate
- from ProductVendor";
+ from Purchasing.ProductVendor";
 
         protected override ProductVendorModel ToModel(SqlDataReader dataReader)
         {
@@ -37,7 +37,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into ProductVendor
+        public override string InsertQuery => @"Insert Into Purchasing.ProductVendor
 (
 ProductID,
 BusinessEntityID,
@@ -88,7 +88,7 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update ProductVendor
+            @"Update Purchasing.ProductVendor
 Set
     AverageLeadTime=@AverageLeadTime,
     StandardPrice=@StandardPrice,
@@ -97,12 +97,12 @@ Set
     MinOrderQty=@MinOrderQty,
     MaxOrderQty=@MaxOrderQty,
     OnOrderQty=@OnOrderQty,
+    UnitMeasureCode=@UnitMeasureCode,
     ModifiedDate=@ModifiedDate
 
 Where
 ProductID=@ProductID  AND 
-BusinessEntityID=@BusinessEntityID  AND 
-UnitMeasureCode=@UnitMeasureCode 
+BusinessEntityID=@BusinessEntityID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ProductVendorModel updated)
@@ -114,6 +114,7 @@ UnitMeasureCode=@UnitMeasureCode
             sqlCommand.Parameters.AddWithValue("@MinOrderQty", updated.MinOrderQty);
             sqlCommand.Parameters.AddWithValue("@MaxOrderQty", updated.MaxOrderQty);
             sqlCommand.Parameters.AddWithValue("@OnOrderQty", updated.OnOrderQty);
+            sqlCommand.Parameters.AddWithValue("@UnitMeasureCode", updated.UnitMeasureCode);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
@@ -121,23 +122,33 @@ UnitMeasureCode=@UnitMeasureCode
         {
             sqlCommand.Parameters.AddWithValue("@ProductID", updated.ProductID);
             sqlCommand.Parameters.AddWithValue("@BusinessEntityID", updated.BusinessEntityID);
-            sqlCommand.Parameters.AddWithValue("@UnitMeasureCode", updated.UnitMeasureCode);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    ProductVendor
+    Purchasing.ProductVendor
 where
 ProductID=@ProductID  AND 
-BusinessEntityID=@BusinessEntityID  AND 
-UnitMeasureCode=@UnitMeasureCode 
+BusinessEntityID=@BusinessEntityID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ProductVendorModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@ProductID", deleted.ProductID);
             sqlCommand.Parameters.AddWithValue("@BusinessEntityID", deleted.BusinessEntityID);
-            sqlCommand.Parameters.AddWithValue("@UnitMeasureCode", deleted.UnitMeasureCode);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"ProductID=@ProductID  AND 
+BusinessEntityID=@BusinessEntityID 
+";
+
+        public override void MapPrimaryParameters(ProductVendorModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@ProductID", key.ProductID);
+            sqlCommand.Parameters.AddWithValue("@BusinessEntityID", key.BusinessEntityID);
+
+        }
+
     }
 }

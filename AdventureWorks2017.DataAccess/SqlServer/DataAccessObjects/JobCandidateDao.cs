@@ -4,14 +4,14 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class JobCandidateDao : AbstractDao<JobCandidateModel>
+    public class JobCandidateDao : AbstractDaoWithPrimaryKey<JobCandidateModel,JobCandidateModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              JobCandidateID,
              BusinessEntityID,
              Resume,
              ModifiedDate
- from JobCandidate";
+ from HumanResources.JobCandidate";
 
         protected override JobCandidateModel ToModel(SqlDataReader dataReader)
         {
@@ -23,7 +23,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into JobCandidate
+        public override string InsertQuery => @"Insert Into HumanResources.JobCandidate
 (
 BusinessEntityID,
 Resume,
@@ -53,18 +53,19 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update JobCandidate
+            @"Update HumanResources.JobCandidate
 Set
+    BusinessEntityID=@BusinessEntityID,
     Resume=@Resume,
     ModifiedDate=@ModifiedDate
 
 Where
-JobCandidateID=@JobCandidateID  AND 
-BusinessEntityID=@BusinessEntityID 
+JobCandidateID=@JobCandidateID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, JobCandidateModel updated)
         {
+            sqlCommand.Parameters.AddWithValue("@BusinessEntityID", updated.BusinessEntityID);
             sqlCommand.Parameters.AddWithValue("@Resume", updated.Resume);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
@@ -72,21 +73,29 @@ BusinessEntityID=@BusinessEntityID
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, JobCandidateModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@JobCandidateID", updated.JobCandidateID);
-            sqlCommand.Parameters.AddWithValue("@BusinessEntityID", updated.BusinessEntityID);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    JobCandidate
+    HumanResources.JobCandidate
 where
-JobCandidateID=@JobCandidateID  AND 
-BusinessEntityID=@BusinessEntityID 
+JobCandidateID=@JobCandidateID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, JobCandidateModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@JobCandidateID", deleted.JobCandidateID);
-            sqlCommand.Parameters.AddWithValue("@BusinessEntityID", deleted.BusinessEntityID);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"JobCandidateID=@JobCandidateID 
+";
+
+        public override void MapPrimaryParameters(JobCandidateModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@JobCandidateID", key.JobCandidateID);
+
+        }
+
     }
 }

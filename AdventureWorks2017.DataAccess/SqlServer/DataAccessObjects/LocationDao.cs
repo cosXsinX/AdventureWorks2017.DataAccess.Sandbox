@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class LocationDao : AbstractDao<LocationModel>
+    public class LocationDao : AbstractDaoWithPrimaryKey<LocationModel,LocationModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              LocationID,
@@ -12,7 +12,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              CostRate,
              Availability,
              ModifiedDate
- from Location";
+ from Production.Location";
 
         protected override LocationModel ToModel(SqlDataReader dataReader)
         {
@@ -25,7 +25,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Location
+        public override string InsertQuery => @"Insert Into Production.Location
 (
 Name,
 CostRate,
@@ -58,19 +58,20 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Location
+            @"Update Production.Location
 Set
+    Name=@Name,
     CostRate=@CostRate,
     Availability=@Availability,
     ModifiedDate=@ModifiedDate
 
 Where
-LocationID=@LocationID  AND 
-Name=@Name 
+LocationID=@LocationID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, LocationModel updated)
         {
+            sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
             sqlCommand.Parameters.AddWithValue("@CostRate", updated.CostRate);
             sqlCommand.Parameters.AddWithValue("@Availability", updated.Availability);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
@@ -79,21 +80,29 @@ Name=@Name
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, LocationModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@LocationID", updated.LocationID);
-            sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    Location
+    Production.Location
 where
-LocationID=@LocationID  AND 
-Name=@Name 
+LocationID=@LocationID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, LocationModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@LocationID", deleted.LocationID);
-            sqlCommand.Parameters.AddWithValue("@Name", deleted.Name);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"LocationID=@LocationID 
+";
+
+        public override void MapPrimaryParameters(LocationModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@LocationID", key.LocationID);
+
+        }
+
     }
 }

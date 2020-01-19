@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class TransactionHistoryDao : AbstractDao<TransactionHistoryModel>
+    public class TransactionHistoryDao : AbstractDaoWithPrimaryKey<TransactionHistoryModel,TransactionHistoryModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              TransactionID,
@@ -16,7 +16,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              Quantity,
              ActualCost,
              ModifiedDate
- from TransactionHistory";
+ from Production.TransactionHistory";
 
         protected override TransactionHistoryModel ToModel(SqlDataReader dataReader)
         {
@@ -33,7 +33,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into TransactionHistory
+        public override string InsertQuery => @"Insert Into Production.TransactionHistory
 (
 ProductID,
 ReferenceOrderID,
@@ -78,8 +78,11 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update TransactionHistory
+            @"Update Production.TransactionHistory
 Set
+    ProductID=@ProductID,
+    ReferenceOrderID=@ReferenceOrderID,
+    ReferenceOrderLineID=@ReferenceOrderLineID,
     TransactionDate=@TransactionDate,
     TransactionType=@TransactionType,
     Quantity=@Quantity,
@@ -87,14 +90,14 @@ Set
     ModifiedDate=@ModifiedDate
 
 Where
-TransactionID=@TransactionID  AND 
-ProductID=@ProductID  AND 
-ReferenceOrderID=@ReferenceOrderID  AND 
-ReferenceOrderLineID=@ReferenceOrderLineID 
+TransactionID=@TransactionID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, TransactionHistoryModel updated)
         {
+            sqlCommand.Parameters.AddWithValue("@ProductID", updated.ProductID);
+            sqlCommand.Parameters.AddWithValue("@ReferenceOrderID", updated.ReferenceOrderID);
+            sqlCommand.Parameters.AddWithValue("@ReferenceOrderLineID", updated.ReferenceOrderLineID);
             sqlCommand.Parameters.AddWithValue("@TransactionDate", updated.TransactionDate);
             sqlCommand.Parameters.AddWithValue("@TransactionType", updated.TransactionType);
             sqlCommand.Parameters.AddWithValue("@Quantity", updated.Quantity);
@@ -105,27 +108,29 @@ ReferenceOrderLineID=@ReferenceOrderLineID
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, TransactionHistoryModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@TransactionID", updated.TransactionID);
-            sqlCommand.Parameters.AddWithValue("@ProductID", updated.ProductID);
-            sqlCommand.Parameters.AddWithValue("@ReferenceOrderID", updated.ReferenceOrderID);
-            sqlCommand.Parameters.AddWithValue("@ReferenceOrderLineID", updated.ReferenceOrderLineID);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    TransactionHistory
+    Production.TransactionHistory
 where
-TransactionID=@TransactionID  AND 
-ProductID=@ProductID  AND 
-ReferenceOrderID=@ReferenceOrderID  AND 
-ReferenceOrderLineID=@ReferenceOrderLineID 
+TransactionID=@TransactionID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, TransactionHistoryModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@TransactionID", deleted.TransactionID);
-            sqlCommand.Parameters.AddWithValue("@ProductID", deleted.ProductID);
-            sqlCommand.Parameters.AddWithValue("@ReferenceOrderID", deleted.ReferenceOrderID);
-            sqlCommand.Parameters.AddWithValue("@ReferenceOrderLineID", deleted.ReferenceOrderLineID);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"TransactionID=@TransactionID 
+";
+
+        public override void MapPrimaryParameters(TransactionHistoryModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@TransactionID", key.TransactionID);
+
+        }
+
     }
 }

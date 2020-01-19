@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class StoreDao : AbstractDao<StoreModel>
+    public class StoreDao : AbstractDaoWithPrimaryKey<StoreModel,StoreModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              BusinessEntityID,
@@ -13,7 +13,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              Demographics,
              rowguid,
              ModifiedDate
- from Store";
+ from Sales.Store";
 
         protected override StoreModel ToModel(SqlDataReader dataReader)
         {
@@ -27,7 +27,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Store
+        public override string InsertQuery => @"Insert Into Sales.Store
 (
 BusinessEntityID,
 Name,
@@ -63,48 +63,53 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Store
+            @"Update Sales.Store
 Set
     Name=@Name,
+    SalesPersonID=@SalesPersonID,
+    Demographics=@Demographics,
+    rowguid=@rowguid,
     ModifiedDate=@ModifiedDate
 
 Where
-BusinessEntityID=@BusinessEntityID  AND 
-SalesPersonID=@SalesPersonID  AND 
-Demographics=@Demographics  AND 
-rowguid=@rowguid 
+BusinessEntityID=@BusinessEntityID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, StoreModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
+            sqlCommand.Parameters.AddWithValue("@SalesPersonID", updated.SalesPersonID);
+            sqlCommand.Parameters.AddWithValue("@Demographics", updated.Demographics);
+            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, StoreModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@BusinessEntityID", updated.BusinessEntityID);
-            sqlCommand.Parameters.AddWithValue("@SalesPersonID", updated.SalesPersonID);
-            sqlCommand.Parameters.AddWithValue("@Demographics", updated.Demographics);
-            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    Store
+    Sales.Store
 where
-BusinessEntityID=@BusinessEntityID  AND 
-SalesPersonID=@SalesPersonID  AND 
-Demographics=@Demographics  AND 
-rowguid=@rowguid 
+BusinessEntityID=@BusinessEntityID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, StoreModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@BusinessEntityID", deleted.BusinessEntityID);
-            sqlCommand.Parameters.AddWithValue("@SalesPersonID", deleted.SalesPersonID);
-            sqlCommand.Parameters.AddWithValue("@Demographics", deleted.Demographics);
-            sqlCommand.Parameters.AddWithValue("@rowguid", deleted.rowguid);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"BusinessEntityID=@BusinessEntityID 
+";
+
+        public override void MapPrimaryParameters(StoreModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@BusinessEntityID", key.BusinessEntityID);
+
+        }
+
     }
 }

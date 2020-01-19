@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class DocumentDao : AbstractDao<DocumentModel>
+    public class DocumentDao : AbstractDaoWithPrimaryKey<DocumentModel,DocumentModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              DocumentNode,
@@ -21,7 +21,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              Document,
              rowguid,
              ModifiedDate
- from Document";
+ from Production.Document";
 
         protected override DocumentModel ToModel(SqlDataReader dataReader)
         {
@@ -43,7 +43,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Document
+        public override string InsertQuery => @"Insert Into Production.Document
 (
 DocumentNode,
 DocumentLevel,
@@ -103,66 +103,69 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Document
+            @"Update Production.Document
 Set
+    DocumentLevel=@DocumentLevel,
     Title=@Title,
     Owner=@Owner,
     FolderFlag=@FolderFlag,
+    FileName=@FileName,
     FileExtension=@FileExtension,
+    Revision=@Revision,
     ChangeNumber=@ChangeNumber,
     Status=@Status,
     DocumentSummary=@DocumentSummary,
     Document=@Document,
+    rowguid=@rowguid,
     ModifiedDate=@ModifiedDate
 
 Where
-DocumentNode=@DocumentNode  AND 
-DocumentLevel=@DocumentLevel  AND 
-FileName=@FileName  AND 
-Revision=@Revision  AND 
-rowguid=@rowguid 
+DocumentNode=@DocumentNode 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, DocumentModel updated)
         {
+            sqlCommand.Parameters.AddWithValue("@DocumentLevel", updated.DocumentLevel);
             sqlCommand.Parameters.AddWithValue("@Title", updated.Title);
             sqlCommand.Parameters.AddWithValue("@Owner", updated.Owner);
             sqlCommand.Parameters.AddWithValue("@FolderFlag", updated.FolderFlag);
+            sqlCommand.Parameters.AddWithValue("@FileName", updated.FileName);
             sqlCommand.Parameters.AddWithValue("@FileExtension", updated.FileExtension);
+            sqlCommand.Parameters.AddWithValue("@Revision", updated.Revision);
             sqlCommand.Parameters.AddWithValue("@ChangeNumber", updated.ChangeNumber);
             sqlCommand.Parameters.AddWithValue("@Status", updated.Status);
             sqlCommand.Parameters.AddWithValue("@DocumentSummary", updated.DocumentSummary);
             sqlCommand.Parameters.AddWithValue("@Document", updated.Document);
+            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, DocumentModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@DocumentNode", updated.DocumentNode);
-            sqlCommand.Parameters.AddWithValue("@DocumentLevel", updated.DocumentLevel);
-            sqlCommand.Parameters.AddWithValue("@FileName", updated.FileName);
-            sqlCommand.Parameters.AddWithValue("@Revision", updated.Revision);
-            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    Document
+    Production.Document
 where
-DocumentNode=@DocumentNode  AND 
-DocumentLevel=@DocumentLevel  AND 
-FileName=@FileName  AND 
-Revision=@Revision  AND 
-rowguid=@rowguid 
+DocumentNode=@DocumentNode 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, DocumentModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@DocumentNode", deleted.DocumentNode);
-            sqlCommand.Parameters.AddWithValue("@DocumentLevel", deleted.DocumentLevel);
-            sqlCommand.Parameters.AddWithValue("@FileName", deleted.FileName);
-            sqlCommand.Parameters.AddWithValue("@Revision", deleted.Revision);
-            sqlCommand.Parameters.AddWithValue("@rowguid", deleted.rowguid);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"DocumentNode=@DocumentNode 
+";
+
+        public override void MapPrimaryParameters(DocumentModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@DocumentNode", key.DocumentNode);
+
+        }
+
     }
 }

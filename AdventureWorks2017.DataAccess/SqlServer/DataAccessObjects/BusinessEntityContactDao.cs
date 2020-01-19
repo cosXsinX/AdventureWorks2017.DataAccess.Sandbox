@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class BusinessEntityContactDao : AbstractDao<BusinessEntityContactModel>
+    public class BusinessEntityContactDao : AbstractDaoWithPrimaryKey<BusinessEntityContactModel,BusinessEntityContactModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              BusinessEntityID,
@@ -12,7 +12,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              ContactTypeID,
              rowguid,
              ModifiedDate
- from BusinessEntityContact";
+ from Person.BusinessEntityContact";
 
         protected override BusinessEntityContactModel ToModel(SqlDataReader dataReader)
         {
@@ -25,7 +25,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into BusinessEntityContact
+        public override string InsertQuery => @"Insert Into Person.BusinessEntityContact
 (
 BusinessEntityID,
 PersonID,
@@ -58,19 +58,20 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update BusinessEntityContact
+            @"Update Person.BusinessEntityContact
 Set
+    rowguid=@rowguid,
     ModifiedDate=@ModifiedDate
 
 Where
 BusinessEntityID=@BusinessEntityID  AND 
 PersonID=@PersonID  AND 
-ContactTypeID=@ContactTypeID  AND 
-rowguid=@rowguid 
+ContactTypeID=@ContactTypeID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, BusinessEntityContactModel updated)
         {
+            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
@@ -79,17 +80,15 @@ rowguid=@rowguid
             sqlCommand.Parameters.AddWithValue("@BusinessEntityID", updated.BusinessEntityID);
             sqlCommand.Parameters.AddWithValue("@PersonID", updated.PersonID);
             sqlCommand.Parameters.AddWithValue("@ContactTypeID", updated.ContactTypeID);
-            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    BusinessEntityContact
+    Person.BusinessEntityContact
 where
 BusinessEntityID=@BusinessEntityID  AND 
 PersonID=@PersonID  AND 
-ContactTypeID=@ContactTypeID  AND 
-rowguid=@rowguid 
+ContactTypeID=@ContactTypeID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, BusinessEntityContactModel deleted)
@@ -97,7 +96,21 @@ rowguid=@rowguid
             sqlCommand.Parameters.AddWithValue("@BusinessEntityID", deleted.BusinessEntityID);
             sqlCommand.Parameters.AddWithValue("@PersonID", deleted.PersonID);
             sqlCommand.Parameters.AddWithValue("@ContactTypeID", deleted.ContactTypeID);
-            sqlCommand.Parameters.AddWithValue("@rowguid", deleted.rowguid);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"BusinessEntityID=@BusinessEntityID  AND 
+PersonID=@PersonID  AND 
+ContactTypeID=@ContactTypeID 
+";
+
+        public override void MapPrimaryParameters(BusinessEntityContactModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@BusinessEntityID", key.BusinessEntityID);
+            sqlCommand.Parameters.AddWithValue("@PersonID", key.PersonID);
+            sqlCommand.Parameters.AddWithValue("@ContactTypeID", key.ContactTypeID);
+
+        }
+
     }
 }

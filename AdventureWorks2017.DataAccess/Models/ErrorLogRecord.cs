@@ -4,6 +4,12 @@ using System.Text;
 
 namespace AdventureWorks2017.Models
 {
+    public struct ErrorLogModelPrimaryKey
+    {
+        public int ErrorLogID { get; set; }
+
+    }
+
     public class ErrorLogModel
     {
         public int ErrorLogID { get; set; }

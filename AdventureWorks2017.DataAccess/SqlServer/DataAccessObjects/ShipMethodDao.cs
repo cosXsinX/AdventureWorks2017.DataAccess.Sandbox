@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class ShipMethodDao : AbstractDao<ShipMethodModel>
+    public class ShipMethodDao : AbstractDaoWithPrimaryKey<ShipMethodModel,ShipMethodModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              ShipMethodID,
@@ -13,7 +13,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              ShipRate,
              rowguid,
              ModifiedDate
- from ShipMethod";
+ from Purchasing.ShipMethod";
 
         protected override ShipMethodModel ToModel(SqlDataReader dataReader)
         {
@@ -27,7 +27,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into ShipMethod
+        public override string InsertQuery => @"Insert Into Purchasing.ShipMethod
 (
 Name,
 ShipBase,
@@ -63,46 +63,53 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update ShipMethod
+            @"Update Purchasing.ShipMethod
 Set
+    Name=@Name,
     ShipBase=@ShipBase,
     ShipRate=@ShipRate,
+    rowguid=@rowguid,
     ModifiedDate=@ModifiedDate
 
 Where
-ShipMethodID=@ShipMethodID  AND 
-Name=@Name  AND 
-rowguid=@rowguid 
+ShipMethodID=@ShipMethodID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ShipMethodModel updated)
         {
+            sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
             sqlCommand.Parameters.AddWithValue("@ShipBase", updated.ShipBase);
             sqlCommand.Parameters.AddWithValue("@ShipRate", updated.ShipRate);
+            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, ShipMethodModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@ShipMethodID", updated.ShipMethodID);
-            sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
-            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    ShipMethod
+    Purchasing.ShipMethod
 where
-ShipMethodID=@ShipMethodID  AND 
-Name=@Name  AND 
-rowguid=@rowguid 
+ShipMethodID=@ShipMethodID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ShipMethodModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@ShipMethodID", deleted.ShipMethodID);
-            sqlCommand.Parameters.AddWithValue("@Name", deleted.Name);
-            sqlCommand.Parameters.AddWithValue("@rowguid", deleted.rowguid);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"ShipMethodID=@ShipMethodID 
+";
+
+        public override void MapPrimaryParameters(ShipMethodModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@ShipMethodID", key.ShipMethodID);
+
+        }
+
     }
 }

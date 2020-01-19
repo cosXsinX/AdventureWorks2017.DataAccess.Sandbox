@@ -4,6 +4,12 @@ using System.Text;
 
 namespace AdventureWorks2017.Models
 {
+    public struct ProductModelPrimaryKey
+    {
+        public int ProductID { get; set; }
+
+    }
+
     public class ProductModel
     {
         public int ProductID { get; set; }

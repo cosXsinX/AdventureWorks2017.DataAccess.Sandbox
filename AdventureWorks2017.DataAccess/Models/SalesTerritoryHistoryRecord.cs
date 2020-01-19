@@ -4,6 +4,14 @@ using System.Text;
 
 namespace AdventureWorks2017.Models
 {
+    public struct SalesTerritoryHistoryModelPrimaryKey
+    {
+        public int BusinessEntityID { get; set; }
+        public int TerritoryID { get; set; }
+        public DateTime StartDate { get; set; }
+
+    }
+
     public class SalesTerritoryHistoryModel
     {
         public int BusinessEntityID { get; set; }

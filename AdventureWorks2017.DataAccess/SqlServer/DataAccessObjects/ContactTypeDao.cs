@@ -4,13 +4,13 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class ContactTypeDao : AbstractDao<ContactTypeModel>
+    public class ContactTypeDao : AbstractDaoWithPrimaryKey<ContactTypeModel,ContactTypeModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              ContactTypeID,
              Name,
              ModifiedDate
- from ContactType";
+ from Person.ContactType";
 
         protected override ContactTypeModel ToModel(SqlDataReader dataReader)
         {
@@ -21,7 +21,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into ContactType
+        public override string InsertQuery => @"Insert Into Person.ContactType
 (
 Name,
 ModifiedDate
@@ -48,38 +48,47 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update ContactType
+            @"Update Person.ContactType
 Set
+    Name=@Name,
     ModifiedDate=@ModifiedDate
 
 Where
-ContactTypeID=@ContactTypeID  AND 
-Name=@Name 
+ContactTypeID=@ContactTypeID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ContactTypeModel updated)
         {
+            sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, ContactTypeModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@ContactTypeID", updated.ContactTypeID);
-            sqlCommand.Parameters.AddWithValue("@Name", updated.Name);
         }
 
         public override string DeleteQuery =>
 @"delete from
-    ContactType
+    Person.ContactType
 where
-ContactTypeID=@ContactTypeID  AND 
-Name=@Name 
+ContactTypeID=@ContactTypeID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ContactTypeModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@ContactTypeID", deleted.ContactTypeID);
-            sqlCommand.Parameters.AddWithValue("@Name", deleted.Name);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"ContactTypeID=@ContactTypeID 
+";
+
+        public override void MapPrimaryParameters(ContactTypeModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@ContactTypeID", key.ContactTypeID);
+
+        }
+
     }
 }

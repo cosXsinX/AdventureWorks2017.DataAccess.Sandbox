@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class ErrorLogDao : AbstractDao<ErrorLogModel>
+    public class ErrorLogDao : AbstractDaoWithPrimaryKey<ErrorLogModel,ErrorLogModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              ErrorLogID,
@@ -16,7 +16,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              ErrorProcedure,
              ErrorLine,
              ErrorMessage
- from ErrorLog";
+ from dbo.ErrorLog";
 
         protected override ErrorLogModel ToModel(SqlDataReader dataReader)
         {
@@ -33,7 +33,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into ErrorLog
+        public override string InsertQuery => @"Insert Into dbo.ErrorLog
 (
 ErrorTime,
 UserName,
@@ -78,7 +78,7 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update ErrorLog
+            @"Update dbo.ErrorLog
 Set
     ErrorTime=@ErrorTime,
     UserName=@UserName,
@@ -112,7 +112,7 @@ ErrorLogID=@ErrorLogID
 
         public override string DeleteQuery =>
 @"delete from
-    ErrorLog
+    dbo.ErrorLog
 where
 ErrorLogID=@ErrorLogID 
 ";
@@ -121,5 +121,16 @@ ErrorLogID=@ErrorLogID
         {
             sqlCommand.Parameters.AddWithValue("@ErrorLogID", deleted.ErrorLogID);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"ErrorLogID=@ErrorLogID 
+";
+
+        public override void MapPrimaryParameters(ErrorLogModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@ErrorLogID", key.ErrorLogID);
+
+        }
+
     }
 }

@@ -4,13 +4,13 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class ProductDocumentDao : AbstractDao<ProductDocumentModel>
+    public class ProductDocumentDao : AbstractDaoWithPrimaryKey<ProductDocumentModel,ProductDocumentModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              ProductID,
              DocumentNode,
              ModifiedDate
- from ProductDocument";
+ from Production.ProductDocument";
 
         protected override ProductDocumentModel ToModel(SqlDataReader dataReader)
         {
@@ -21,7 +21,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into ProductDocument
+        public override string InsertQuery => @"Insert Into Production.ProductDocument
 (
 ProductID,
 DocumentNode,
@@ -48,7 +48,7 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update ProductDocument
+            @"Update Production.ProductDocument
 Set
     ModifiedDate=@ModifiedDate
 
@@ -70,7 +70,7 @@ DocumentNode=@DocumentNode
 
         public override string DeleteQuery =>
 @"delete from
-    ProductDocument
+    Production.ProductDocument
 where
 ProductID=@ProductID  AND 
 DocumentNode=@DocumentNode 
@@ -81,5 +81,18 @@ DocumentNode=@DocumentNode
             sqlCommand.Parameters.AddWithValue("@ProductID", deleted.ProductID);
             sqlCommand.Parameters.AddWithValue("@DocumentNode", deleted.DocumentNode);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"ProductID=@ProductID  AND 
+DocumentNode=@DocumentNode 
+";
+
+        public override void MapPrimaryParameters(ProductDocumentModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@ProductID", key.ProductID);
+            sqlCommand.Parameters.AddWithValue("@DocumentNode", key.DocumentNode);
+
+        }
+
     }
 }

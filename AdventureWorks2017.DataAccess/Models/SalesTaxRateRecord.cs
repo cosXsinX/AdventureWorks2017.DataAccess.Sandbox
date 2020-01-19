@@ -4,6 +4,12 @@ using System.Text;
 
 namespace AdventureWorks2017.Models
 {
+    public struct SalesTaxRateModelPrimaryKey
+    {
+        public int SalesTaxRateID { get; set; }
+
+    }
+
     public class SalesTaxRateModel
     {
         public int SalesTaxRateID { get; set; }

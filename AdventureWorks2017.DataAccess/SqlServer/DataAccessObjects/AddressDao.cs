@@ -32,10 +32,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              result.ModifiedDate = (DateTime)(dataReader["ModifiedDate"]);
             return result;
         }
-
-        private string PrimaryKeyWhereArgs => "AddressId = @AddressId"; //AND;
-
-
+        
         public override string InsertQuery => @"Insert Into Person.Address
 (
 AddressLine1,
@@ -74,7 +71,7 @@ VALUES
             sqlCommand.Parameters.AddWithValue("@City", inserted.City);
             sqlCommand.Parameters.AddWithValue("@StateProvinceID", inserted.StateProvinceID);
             sqlCommand.Parameters.AddWithValue("@PostalCode", inserted.PostalCode);
-            sqlCommand.Parameters.Add(new SqlParameter("@SpatialLocation", inserted.SpatialLocation) { UdtTypeName = "Geography"});
+            sqlCommand.Parameters.Add(new SqlParameter("@SpatialLocation", inserted.SpatialLocation) { UdtTypeName = "Geography" });
             sqlCommand.Parameters.AddWithValue("@rowguid", inserted.rowguid);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", inserted.ModifiedDate);
 
@@ -83,67 +80,57 @@ VALUES
         public override string UpdateQuery =>
             @"Update Person.Address
 Set
+    AddressLine1=@AddressLine1,
+    AddressLine2=@AddressLine2,
+    City=@City,
+    StateProvinceID=@StateProvinceID,
+    PostalCode=@PostalCode,
     SpatialLocation=@SpatialLocation,
+    rowguid=@rowguid,
     ModifiedDate=@ModifiedDate
 
 Where
-AddressID=@AddressID  AND 
-AddressLine1=@AddressLine1  AND 
-AddressLine2=@AddressLine2  AND 
-City=@City  AND 
-StateProvinceID=@StateProvinceID  AND 
-PostalCode=@PostalCode  AND 
-rowguid=@rowguid 
+AddressID=@AddressID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, AddressModel updated)
         {
+            sqlCommand.Parameters.AddWithValue("@AddressLine1", updated.AddressLine1);
+            sqlCommand.Parameters.AddWithValue("@AddressLine2", updated.AddressLine2);
+            sqlCommand.Parameters.AddWithValue("@City", updated.City);
+            sqlCommand.Parameters.AddWithValue("@StateProvinceID", updated.StateProvinceID);
+            sqlCommand.Parameters.AddWithValue("@PostalCode", updated.PostalCode);
             sqlCommand.Parameters.Add(new SqlParameter("@SpatialLocation", updated.SpatialLocation) { UdtTypeName = "Geography" });
+            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }
 
         public override void UpdateWhereParameterMapping(SqlCommand sqlCommand, AddressModel updated)
         {
             sqlCommand.Parameters.AddWithValue("@AddressID", updated.AddressID);
-            sqlCommand.Parameters.AddWithValue("@AddressLine1", updated.AddressLine1);
-            sqlCommand.Parameters.AddWithValue("@AddressLine2", updated.AddressLine2);
-            sqlCommand.Parameters.AddWithValue("@City", updated.City);
-            sqlCommand.Parameters.AddWithValue("@StateProvinceID", updated.StateProvinceID);
-            sqlCommand.Parameters.AddWithValue("@PostalCode", updated.PostalCode);
-            sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
         }
 
         public override string DeleteQuery =>
 @"delete from
     Person.Address
 where
-AddressID=@AddressID  AND 
-AddressLine1=@AddressLine1  AND 
-AddressLine2=@AddressLine2  AND 
-City=@City  AND 
-StateProvinceID=@StateProvinceID  AND 
-PostalCode=@PostalCode  AND 
-rowguid=@rowguid 
+AddressID=@AddressID 
 ";
-
-        
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, AddressModel deleted)
         {
             sqlCommand.Parameters.AddWithValue("@AddressID", deleted.AddressID);
-            sqlCommand.Parameters.AddWithValue("@AddressLine1", deleted.AddressLine1);
-            sqlCommand.Parameters.AddWithValue("@AddressLine2", deleted.AddressLine2);
-            sqlCommand.Parameters.AddWithValue("@City", deleted.City);
-            sqlCommand.Parameters.AddWithValue("@StateProvinceID", deleted.StateProvinceID);
-            sqlCommand.Parameters.AddWithValue("@PostalCode", deleted.PostalCode);
-            sqlCommand.Parameters.AddWithValue("@rowguid", deleted.rowguid);
         }
 
-        public override string ByPrimaryWhereConditionWithArgs => "AddressID=@AddressID";
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"AddressID=@AddressID 
+";
 
         public override void MapPrimaryParameters(AddressModelPrimaryKey key, SqlCommand sqlCommand)
         {
             sqlCommand.Parameters.AddWithValue("@AddressID", key.AddressID);
+
         }
+
     }
 }

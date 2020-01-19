@@ -4,6 +4,13 @@ using System.Text;
 
 namespace AdventureWorks2017.Models
 {
+    public struct EmailAddressModelPrimaryKey
+    {
+        public int BusinessEntityID { get; set; }
+        public int EmailAddressID { get; set; }
+
+    }
+
     public class EmailAddressModel
     {
         public int BusinessEntityID { get; set; }

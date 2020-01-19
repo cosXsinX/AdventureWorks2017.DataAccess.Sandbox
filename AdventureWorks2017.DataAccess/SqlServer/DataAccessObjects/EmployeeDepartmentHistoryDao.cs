@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class EmployeeDepartmentHistoryDao : AbstractDao<EmployeeDepartmentHistoryModel>
+    public class EmployeeDepartmentHistoryDao : AbstractDaoWithPrimaryKey<EmployeeDepartmentHistoryModel,EmployeeDepartmentHistoryModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              BusinessEntityID,
@@ -13,7 +13,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              StartDate,
              EndDate,
              ModifiedDate
- from EmployeeDepartmentHistory";
+ from HumanResources.EmployeeDepartmentHistory";
 
         protected override EmployeeDepartmentHistoryModel ToModel(SqlDataReader dataReader)
         {
@@ -27,7 +27,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into EmployeeDepartmentHistory
+        public override string InsertQuery => @"Insert Into HumanResources.EmployeeDepartmentHistory
 (
 BusinessEntityID,
 DepartmentID,
@@ -63,7 +63,7 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update EmployeeDepartmentHistory
+            @"Update HumanResources.EmployeeDepartmentHistory
 Set
     EndDate=@EndDate,
     ModifiedDate=@ModifiedDate
@@ -91,7 +91,7 @@ StartDate=@StartDate
 
         public override string DeleteQuery =>
 @"delete from
-    EmployeeDepartmentHistory
+    HumanResources.EmployeeDepartmentHistory
 where
 BusinessEntityID=@BusinessEntityID  AND 
 DepartmentID=@DepartmentID  AND 
@@ -106,5 +106,22 @@ StartDate=@StartDate
             sqlCommand.Parameters.AddWithValue("@ShiftID", deleted.ShiftID);
             sqlCommand.Parameters.AddWithValue("@StartDate", deleted.StartDate);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"BusinessEntityID=@BusinessEntityID  AND 
+DepartmentID=@DepartmentID  AND 
+ShiftID=@ShiftID  AND 
+StartDate=@StartDate 
+";
+
+        public override void MapPrimaryParameters(EmployeeDepartmentHistoryModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@BusinessEntityID", key.BusinessEntityID);
+            sqlCommand.Parameters.AddWithValue("@DepartmentID", key.DepartmentID);
+            sqlCommand.Parameters.AddWithValue("@ShiftID", key.ShiftID);
+            sqlCommand.Parameters.AddWithValue("@StartDate", key.StartDate);
+
+        }
+
     }
 }

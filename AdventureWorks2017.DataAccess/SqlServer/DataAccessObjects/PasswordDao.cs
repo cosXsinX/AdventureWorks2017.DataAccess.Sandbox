@@ -4,7 +4,7 @@ using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
 {
-    public class PasswordDao : AbstractDao<PasswordModel>
+    public class PasswordDao : AbstractDaoWithPrimaryKey<PasswordModel,PasswordModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
              BusinessEntityID,
@@ -12,7 +12,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              PasswordSalt,
              rowguid,
              ModifiedDate
- from Password";
+ from Person.Password";
 
         protected override PasswordModel ToModel(SqlDataReader dataReader)
         {
@@ -25,7 +25,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Password
+        public override string InsertQuery => @"Insert Into Person.Password
 (
 BusinessEntityID,
 PasswordHash,
@@ -58,7 +58,7 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Password
+            @"Update Person.Password
 Set
     PasswordHash=@PasswordHash,
     PasswordSalt=@PasswordSalt,
@@ -84,7 +84,7 @@ BusinessEntityID=@BusinessEntityID
 
         public override string DeleteQuery =>
 @"delete from
-    Password
+    Person.Password
 where
 BusinessEntityID=@BusinessEntityID 
 ";
@@ -93,5 +93,16 @@ BusinessEntityID=@BusinessEntityID
         {
             sqlCommand.Parameters.AddWithValue("@BusinessEntityID", deleted.BusinessEntityID);
         }
+
+        public override string ByPrimaryWhereConditionWithArgs => 
+@"BusinessEntityID=@BusinessEntityID 
+";
+
+        public override void MapPrimaryParameters(PasswordModelPrimaryKey key, SqlCommand sqlCommand)
+        {
+            sqlCommand.Parameters.AddWithValue("@BusinessEntityID", key.BusinessEntityID);
+
+        }
+
     }
 }
