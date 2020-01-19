@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AdventureWorks2017.DataAccess\AdventureWorks2017.DataAccess.csproj" />
-    <ProjectReference Include="..\AdventureWorks2017\AdventureWorks2017.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

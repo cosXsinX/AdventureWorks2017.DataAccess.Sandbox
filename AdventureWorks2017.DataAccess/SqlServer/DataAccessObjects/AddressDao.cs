@@ -16,7 +16,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              SpatialLocation,
              rowguid,
              ModifiedDate
- from Address";
+ from Person.Address";
 
         protected override AddressModel ToModel(SqlDataReader dataReader)
         {
@@ -33,7 +33,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Address
+        public override string InsertQuery => @"Insert Into Person.Address
 (
 AddressLine1,
 AddressLine2,
@@ -78,7 +78,7 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Address
+            @"Update Person.Address
 Set
     SpatialLocation=@SpatialLocation,
     ModifiedDate=@ModifiedDate
@@ -112,7 +112,7 @@ rowguid=@rowguid
 
         public override string DeleteQuery =>
 @"delete from
-    Address
+    Person.Address
 where
 AddressID=@AddressID  AND 
 AddressLine1=@AddressLine1  AND 
