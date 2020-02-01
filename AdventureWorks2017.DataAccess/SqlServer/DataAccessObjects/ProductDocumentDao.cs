@@ -1,3 +1,4 @@
+
 using System;
 using System.Data.SqlClient;
 using AdventureWorks2017.Models;
@@ -16,7 +17,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
         {
             var result = new ProductDocumentModel();
              result.ProductID = (int)(dataReader["ProductID"]);
-             result.DocumentNode = (string)(dataReader["DocumentNode"]);
+             result.DocumentNode = (Microsoft.SqlServer.Types.SqlHierarchyId)(dataReader["DocumentNode"]);
              result.ModifiedDate = (DateTime)(dataReader["ModifiedDate"]);
             return result;
         }

@@ -1,3 +1,4 @@
+
 using System;
 using System.Data.SqlClient;
 using AdventureWorks2017.Models;
@@ -26,7 +27,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
         protected override DocumentModel ToModel(SqlDataReader dataReader)
         {
             var result = new DocumentModel();
-             result.DocumentNode = (string)(dataReader["DocumentNode"]);
+             result.DocumentNode = (Microsoft.SqlServer.Types.SqlHierarchyId)(dataReader["DocumentNode"]);
              result.DocumentLevel = (short)(dataReader["DocumentLevel"] is DBNull ? null : dataReader["DocumentLevel"]);
              result.Title = (string)(dataReader["Title"]);
              result.Owner = (int)(dataReader["Owner"]);

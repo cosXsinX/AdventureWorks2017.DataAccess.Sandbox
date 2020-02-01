@@ -1,3 +1,4 @@
+
 using System;
 using System.Data.SqlClient;
 using AdventureWorks2017.Models;
@@ -31,7 +32,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              result.BusinessEntityID = (int)(dataReader["BusinessEntityID"]);
              result.NationalIDNumber = (string)(dataReader["NationalIDNumber"]);
              result.LoginID = (string)(dataReader["LoginID"]);
-             result.OrganizationNode = (string)(dataReader["OrganizationNode"] is DBNull ? null : dataReader["OrganizationNode"]);
+             result.OrganizationNode = (Microsoft.SqlServer.Types.SqlHierarchyId)(dataReader["OrganizationNode"] is DBNull ? null : dataReader["OrganizationNode"]);
              result.OrganizationLevel = (short)(dataReader["OrganizationLevel"] is DBNull ? null : dataReader["OrganizationLevel"]);
              result.JobTitle = (string)(dataReader["JobTitle"]);
              result.BirthDate = (DateTime)(dataReader["BirthDate"]);

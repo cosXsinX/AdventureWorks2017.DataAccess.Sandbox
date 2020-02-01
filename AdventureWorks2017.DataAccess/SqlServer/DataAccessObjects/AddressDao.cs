@@ -1,3 +1,4 @@
+
 using System;
 using System.Data.SqlClient;
 using AdventureWorks2017.Models;
@@ -71,7 +72,7 @@ VALUES
             sqlCommand.Parameters.AddWithValue("@City", inserted.City);
             sqlCommand.Parameters.AddWithValue("@StateProvinceID", inserted.StateProvinceID);
             sqlCommand.Parameters.AddWithValue("@PostalCode", inserted.PostalCode);
-            sqlCommand.Parameters.Add(new SqlParameter("@SpatialLocation", inserted.SpatialLocation) { UdtTypeName = "Geography" });
+            sqlCommand.Parameters.AddWithValue("@SpatialLocation", inserted.SpatialLocation);
             sqlCommand.Parameters.AddWithValue("@rowguid", inserted.rowguid);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", inserted.ModifiedDate);
 
@@ -100,7 +101,7 @@ AddressID=@AddressID
             sqlCommand.Parameters.AddWithValue("@City", updated.City);
             sqlCommand.Parameters.AddWithValue("@StateProvinceID", updated.StateProvinceID);
             sqlCommand.Parameters.AddWithValue("@PostalCode", updated.PostalCode);
-            sqlCommand.Parameters.Add(new SqlParameter("@SpatialLocation", updated.SpatialLocation) { UdtTypeName = "Geography" });
+            sqlCommand.Parameters.AddWithValue("@SpatialLocation", updated.SpatialLocation);
             sqlCommand.Parameters.AddWithValue("@rowguid", updated.rowguid);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }

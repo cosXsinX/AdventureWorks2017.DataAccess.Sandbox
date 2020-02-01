@@ -6,13 +6,13 @@ namespace AdventureWorks2017.Models
 {
     public struct DocumentModelPrimaryKey
     {
-        public string DocumentNode { get; set; }
+        public Microsoft.SqlServer.Types.SqlHierarchyId DocumentNode { get; set; }
 
     }
 
     public class DocumentModel
     {
-        public string DocumentNode { get; set; }
+        public Microsoft.SqlServer.Types.SqlHierarchyId DocumentNode { get; set; }
         public short? DocumentLevel { get; set; }
         public string Title { get; set; }
         public int Owner { get; set; }

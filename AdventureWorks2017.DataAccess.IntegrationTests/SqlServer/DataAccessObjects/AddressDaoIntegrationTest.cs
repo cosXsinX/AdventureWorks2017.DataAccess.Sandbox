@@ -1,3 +1,4 @@
+
 using AdventureWorks2017.DataAccess.IntegrationTests.SqlServer.DataAccessObjects;
 using AdventureWorks2017.Models;
 using AdventureWorks2017.SqlServer.DataAccessObjects;
@@ -5,6 +6,7 @@ using NUnit.Framework;
 using System;
 using System.Data.SqlClient;
 using System.Linq;
+using AdventureWorks2017.DataAccess.IntegrationTests.SqlServer.DataAccessObjects;
 
 namespace AdventureWorks2017.DataAccess.IntegrationTests
 {
@@ -34,51 +36,51 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
         {
             #region good insertion and select by id test
             AddressModel inserted = new AddressModel();
-            inserted.AddressID = TestSession.Random.Next();
-            inserted.AddressLine1 = TestSession.Random.RandomString(60);
-            inserted.AddressLine2 = TestSession.Random.RandomString(60);
-            inserted.City = TestSession.Random.RandomString(30);
-            inserted.StateProvinceID = 108;
-            inserted.PostalCode = TestSession.Random.RandomString(15);
-            inserted.SpatialLocation = TestHelper.BuildRandomGeographyPoint();
+            inserted.AddressLine1 = TestSession.Random.RandomString(120);
+            inserted.AddressLine2 = TestSession.Random.RandomString(120);
+            inserted.City = TestSession.Random.RandomString(60);
+            inserted.StateProvinceID = TestSession.Random.Next();
+            inserted.PostalCode = TestSession.Random.RandomString(30);
+            inserted.SpatialLocation = TestSession.Random.RandomSqlGeography();
             inserted.rowguid = Guid.NewGuid();
-            inserted.ModifiedDate = DateTime.Today;
+            inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 
             _tested.Insert(_connection,new[] { inserted });
 
-            var selectedAfterInsertionAddresss = _tested.GetByPrimaryKey(_connection, new AddressModelPrimaryKey()
+            var selectedAfterInsertion = _tested.GetByPrimaryKey(_connection, new AddressModelPrimaryKey()
             {
-                AddressID = inserted.AddressID
+                AddressID = inserted.AddressID,
             });
 
-            CollectionAssert.IsNotEmpty(selectedAfterInsertionAddresss);
-            var selectedAfterInsert = selectedAfterInsertionAddresss.Single();
+            CollectionAssert.IsNotEmpty(selectedAfterInsertion);
+            var selectedAfterInsert = selectedAfterInsertion.Single();
             Assert.AreEqual(inserted.AddressID,selectedAfterInsert.AddressID);
-            Assert.AreEqual(inserted.AddressLine1, selectedAfterInsert.AddressLine1);
-            Assert.AreEqual(inserted.AddressLine2, selectedAfterInsert.AddressLine2);
-            Assert.AreEqual(inserted.City, selectedAfterInsert.City);
-            Assert.AreEqual(inserted.StateProvinceID, selectedAfterInsert.StateProvinceID);
-            Assert.AreEqual(inserted.PostalCode, selectedAfterInsert.PostalCode);
-            //Assert.AreEqual(inserted.SpatialLocation, selectedAfterInsert.SpatialLocation);
-            Assert.AreEqual(inserted.rowguid, selectedAfterInsert.rowguid);
-            Assert.AreEqual(inserted.ModifiedDate, selectedAfterInsert.ModifiedDate);
+            Assert.AreEqual(inserted.AddressLine1,selectedAfterInsert.AddressLine1);
+            Assert.AreEqual(inserted.AddressLine2,selectedAfterInsert.AddressLine2);
+            Assert.AreEqual(inserted.City,selectedAfterInsert.City);
+            Assert.AreEqual(inserted.StateProvinceID,selectedAfterInsert.StateProvinceID);
+            Assert.AreEqual(inserted.PostalCode,selectedAfterInsert.PostalCode);
+            Assert.AreEqual(inserted.SpatialLocation,selectedAfterInsert.SpatialLocation);
+            Assert.AreEqual(inserted.rowguid,selectedAfterInsert.rowguid);
+            Assert.AreEqual(inserted.ModifiedDate,selectedAfterInsert.ModifiedDate);
+
             #endregion
 
             #region update and select by id test
-            inserted.AddressLine1 = TestSession.Random.RandomString(60);
-            inserted.AddressLine2 = TestSession.Random.RandomString(60);
-            inserted.City = TestSession.Random.RandomString(30);
-            inserted.StateProvinceID = 108;
-            inserted.PostalCode = TestSession.Random.RandomString(15);
-            inserted.SpatialLocation = TestHelper.BuildRandomGeographyPoint();
+            inserted.AddressLine1 = TestSession.Random.RandomString(120);
+            inserted.AddressLine2 = TestSession.Random.RandomString(120);
+            inserted.City = TestSession.Random.RandomString(60);
+            inserted.StateProvinceID = TestSession.Random.Next();
+            inserted.PostalCode = TestSession.Random.RandomString(30);
+            inserted.SpatialLocation = TestSession.Random.RandomSqlGeography();
             inserted.rowguid = Guid.NewGuid();
-            inserted.ModifiedDate = DateTime.Today;
+            inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 
             _tested.Update(_connection, new[] { inserted });
 
             var selectedAfterUpdateAddresss = _tested.GetByPrimaryKey(_connection, new AddressModelPrimaryKey()
             {
-                AddressID = inserted.AddressID
+                AddressID = inserted.AddressID,
             });
 
             CollectionAssert.IsNotEmpty(selectedAfterUpdateAddresss);
@@ -89,16 +91,17 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             Assert.AreEqual(inserted.City, selectedAfterUpdate.City);
             Assert.AreEqual(inserted.StateProvinceID, selectedAfterUpdate.StateProvinceID);
             Assert.AreEqual(inserted.PostalCode, selectedAfterUpdate.PostalCode);
-            //Assert.AreEqual(inserted.SpatialLocation, selectedAfterUpdate.SpatialLocation);
+            Assert.AreEqual(inserted.SpatialLocation, selectedAfterUpdate.SpatialLocation);
             Assert.AreEqual(inserted.rowguid, selectedAfterUpdate.rowguid);
             Assert.AreEqual(inserted.ModifiedDate, selectedAfterUpdate.ModifiedDate);
+
             #endregion
 
             #region delete test
             _tested.Delete(_connection, new[] { inserted });
             var selectedAfterDeleteAddresss = _tested.GetByPrimaryKey(_connection, new AddressModelPrimaryKey()
             {
-                AddressID = inserted.AddressID
+                AddressID = inserted.AddressID,
             });
             CollectionAssert.IsEmpty(selectedAfterDeleteAddresss);
             #endregion
