@@ -8,10 +8,10 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class AWBuildVersionDao : AbstractDaoWithPrimaryKey<AWBuildVersionModel,AWBuildVersionModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             SystemInformationID,
-             Database Version,
-             VersionDate,
-             ModifiedDate
+             [SystemInformationID],
+             [Database Version],
+             [VersionDate],
+             [ModifiedDate]
  from dbo.AWBuildVersion";
 
         protected override AWBuildVersionModel ToModel(SqlDataReader dataReader)
@@ -26,16 +26,16 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
         
         public override string InsertQuery => @"Insert Into dbo.AWBuildVersion
 (
-Database Version,
-VersionDate,
-ModifiedDate
+[Database Version],
+[VersionDate],
+[ModifiedDate]
 )
 output 
 inserted.SystemInformationID
 
 VALUES
 (
-@Database Version,
+@DatabaseVersion,
 @VersionDate,
 @ModifiedDate
 )";
@@ -47,7 +47,7 @@ VALUES
 
         public override void InsertionParameterMapping(SqlCommand sqlCommand, AWBuildVersionModel inserted)
         {
-            sqlCommand.Parameters.AddWithValue("@Database Version", inserted.DatabaseVersion);
+            sqlCommand.Parameters.AddWithValue("@DatabaseVersion", inserted.DatabaseVersion);
             sqlCommand.Parameters.AddWithValue("@VersionDate", inserted.VersionDate);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", inserted.ModifiedDate);
 
@@ -56,9 +56,9 @@ VALUES
         public override string UpdateQuery =>
             @"Update dbo.AWBuildVersion
 Set
-    Database Version=@Database Version,
-    VersionDate=@VersionDate,
-    ModifiedDate=@ModifiedDate
+    [Database Version]=@DatabaseVersion,
+    [VersionDate]=@VersionDate,
+    [ModifiedDate]=@ModifiedDate
 
 Where
 SystemInformationID=@SystemInformationID 
@@ -66,7 +66,7 @@ SystemInformationID=@SystemInformationID
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, AWBuildVersionModel updated)
         {
-            sqlCommand.Parameters.AddWithValue("@Database Version", updated.DatabaseVersion);
+            sqlCommand.Parameters.AddWithValue("@DatabaseVersion", updated.DatabaseVersion);
             sqlCommand.Parameters.AddWithValue("@VersionDate", updated.VersionDate);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", updated.ModifiedDate);
         }

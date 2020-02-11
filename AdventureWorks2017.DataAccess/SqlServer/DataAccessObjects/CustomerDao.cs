@@ -21,9 +21,9 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
         {
             var result = new CustomerModel();
              result.CustomerID = (int)(dataReader["CustomerID"]);
-             result.PersonID = (int)(dataReader["PersonID"] is DBNull ? null : dataReader["PersonID"]);
-             result.StoreID = (int)(dataReader["StoreID"] is DBNull ? null : dataReader["StoreID"]);
-             result.TerritoryID = (int)(dataReader["TerritoryID"] is DBNull ? null : dataReader["TerritoryID"]);
+             result.PersonID = (int?)(dataReader["PersonID"] is DBNull ? null : dataReader["PersonID"]);
+             result.StoreID = (int?)(dataReader["StoreID"] is DBNull ? null : dataReader["StoreID"]);
+             result.TerritoryID = (int?)(dataReader["TerritoryID"] is DBNull ? null : dataReader["TerritoryID"]);
              result.AccountNumber = (string)(dataReader["AccountNumber"]);
              result.rowguid = (Guid)(dataReader["rowguid"]);
              result.ModifiedDate = (DateTime)(dataReader["ModifiedDate"]);

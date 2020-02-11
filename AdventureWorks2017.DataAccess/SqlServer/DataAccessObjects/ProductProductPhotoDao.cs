@@ -10,7 +10,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
         public override string SelectQuery => @"select 
              ProductID,
              ProductPhotoID,
-             Primary,
+             [Primary],
              ModifiedDate
  from Production.ProductProductPhoto";
 

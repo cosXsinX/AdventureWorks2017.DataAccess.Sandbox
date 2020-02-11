@@ -8,21 +8,15 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
 {
 
     [SetUpFixture]
-    public class TestSession : IDisposable
+    public class TestSession 
     {
-        public string ConnectionString = "Data Source=DESKTOP-JNFJSV9\\SQLEXPRESS01;Initial Catalog=AdventureWorks2017;Integrated Security=True;";
-
-
-        public static SqlConnection SqlConnection { get; private set; }
+        public const string ConnectionString = "Data Source=DESKTOP-JNFJSV9\\SQLEXPRESS01;Initial Catalog=AdventureWorks2017;Integrated Security=True;";
         public static SessionRandom Random { get; private set; }
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
             Random = new SessionRandom();
-
-            SqlConnection = new SqlConnection(ConnectionString);
-            SqlConnection.Open();
         }
 
 
@@ -31,9 +25,11 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
         {
         }
 
-        public void Dispose()
+
+        public static SqlConnection GetConnection()
         {
-            if (SqlConnection != null && SqlConnection.State != System.Data.ConnectionState.Closed) SqlConnection.Close();
+            var SqlConnection = new SqlConnection(ConnectionString);
+            return SqlConnection;
         }
 
         public class SessionRandom : Random

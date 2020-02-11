@@ -31,7 +31,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              result.StartDate = (DateTime)(dataReader["StartDate"]);
              result.EndDate = (DateTime)(dataReader["EndDate"] is DBNull ? null : dataReader["EndDate"]);
              result.DueDate = (DateTime)(dataReader["DueDate"]);
-             result.ScrapReasonID = (short)(dataReader["ScrapReasonID"] is DBNull ? null : dataReader["ScrapReasonID"]);
+             result.ScrapReasonID = (short?)(dataReader["ScrapReasonID"] is DBNull ? null : dataReader["ScrapReasonID"]);
              result.ModifiedDate = (DateTime)(dataReader["ModifiedDate"]);
             return result;
         }

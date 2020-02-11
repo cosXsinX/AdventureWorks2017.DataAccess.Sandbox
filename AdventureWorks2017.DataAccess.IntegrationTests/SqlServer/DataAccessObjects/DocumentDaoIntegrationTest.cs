@@ -14,26 +14,29 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
     public class DocumentDaoIntegrationTests
     {
         private DocumentDao _tested;
-        public SqlConnection _connection;
 
         [OneTimeSetUp]
         public void Setup()
         {
             _tested = new DocumentDao();
-            _connection = TestSession.SqlConnection;
         }
 
         //TODO execute when there is no indexes
         [Test]
         public void GetAllIntegrationTest()
         {
+            var _connection = TestSession.GetConnection();
+            _connection.Open();
             var selecteds = _tested.GetAll(_connection);
             Assert.IsNotNull(selecteds);
+            _connection.Close();
         }
 
         [Test]
         public void IntegrationTest()
         {
+            var _connection = TestSession.GetConnection();
+            _connection.Open();
             #region good insertion and select by id test
             DocumentModel inserted = new DocumentModel();
             inserted.DocumentNode = Microsoft.SqlServer.Types.SqlHierarchyId.Null; //TODO define how to generate random hierarchy id in test session;
@@ -126,6 +129,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             });
             CollectionAssert.IsEmpty(selectedAfterDeleteAddresss);
             #endregion
+            _connection.Close();
         }
     }
 }

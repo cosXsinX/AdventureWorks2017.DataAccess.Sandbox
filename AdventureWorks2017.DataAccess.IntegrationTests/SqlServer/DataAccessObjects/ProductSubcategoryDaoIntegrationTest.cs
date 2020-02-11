@@ -14,26 +14,29 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
     public class ProductSubcategoryDaoIntegrationTests
     {
         private ProductSubcategoryDao _tested;
-        public SqlConnection _connection;
 
         [OneTimeSetUp]
         public void Setup()
         {
             _tested = new ProductSubcategoryDao();
-            _connection = TestSession.SqlConnection;
         }
 
         //TODO execute when there is no indexes
         [Test]
         public void GetAllIntegrationTest()
         {
+            var _connection = TestSession.GetConnection();
+            _connection.Open();
             var selecteds = _tested.GetAll(_connection);
             Assert.IsNotNull(selecteds);
+            _connection.Close();
         }
 
         [Test]
         public void IntegrationTest()
         {
+            var _connection = TestSession.GetConnection();
+            _connection.Open();
             #region good insertion and select by id test
             ProductSubcategoryModel inserted = new ProductSubcategoryModel();
             inserted.ProductCategoryID = TestSession.Random.Next();
@@ -89,6 +92,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             });
             CollectionAssert.IsEmpty(selectedAfterDeleteAddresss);
             #endregion
+            _connection.Close();
         }
     }
 }

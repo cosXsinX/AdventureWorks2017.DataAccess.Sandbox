@@ -32,7 +32,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              result.StartDate = (DateTime)(dataReader["StartDate"]);
              result.EndDate = (DateTime)(dataReader["EndDate"]);
              result.MinQty = (int)(dataReader["MinQty"]);
-             result.MaxQty = (int)(dataReader["MaxQty"] is DBNull ? null : dataReader["MaxQty"]);
+             result.MaxQty = (int?)(dataReader["MaxQty"] is DBNull ? null : dataReader["MaxQty"]);
              result.rowguid = (Guid)(dataReader["rowguid"]);
              result.ModifiedDate = (DateTime)(dataReader["ModifiedDate"]);
             return result;

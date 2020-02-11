@@ -14,26 +14,30 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
     public class SalesReasonDaoIntegrationTests
     {
         private SalesReasonDao _tested;
-        public SqlConnection _connection;
 
         [OneTimeSetUp]
         public void Setup()
         {
             _tested = new SalesReasonDao();
-            _connection = TestSession.SqlConnection;
         }
 
         //TODO execute when there is no indexes
         [Test]
         public void GetAllIntegrationTest()
         {
+
+            var _connection = TestSession.GetConnection();
+            _connection.Open();
             var selecteds = _tested.GetAll(_connection);
             Assert.IsNotNull(selecteds);
+            _connection.Close();
         }
 
         [Test]
         public void IntegrationTest()
         {
+            var _connection = TestSession.GetConnection();
+            _connection.Open();
             #region good insertion and select by id test
             SalesReasonModel inserted = new SalesReasonModel();
             inserted.Name = TestSession.Random.RandomString(100);
@@ -85,6 +89,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             });
             CollectionAssert.IsEmpty(selectedAfterDeleteAddresss);
             #endregion
+            _connection.Close();
         }
     }
 }

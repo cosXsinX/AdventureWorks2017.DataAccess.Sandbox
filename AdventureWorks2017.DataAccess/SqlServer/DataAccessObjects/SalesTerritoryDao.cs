@@ -11,7 +11,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              TerritoryID,
              Name,
              CountryRegionCode,
-             Group,
+             [Group],
              SalesYTD,
              SalesLastYear,
              CostYTD,

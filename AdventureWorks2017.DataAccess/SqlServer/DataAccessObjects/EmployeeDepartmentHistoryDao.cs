@@ -23,7 +23,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              result.DepartmentID = (short)(dataReader["DepartmentID"]);
              result.ShiftID = (byte)(dataReader["ShiftID"]);
              result.StartDate = (DateTime)(dataReader["StartDate"]);
-             result.EndDate = (DateTime)(dataReader["EndDate"] is DBNull ? null : dataReader["EndDate"]);
+             result.EndDate = (DateTime?)(dataReader["EndDate"] is DBNull ? null : dataReader["EndDate"]);
              result.ModifiedDate = (DateTime)(dataReader["ModifiedDate"]);
             return result;
         }

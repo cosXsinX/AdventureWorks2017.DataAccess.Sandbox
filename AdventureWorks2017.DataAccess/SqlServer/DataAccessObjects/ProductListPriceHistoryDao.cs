@@ -20,7 +20,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             var result = new ProductListPriceHistoryModel();
              result.ProductID = (int)(dataReader["ProductID"]);
              result.StartDate = (DateTime)(dataReader["StartDate"]);
-             result.EndDate = (DateTime)(dataReader["EndDate"] is DBNull ? null : dataReader["EndDate"]);
+             result.EndDate = (DateTime?)(dataReader["EndDate"] is DBNull ? null : dataReader["EndDate"]);
              result.ListPrice = (decimal)(dataReader["ListPrice"]);
              result.ModifiedDate = (DateTime)(dataReader["ModifiedDate"]);
             return result;

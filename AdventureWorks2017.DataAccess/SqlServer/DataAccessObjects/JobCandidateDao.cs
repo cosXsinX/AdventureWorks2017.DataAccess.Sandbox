@@ -18,7 +18,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
         {
             var result = new JobCandidateModel();
              result.JobCandidateID = (int)(dataReader["JobCandidateID"]);
-             result.BusinessEntityID = (int)(dataReader["BusinessEntityID"] is DBNull ? null : dataReader["BusinessEntityID"]);
+             result.BusinessEntityID = (int?)(dataReader["BusinessEntityID"] is DBNull ? null : dataReader["BusinessEntityID"]);
              result.Resume = (System.Xml.XmlDocument)(dataReader["Resume"] is DBNull ? null : dataReader["Resume"]);
              result.ModifiedDate = (DateTime)(dataReader["ModifiedDate"]);
             return result;

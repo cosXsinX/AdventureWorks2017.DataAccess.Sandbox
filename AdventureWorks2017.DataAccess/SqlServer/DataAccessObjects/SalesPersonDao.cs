@@ -23,7 +23,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
         {
             var result = new SalesPersonModel();
              result.BusinessEntityID = (int)(dataReader["BusinessEntityID"]);
-             result.TerritoryID = (int)(dataReader["TerritoryID"] is DBNull ? null : dataReader["TerritoryID"]);
+             result.TerritoryID = (int?)(dataReader["TerritoryID"] is DBNull ? null : dataReader["TerritoryID"]);
              result.SalesQuota = (decimal)(dataReader["SalesQuota"] is DBNull ? null : dataReader["SalesQuota"]);
              result.Bonus = (decimal)(dataReader["Bonus"]);
              result.CommissionPct = (decimal)(dataReader["CommissionPct"]);

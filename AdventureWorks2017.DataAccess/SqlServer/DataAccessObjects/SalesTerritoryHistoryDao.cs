@@ -22,7 +22,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              result.BusinessEntityID = (int)(dataReader["BusinessEntityID"]);
              result.TerritoryID = (int)(dataReader["TerritoryID"]);
              result.StartDate = (DateTime)(dataReader["StartDate"]);
-             result.EndDate = (DateTime)(dataReader["EndDate"] is DBNull ? null : dataReader["EndDate"]);
+             result.EndDate = (DateTime?)(dataReader["EndDate"] is DBNull ? null : dataReader["EndDate"]);
              result.rowguid = (Guid)(dataReader["rowguid"]);
              result.ModifiedDate = (DateTime)(dataReader["ModifiedDate"]);
             return result;

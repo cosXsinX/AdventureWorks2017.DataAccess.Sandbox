@@ -23,10 +23,10 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
         {
             var result = new BillOfMaterialsModel();
              result.BillOfMaterialsID = (int)(dataReader["BillOfMaterialsID"]);
-             result.ProductAssemblyID = (int)(dataReader["ProductAssemblyID"] is DBNull ? null : dataReader["ProductAssemblyID"]);
+             result.ProductAssemblyID = (int?)(dataReader["ProductAssemblyID"] is DBNull ? null : dataReader["ProductAssemblyID"]);
              result.ComponentID = (int)(dataReader["ComponentID"]);
              result.StartDate = (DateTime)(dataReader["StartDate"]);
-             result.EndDate = (DateTime)(dataReader["EndDate"] is DBNull ? null : dataReader["EndDate"]);
+             result.EndDate = (DateTime?)(dataReader["EndDate"] is DBNull ? null : dataReader["EndDate"]);
              result.UnitMeasureCode = (string)(dataReader["UnitMeasureCode"]);
              result.BOMLevel = (short)(dataReader["BOMLevel"]);
              result.PerAssemblyQty = (decimal)(dataReader["PerAssemblyQty"]);
