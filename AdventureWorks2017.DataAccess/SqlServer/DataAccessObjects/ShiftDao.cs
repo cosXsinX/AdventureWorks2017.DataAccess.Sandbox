@@ -8,12 +8,12 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class ShiftDao : AbstractDaoWithPrimaryKey<ShiftModel,ShiftModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             ShiftID,
-             Name,
-             StartTime,
-             EndTime,
-             ModifiedDate
- from HumanResources.Shift";
+             [ShiftID],
+             [Name],
+             [StartTime],
+             [EndTime],
+             [ModifiedDate]
+ from [HumanResources].[Shift]";
 
         protected override ShiftModel ToModel(SqlDataReader dataReader)
         {
@@ -26,15 +26,15 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into HumanResources.Shift
+        public override string InsertQuery => @"Insert Into [HumanResources].[Shift]
 (
-Name,
-StartTime,
-EndTime,
-ModifiedDate
+[Name],
+[StartTime],
+[EndTime],
+[ModifiedDate]
 )
 output 
-inserted.ShiftID
+inserted.[ShiftID]
 
 VALUES
 (
@@ -59,15 +59,15 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update HumanResources.Shift
+            @"Update [HumanResources].[Shift]
 Set
-    Name=@Name,
-    StartTime=@StartTime,
-    EndTime=@EndTime,
-    ModifiedDate=@ModifiedDate
+    [Name]=@Name,
+    [StartTime]=@StartTime,
+    [EndTime]=@EndTime,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-ShiftID=@ShiftID 
+[ShiftID]=@ShiftID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ShiftModel updated)
@@ -85,9 +85,9 @@ ShiftID=@ShiftID
 
         public override string DeleteQuery =>
 @"delete from
-    HumanResources.Shift
+    [HumanResources].[Shift]
 where
-ShiftID=@ShiftID 
+[ShiftID]=@ShiftID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ShiftModel deleted)

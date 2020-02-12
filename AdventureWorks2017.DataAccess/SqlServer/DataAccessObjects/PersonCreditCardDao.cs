@@ -8,10 +8,10 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class PersonCreditCardDao : AbstractDaoWithPrimaryKey<PersonCreditCardModel,PersonCreditCardModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             BusinessEntityID,
-             CreditCardID,
-             ModifiedDate
- from Sales.PersonCreditCard";
+             [BusinessEntityID],
+             [CreditCardID],
+             [ModifiedDate]
+ from [Sales].[PersonCreditCard]";
 
         protected override PersonCreditCardModel ToModel(SqlDataReader dataReader)
         {
@@ -22,11 +22,11 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Sales.PersonCreditCard
+        public override string InsertQuery => @"Insert Into [Sales].[PersonCreditCard]
 (
-BusinessEntityID,
-CreditCardID,
-ModifiedDate
+[BusinessEntityID],
+[CreditCardID],
+[ModifiedDate]
 )
 
 VALUES
@@ -49,13 +49,13 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Sales.PersonCreditCard
+            @"Update [Sales].[PersonCreditCard]
 Set
-    ModifiedDate=@ModifiedDate
+    [ModifiedDate]=@ModifiedDate
 
 Where
-BusinessEntityID=@BusinessEntityID  AND 
-CreditCardID=@CreditCardID 
+[BusinessEntityID]=@BusinessEntityID  AND 
+[CreditCardID]=@CreditCardID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, PersonCreditCardModel updated)
@@ -71,10 +71,10 @@ CreditCardID=@CreditCardID
 
         public override string DeleteQuery =>
 @"delete from
-    Sales.PersonCreditCard
+    [Sales].[PersonCreditCard]
 where
-BusinessEntityID=@BusinessEntityID  AND 
-CreditCardID=@CreditCardID 
+[BusinessEntityID]=@BusinessEntityID  AND 
+[CreditCardID]=@CreditCardID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, PersonCreditCardModel deleted)

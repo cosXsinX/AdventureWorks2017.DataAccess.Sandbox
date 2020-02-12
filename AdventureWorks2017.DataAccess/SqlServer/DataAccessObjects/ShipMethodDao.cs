@@ -8,13 +8,13 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class ShipMethodDao : AbstractDaoWithPrimaryKey<ShipMethodModel,ShipMethodModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             ShipMethodID,
-             Name,
-             ShipBase,
-             ShipRate,
-             rowguid,
-             ModifiedDate
- from Purchasing.ShipMethod";
+             [ShipMethodID],
+             [Name],
+             [ShipBase],
+             [ShipRate],
+             [rowguid],
+             [ModifiedDate]
+ from [Purchasing].[ShipMethod]";
 
         protected override ShipMethodModel ToModel(SqlDataReader dataReader)
         {
@@ -28,16 +28,16 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Purchasing.ShipMethod
+        public override string InsertQuery => @"Insert Into [Purchasing].[ShipMethod]
 (
-Name,
-ShipBase,
-ShipRate,
-rowguid,
-ModifiedDate
+[Name],
+[ShipBase],
+[ShipRate],
+[rowguid],
+[ModifiedDate]
 )
 output 
-inserted.ShipMethodID
+inserted.[ShipMethodID]
 
 VALUES
 (
@@ -64,16 +64,16 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Purchasing.ShipMethod
+            @"Update [Purchasing].[ShipMethod]
 Set
-    Name=@Name,
-    ShipBase=@ShipBase,
-    ShipRate=@ShipRate,
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [Name]=@Name,
+    [ShipBase]=@ShipBase,
+    [ShipRate]=@ShipRate,
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-ShipMethodID=@ShipMethodID 
+[ShipMethodID]=@ShipMethodID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ShipMethodModel updated)
@@ -92,9 +92,9 @@ ShipMethodID=@ShipMethodID
 
         public override string DeleteQuery =>
 @"delete from
-    Purchasing.ShipMethod
+    [Purchasing].[ShipMethod]
 where
-ShipMethodID=@ShipMethodID 
+[ShipMethodID]=@ShipMethodID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ShipMethodModel deleted)

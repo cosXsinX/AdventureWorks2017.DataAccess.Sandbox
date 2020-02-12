@@ -8,10 +8,10 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class PhoneNumberTypeDao : AbstractDaoWithPrimaryKey<PhoneNumberTypeModel,PhoneNumberTypeModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             PhoneNumberTypeID,
-             Name,
-             ModifiedDate
- from Person.PhoneNumberType";
+             [PhoneNumberTypeID],
+             [Name],
+             [ModifiedDate]
+ from [Person].[PhoneNumberType]";
 
         protected override PhoneNumberTypeModel ToModel(SqlDataReader dataReader)
         {
@@ -22,13 +22,13 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Person.PhoneNumberType
+        public override string InsertQuery => @"Insert Into [Person].[PhoneNumberType]
 (
-Name,
-ModifiedDate
+[Name],
+[ModifiedDate]
 )
 output 
-inserted.PhoneNumberTypeID
+inserted.[PhoneNumberTypeID]
 
 VALUES
 (
@@ -49,13 +49,13 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Person.PhoneNumberType
+            @"Update [Person].[PhoneNumberType]
 Set
-    Name=@Name,
-    ModifiedDate=@ModifiedDate
+    [Name]=@Name,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-PhoneNumberTypeID=@PhoneNumberTypeID 
+[PhoneNumberTypeID]=@PhoneNumberTypeID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, PhoneNumberTypeModel updated)
@@ -71,9 +71,9 @@ PhoneNumberTypeID=@PhoneNumberTypeID
 
         public override string DeleteQuery =>
 @"delete from
-    Person.PhoneNumberType
+    [Person].[PhoneNumberType]
 where
-PhoneNumberTypeID=@PhoneNumberTypeID 
+[PhoneNumberTypeID]=@PhoneNumberTypeID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, PhoneNumberTypeModel deleted)

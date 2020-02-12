@@ -8,18 +8,18 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class ProductVendorDao : AbstractDaoWithPrimaryKey<ProductVendorModel,ProductVendorModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             ProductID,
-             BusinessEntityID,
-             AverageLeadTime,
-             StandardPrice,
-             LastReceiptCost,
-             LastReceiptDate,
-             MinOrderQty,
-             MaxOrderQty,
-             OnOrderQty,
-             UnitMeasureCode,
-             ModifiedDate
- from Purchasing.ProductVendor";
+             [ProductID],
+             [BusinessEntityID],
+             [AverageLeadTime],
+             [StandardPrice],
+             [LastReceiptCost],
+             [LastReceiptDate],
+             [MinOrderQty],
+             [MaxOrderQty],
+             [OnOrderQty],
+             [UnitMeasureCode],
+             [ModifiedDate]
+ from [Purchasing].[ProductVendor]";
 
         protected override ProductVendorModel ToModel(SqlDataReader dataReader)
         {
@@ -28,8 +28,8 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              result.BusinessEntityID = (int)(dataReader["BusinessEntityID"]);
              result.AverageLeadTime = (int)(dataReader["AverageLeadTime"]);
              result.StandardPrice = (decimal)(dataReader["StandardPrice"]);
-             result.LastReceiptCost = (decimal)(dataReader["LastReceiptCost"] is DBNull ? null : dataReader["LastReceiptCost"]);
-             result.LastReceiptDate = (DateTime)(dataReader["LastReceiptDate"] is DBNull ? null : dataReader["LastReceiptDate"]);
+             result.LastReceiptCost = (decimal?)(dataReader["LastReceiptCost"] is DBNull ? null : dataReader["LastReceiptCost"]);
+             result.LastReceiptDate = (DateTime?)(dataReader["LastReceiptDate"] is DBNull ? null : dataReader["LastReceiptDate"]);
              result.MinOrderQty = (int)(dataReader["MinOrderQty"]);
              result.MaxOrderQty = (int)(dataReader["MaxOrderQty"]);
              result.OnOrderQty = (int?)(dataReader["OnOrderQty"] is DBNull ? null : dataReader["OnOrderQty"]);
@@ -38,19 +38,19 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Purchasing.ProductVendor
+        public override string InsertQuery => @"Insert Into [Purchasing].[ProductVendor]
 (
-ProductID,
-BusinessEntityID,
-AverageLeadTime,
-StandardPrice,
-LastReceiptCost,
-LastReceiptDate,
-MinOrderQty,
-MaxOrderQty,
-OnOrderQty,
-UnitMeasureCode,
-ModifiedDate
+[ProductID],
+[BusinessEntityID],
+[AverageLeadTime],
+[StandardPrice],
+[LastReceiptCost],
+[LastReceiptDate],
+[MinOrderQty],
+[MaxOrderQty],
+[OnOrderQty],
+[UnitMeasureCode],
+[ModifiedDate]
 )
 
 VALUES
@@ -89,21 +89,21 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Purchasing.ProductVendor
+            @"Update [Purchasing].[ProductVendor]
 Set
-    AverageLeadTime=@AverageLeadTime,
-    StandardPrice=@StandardPrice,
-    LastReceiptCost=@LastReceiptCost,
-    LastReceiptDate=@LastReceiptDate,
-    MinOrderQty=@MinOrderQty,
-    MaxOrderQty=@MaxOrderQty,
-    OnOrderQty=@OnOrderQty,
-    UnitMeasureCode=@UnitMeasureCode,
-    ModifiedDate=@ModifiedDate
+    [AverageLeadTime]=@AverageLeadTime,
+    [StandardPrice]=@StandardPrice,
+    [LastReceiptCost]=@LastReceiptCost,
+    [LastReceiptDate]=@LastReceiptDate,
+    [MinOrderQty]=@MinOrderQty,
+    [MaxOrderQty]=@MaxOrderQty,
+    [OnOrderQty]=@OnOrderQty,
+    [UnitMeasureCode]=@UnitMeasureCode,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-ProductID=@ProductID  AND 
-BusinessEntityID=@BusinessEntityID 
+[ProductID]=@ProductID  AND 
+[BusinessEntityID]=@BusinessEntityID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ProductVendorModel updated)
@@ -127,10 +127,10 @@ BusinessEntityID=@BusinessEntityID
 
         public override string DeleteQuery =>
 @"delete from
-    Purchasing.ProductVendor
+    [Purchasing].[ProductVendor]
 where
-ProductID=@ProductID  AND 
-BusinessEntityID=@BusinessEntityID 
+[ProductID]=@ProductID  AND 
+[BusinessEntityID]=@BusinessEntityID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ProductVendorModel deleted)

@@ -8,36 +8,36 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class ProductPhotoDao : AbstractDaoWithPrimaryKey<ProductPhotoModel,ProductPhotoModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             ProductPhotoID,
-             ThumbNailPhoto,
-             ThumbnailPhotoFileName,
-             LargePhoto,
-             LargePhotoFileName,
-             ModifiedDate
- from Production.ProductPhoto";
+             [ProductPhotoID],
+             [ThumbNailPhoto],
+             [ThumbnailPhotoFileName],
+             [LargePhoto],
+             [LargePhotoFileName],
+             [ModifiedDate]
+ from [Production].[ProductPhoto]";
 
         protected override ProductPhotoModel ToModel(SqlDataReader dataReader)
         {
             var result = new ProductPhotoModel();
              result.ProductPhotoID = (int)(dataReader["ProductPhotoID"]);
-             result.ThumbNailPhoto = (byte[])(dataReader["ThumbNailPhoto"] is DBNull ? null : dataReader["ThumbNailPhoto"]);
-             result.ThumbnailPhotoFileName = (string)(dataReader["ThumbnailPhotoFileName"] is DBNull ? null : dataReader["ThumbnailPhotoFileName"]);
-             result.LargePhoto = (byte[])(dataReader["LargePhoto"] is DBNull ? null : dataReader["LargePhoto"]);
-             result.LargePhotoFileName = (string)(dataReader["LargePhotoFileName"] is DBNull ? null : dataReader["LargePhotoFileName"]);
+             result.ThumbNailPhoto = (byte[]?)(dataReader["ThumbNailPhoto"] is DBNull ? null : dataReader["ThumbNailPhoto"]);
+             result.ThumbnailPhotoFileName = (string?)(dataReader["ThumbnailPhotoFileName"] is DBNull ? null : dataReader["ThumbnailPhotoFileName"]);
+             result.LargePhoto = (byte[]?)(dataReader["LargePhoto"] is DBNull ? null : dataReader["LargePhoto"]);
+             result.LargePhotoFileName = (string?)(dataReader["LargePhotoFileName"] is DBNull ? null : dataReader["LargePhotoFileName"]);
              result.ModifiedDate = (DateTime)(dataReader["ModifiedDate"]);
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Production.ProductPhoto
+        public override string InsertQuery => @"Insert Into [Production].[ProductPhoto]
 (
-ThumbNailPhoto,
-ThumbnailPhotoFileName,
-LargePhoto,
-LargePhotoFileName,
-ModifiedDate
+[ThumbNailPhoto],
+[ThumbnailPhotoFileName],
+[LargePhoto],
+[LargePhotoFileName],
+[ModifiedDate]
 )
 output 
-inserted.ProductPhotoID
+inserted.[ProductPhotoID]
 
 VALUES
 (
@@ -64,16 +64,16 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Production.ProductPhoto
+            @"Update [Production].[ProductPhoto]
 Set
-    ThumbNailPhoto=@ThumbNailPhoto,
-    ThumbnailPhotoFileName=@ThumbnailPhotoFileName,
-    LargePhoto=@LargePhoto,
-    LargePhotoFileName=@LargePhotoFileName,
-    ModifiedDate=@ModifiedDate
+    [ThumbNailPhoto]=@ThumbNailPhoto,
+    [ThumbnailPhotoFileName]=@ThumbnailPhotoFileName,
+    [LargePhoto]=@LargePhoto,
+    [LargePhotoFileName]=@LargePhotoFileName,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-ProductPhotoID=@ProductPhotoID 
+[ProductPhotoID]=@ProductPhotoID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ProductPhotoModel updated)
@@ -92,9 +92,9 @@ ProductPhotoID=@ProductPhotoID
 
         public override string DeleteQuery =>
 @"delete from
-    Production.ProductPhoto
+    [Production].[ProductPhoto]
 where
-ProductPhotoID=@ProductPhotoID 
+[ProductPhotoID]=@ProductPhotoID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ProductPhotoModel deleted)

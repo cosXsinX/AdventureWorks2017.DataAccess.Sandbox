@@ -8,12 +8,12 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class ProductCostHistoryDao : AbstractDaoWithPrimaryKey<ProductCostHistoryModel,ProductCostHistoryModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             ProductID,
-             StartDate,
-             EndDate,
-             StandardCost,
-             ModifiedDate
- from Production.ProductCostHistory";
+             [ProductID],
+             [StartDate],
+             [EndDate],
+             [StandardCost],
+             [ModifiedDate]
+ from [Production].[ProductCostHistory]";
 
         protected override ProductCostHistoryModel ToModel(SqlDataReader dataReader)
         {
@@ -26,13 +26,13 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Production.ProductCostHistory
+        public override string InsertQuery => @"Insert Into [Production].[ProductCostHistory]
 (
-ProductID,
-StartDate,
-EndDate,
-StandardCost,
-ModifiedDate
+[ProductID],
+[StartDate],
+[EndDate],
+[StandardCost],
+[ModifiedDate]
 )
 
 VALUES
@@ -59,15 +59,15 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Production.ProductCostHistory
+            @"Update [Production].[ProductCostHistory]
 Set
-    EndDate=@EndDate,
-    StandardCost=@StandardCost,
-    ModifiedDate=@ModifiedDate
+    [EndDate]=@EndDate,
+    [StandardCost]=@StandardCost,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-ProductID=@ProductID  AND 
-StartDate=@StartDate 
+[ProductID]=@ProductID  AND 
+[StartDate]=@StartDate 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ProductCostHistoryModel updated)
@@ -85,10 +85,10 @@ StartDate=@StartDate
 
         public override string DeleteQuery =>
 @"delete from
-    Production.ProductCostHistory
+    [Production].[ProductCostHistory]
 where
-ProductID=@ProductID  AND 
-StartDate=@StartDate 
+[ProductID]=@ProductID  AND 
+[StartDate]=@StartDate 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ProductCostHistoryModel deleted)

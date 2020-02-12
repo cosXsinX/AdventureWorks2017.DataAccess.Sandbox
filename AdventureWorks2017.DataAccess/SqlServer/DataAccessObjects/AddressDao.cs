@@ -8,45 +8,45 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class AddressDao : AbstractDaoWithPrimaryKey<AddressModel,AddressModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             AddressID,
-             AddressLine1,
-             AddressLine2,
-             City,
-             StateProvinceID,
-             PostalCode,
-             SpatialLocation,
-             rowguid,
-             ModifiedDate
- from Person.Address";
+             [AddressID],
+             [AddressLine1],
+             [AddressLine2],
+             [City],
+             [StateProvinceID],
+             [PostalCode],
+             [SpatialLocation],
+             [rowguid],
+             [ModifiedDate]
+ from [Person].[Address]";
 
         protected override AddressModel ToModel(SqlDataReader dataReader)
         {
             var result = new AddressModel();
              result.AddressID = (int)(dataReader["AddressID"]);
              result.AddressLine1 = (string)(dataReader["AddressLine1"]);
-             result.AddressLine2 = (string)(dataReader["AddressLine2"] is DBNull ? null : dataReader["AddressLine2"]);
+             result.AddressLine2 = (string?)(dataReader["AddressLine2"] is DBNull ? null : dataReader["AddressLine2"]);
              result.City = (string)(dataReader["City"]);
              result.StateProvinceID = (int)(dataReader["StateProvinceID"]);
              result.PostalCode = (string)(dataReader["PostalCode"]);
-             result.SpatialLocation = (Microsoft.SqlServer.Types.SqlGeography)(dataReader["SpatialLocation"] is DBNull ? null : dataReader["SpatialLocation"]);
+             result.SpatialLocation = (Microsoft.SqlServer.Types.SqlGeography?)(dataReader["SpatialLocation"] is DBNull ? null : dataReader["SpatialLocation"]);
              result.rowguid = (Guid)(dataReader["rowguid"]);
              result.ModifiedDate = (DateTime)(dataReader["ModifiedDate"]);
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Person.Address
+        public override string InsertQuery => @"Insert Into [Person].[Address]
 (
-AddressLine1,
-AddressLine2,
-City,
-StateProvinceID,
-PostalCode,
-SpatialLocation,
-rowguid,
-ModifiedDate
+[AddressLine1],
+[AddressLine2],
+[City],
+[StateProvinceID],
+[PostalCode],
+[SpatialLocation],
+[rowguid],
+[ModifiedDate]
 )
 output 
-inserted.AddressID
+inserted.[AddressID]
 
 VALUES
 (
@@ -79,19 +79,19 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Person.Address
+            @"Update [Person].[Address]
 Set
-    AddressLine1=@AddressLine1,
-    AddressLine2=@AddressLine2,
-    City=@City,
-    StateProvinceID=@StateProvinceID,
-    PostalCode=@PostalCode,
-    SpatialLocation=@SpatialLocation,
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [AddressLine1]=@AddressLine1,
+    [AddressLine2]=@AddressLine2,
+    [City]=@City,
+    [StateProvinceID]=@StateProvinceID,
+    [PostalCode]=@PostalCode,
+    [SpatialLocation]=@SpatialLocation,
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-AddressID=@AddressID 
+[AddressID]=@AddressID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, AddressModel updated)
@@ -113,9 +113,9 @@ AddressID=@AddressID
 
         public override string DeleteQuery =>
 @"delete from
-    Person.Address
+    [Person].[Address]
 where
-AddressID=@AddressID 
+[AddressID]=@AddressID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, AddressModel deleted)

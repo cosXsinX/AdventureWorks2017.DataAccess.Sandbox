@@ -8,10 +8,10 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class SalesOrderHeaderSalesReasonDao : AbstractDaoWithPrimaryKey<SalesOrderHeaderSalesReasonModel,SalesOrderHeaderSalesReasonModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             SalesOrderID,
-             SalesReasonID,
-             ModifiedDate
- from Sales.SalesOrderHeaderSalesReason";
+             [SalesOrderID],
+             [SalesReasonID],
+             [ModifiedDate]
+ from [Sales].[SalesOrderHeaderSalesReason]";
 
         protected override SalesOrderHeaderSalesReasonModel ToModel(SqlDataReader dataReader)
         {
@@ -22,11 +22,11 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Sales.SalesOrderHeaderSalesReason
+        public override string InsertQuery => @"Insert Into [Sales].[SalesOrderHeaderSalesReason]
 (
-SalesOrderID,
-SalesReasonID,
-ModifiedDate
+[SalesOrderID],
+[SalesReasonID],
+[ModifiedDate]
 )
 
 VALUES
@@ -49,13 +49,13 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Sales.SalesOrderHeaderSalesReason
+            @"Update [Sales].[SalesOrderHeaderSalesReason]
 Set
-    ModifiedDate=@ModifiedDate
+    [ModifiedDate]=@ModifiedDate
 
 Where
-SalesOrderID=@SalesOrderID  AND 
-SalesReasonID=@SalesReasonID 
+[SalesOrderID]=@SalesOrderID  AND 
+[SalesReasonID]=@SalesReasonID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, SalesOrderHeaderSalesReasonModel updated)
@@ -71,10 +71,10 @@ SalesReasonID=@SalesReasonID
 
         public override string DeleteQuery =>
 @"delete from
-    Sales.SalesOrderHeaderSalesReason
+    [Sales].[SalesOrderHeaderSalesReason]
 where
-SalesOrderID=@SalesOrderID  AND 
-SalesReasonID=@SalesReasonID 
+[SalesOrderID]=@SalesOrderID  AND 
+[SalesReasonID]=@SalesReasonID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, SalesOrderHeaderSalesReasonModel deleted)

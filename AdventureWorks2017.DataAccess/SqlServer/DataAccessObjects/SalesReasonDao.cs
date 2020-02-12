@@ -8,11 +8,11 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class SalesReasonDao : AbstractDaoWithPrimaryKey<SalesReasonModel,SalesReasonModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             SalesReasonID,
-             Name,
-             ReasonType,
-             ModifiedDate
- from Sales.SalesReason";
+             [SalesReasonID],
+             [Name],
+             [ReasonType],
+             [ModifiedDate]
+ from [Sales].[SalesReason]";
 
         protected override SalesReasonModel ToModel(SqlDataReader dataReader)
         {
@@ -24,14 +24,14 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Sales.SalesReason
+        public override string InsertQuery => @"Insert Into [Sales].[SalesReason]
 (
-Name,
-ReasonType,
-ModifiedDate
+[Name],
+[ReasonType],
+[ModifiedDate]
 )
 output 
-inserted.SalesReasonID
+inserted.[SalesReasonID]
 
 VALUES
 (
@@ -54,14 +54,14 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Sales.SalesReason
+            @"Update [Sales].[SalesReason]
 Set
-    Name=@Name,
-    ReasonType=@ReasonType,
-    ModifiedDate=@ModifiedDate
+    [Name]=@Name,
+    [ReasonType]=@ReasonType,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-SalesReasonID=@SalesReasonID 
+[SalesReasonID]=@SalesReasonID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, SalesReasonModel updated)
@@ -78,9 +78,9 @@ SalesReasonID=@SalesReasonID
 
         public override string DeleteQuery =>
 @"delete from
-    Sales.SalesReason
+    [Sales].[SalesReason]
 where
-SalesReasonID=@SalesReasonID 
+[SalesReasonID]=@SalesReasonID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, SalesReasonModel deleted)

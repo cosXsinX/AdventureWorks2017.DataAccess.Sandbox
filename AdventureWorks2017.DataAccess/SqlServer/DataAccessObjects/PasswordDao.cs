@@ -8,12 +8,12 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class PasswordDao : AbstractDaoWithPrimaryKey<PasswordModel,PasswordModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             BusinessEntityID,
-             PasswordHash,
-             PasswordSalt,
-             rowguid,
-             ModifiedDate
- from Person.Password";
+             [BusinessEntityID],
+             [PasswordHash],
+             [PasswordSalt],
+             [rowguid],
+             [ModifiedDate]
+ from [Person].[Password]";
 
         protected override PasswordModel ToModel(SqlDataReader dataReader)
         {
@@ -26,13 +26,13 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Person.Password
+        public override string InsertQuery => @"Insert Into [Person].[Password]
 (
-BusinessEntityID,
-PasswordHash,
-PasswordSalt,
-rowguid,
-ModifiedDate
+[BusinessEntityID],
+[PasswordHash],
+[PasswordSalt],
+[rowguid],
+[ModifiedDate]
 )
 
 VALUES
@@ -59,15 +59,15 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Person.Password
+            @"Update [Person].[Password]
 Set
-    PasswordHash=@PasswordHash,
-    PasswordSalt=@PasswordSalt,
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [PasswordHash]=@PasswordHash,
+    [PasswordSalt]=@PasswordSalt,
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-BusinessEntityID=@BusinessEntityID 
+[BusinessEntityID]=@BusinessEntityID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, PasswordModel updated)
@@ -85,9 +85,9 @@ BusinessEntityID=@BusinessEntityID
 
         public override string DeleteQuery =>
 @"delete from
-    Person.Password
+    [Person].[Password]
 where
-BusinessEntityID=@BusinessEntityID 
+[BusinessEntityID]=@BusinessEntityID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, PasswordModel deleted)

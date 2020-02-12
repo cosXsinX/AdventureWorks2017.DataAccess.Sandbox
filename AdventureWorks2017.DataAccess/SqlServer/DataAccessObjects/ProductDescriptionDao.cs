@@ -8,11 +8,11 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class ProductDescriptionDao : AbstractDaoWithPrimaryKey<ProductDescriptionModel,ProductDescriptionModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             ProductDescriptionID,
-             Description,
-             rowguid,
-             ModifiedDate
- from Production.ProductDescription";
+             [ProductDescriptionID],
+             [Description],
+             [rowguid],
+             [ModifiedDate]
+ from [Production].[ProductDescription]";
 
         protected override ProductDescriptionModel ToModel(SqlDataReader dataReader)
         {
@@ -24,14 +24,14 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Production.ProductDescription
+        public override string InsertQuery => @"Insert Into [Production].[ProductDescription]
 (
-Description,
-rowguid,
-ModifiedDate
+[Description],
+[rowguid],
+[ModifiedDate]
 )
 output 
-inserted.ProductDescriptionID
+inserted.[ProductDescriptionID]
 
 VALUES
 (
@@ -54,14 +54,14 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Production.ProductDescription
+            @"Update [Production].[ProductDescription]
 Set
-    Description=@Description,
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [Description]=@Description,
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-ProductDescriptionID=@ProductDescriptionID 
+[ProductDescriptionID]=@ProductDescriptionID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ProductDescriptionModel updated)
@@ -78,9 +78,9 @@ ProductDescriptionID=@ProductDescriptionID
 
         public override string DeleteQuery =>
 @"delete from
-    Production.ProductDescription
+    [Production].[ProductDescription]
 where
-ProductDescriptionID=@ProductDescriptionID 
+[ProductDescriptionID]=@ProductDescriptionID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ProductDescriptionModel deleted)

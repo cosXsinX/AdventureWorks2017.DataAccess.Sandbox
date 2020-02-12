@@ -8,10 +8,10 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class BusinessEntityDao : AbstractDaoWithPrimaryKey<BusinessEntityModel,BusinessEntityModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             BusinessEntityID,
-             rowguid,
-             ModifiedDate
- from Person.BusinessEntity";
+             [BusinessEntityID],
+             [rowguid],
+             [ModifiedDate]
+ from [Person].[BusinessEntity]";
 
         protected override BusinessEntityModel ToModel(SqlDataReader dataReader)
         {
@@ -22,13 +22,13 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Person.BusinessEntity
+        public override string InsertQuery => @"Insert Into [Person].[BusinessEntity]
 (
-rowguid,
-ModifiedDate
+[rowguid],
+[ModifiedDate]
 )
 output 
-inserted.BusinessEntityID
+inserted.[BusinessEntityID]
 
 VALUES
 (
@@ -49,13 +49,13 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Person.BusinessEntity
+            @"Update [Person].[BusinessEntity]
 Set
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-BusinessEntityID=@BusinessEntityID 
+[BusinessEntityID]=@BusinessEntityID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, BusinessEntityModel updated)
@@ -71,9 +71,9 @@ BusinessEntityID=@BusinessEntityID
 
         public override string DeleteQuery =>
 @"delete from
-    Person.BusinessEntity
+    [Person].[BusinessEntity]
 where
-BusinessEntityID=@BusinessEntityID 
+[BusinessEntityID]=@BusinessEntityID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, BusinessEntityModel deleted)

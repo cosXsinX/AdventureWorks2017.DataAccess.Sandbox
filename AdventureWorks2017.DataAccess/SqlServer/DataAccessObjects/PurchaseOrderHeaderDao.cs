@@ -8,20 +8,20 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class PurchaseOrderHeaderDao : AbstractDaoWithPrimaryKey<PurchaseOrderHeaderModel,PurchaseOrderHeaderModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             PurchaseOrderID,
-             RevisionNumber,
-             Status,
-             EmployeeID,
-             VendorID,
-             ShipMethodID,
-             OrderDate,
-             ShipDate,
-             SubTotal,
-             TaxAmt,
-             Freight,
-             TotalDue,
-             ModifiedDate
- from Purchasing.PurchaseOrderHeader";
+             [PurchaseOrderID],
+             [RevisionNumber],
+             [Status],
+             [EmployeeID],
+             [VendorID],
+             [ShipMethodID],
+             [OrderDate],
+             [ShipDate],
+             [SubTotal],
+             [TaxAmt],
+             [Freight],
+             [TotalDue],
+             [ModifiedDate]
+ from [Purchasing].[PurchaseOrderHeader]";
 
         protected override PurchaseOrderHeaderModel ToModel(SqlDataReader dataReader)
         {
@@ -33,7 +33,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              result.VendorID = (int)(dataReader["VendorID"]);
              result.ShipMethodID = (int)(dataReader["ShipMethodID"]);
              result.OrderDate = (DateTime)(dataReader["OrderDate"]);
-             result.ShipDate = (DateTime)(dataReader["ShipDate"] is DBNull ? null : dataReader["ShipDate"]);
+             result.ShipDate = (DateTime?)(dataReader["ShipDate"] is DBNull ? null : dataReader["ShipDate"]);
              result.SubTotal = (decimal)(dataReader["SubTotal"]);
              result.TaxAmt = (decimal)(dataReader["TaxAmt"]);
              result.Freight = (decimal)(dataReader["Freight"]);
@@ -42,23 +42,23 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Purchasing.PurchaseOrderHeader
+        public override string InsertQuery => @"Insert Into [Purchasing].[PurchaseOrderHeader]
 (
-RevisionNumber,
-Status,
-EmployeeID,
-VendorID,
-ShipMethodID,
-OrderDate,
-ShipDate,
-SubTotal,
-TaxAmt,
-Freight,
-TotalDue,
-ModifiedDate
+[RevisionNumber],
+[Status],
+[EmployeeID],
+[VendorID],
+[ShipMethodID],
+[OrderDate],
+[ShipDate],
+[SubTotal],
+[TaxAmt],
+[Freight],
+[TotalDue],
+[ModifiedDate]
 )
 output 
-inserted.PurchaseOrderID
+inserted.[PurchaseOrderID]
 
 VALUES
 (
@@ -99,23 +99,23 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Purchasing.PurchaseOrderHeader
+            @"Update [Purchasing].[PurchaseOrderHeader]
 Set
-    RevisionNumber=@RevisionNumber,
-    Status=@Status,
-    EmployeeID=@EmployeeID,
-    VendorID=@VendorID,
-    ShipMethodID=@ShipMethodID,
-    OrderDate=@OrderDate,
-    ShipDate=@ShipDate,
-    SubTotal=@SubTotal,
-    TaxAmt=@TaxAmt,
-    Freight=@Freight,
-    TotalDue=@TotalDue,
-    ModifiedDate=@ModifiedDate
+    [RevisionNumber]=@RevisionNumber,
+    [Status]=@Status,
+    [EmployeeID]=@EmployeeID,
+    [VendorID]=@VendorID,
+    [ShipMethodID]=@ShipMethodID,
+    [OrderDate]=@OrderDate,
+    [ShipDate]=@ShipDate,
+    [SubTotal]=@SubTotal,
+    [TaxAmt]=@TaxAmt,
+    [Freight]=@Freight,
+    [TotalDue]=@TotalDue,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-PurchaseOrderID=@PurchaseOrderID 
+[PurchaseOrderID]=@PurchaseOrderID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, PurchaseOrderHeaderModel updated)
@@ -141,9 +141,9 @@ PurchaseOrderID=@PurchaseOrderID
 
         public override string DeleteQuery =>
 @"delete from
-    Purchasing.PurchaseOrderHeader
+    [Purchasing].[PurchaseOrderHeader]
 where
-PurchaseOrderID=@PurchaseOrderID 
+[PurchaseOrderID]=@PurchaseOrderID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, PurchaseOrderHeaderModel deleted)

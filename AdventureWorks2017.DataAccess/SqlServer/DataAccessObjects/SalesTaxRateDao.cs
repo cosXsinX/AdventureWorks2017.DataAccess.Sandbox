@@ -8,14 +8,14 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class SalesTaxRateDao : AbstractDaoWithPrimaryKey<SalesTaxRateModel,SalesTaxRateModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             SalesTaxRateID,
-             StateProvinceID,
-             TaxType,
-             TaxRate,
-             Name,
-             rowguid,
-             ModifiedDate
- from Sales.SalesTaxRate";
+             [SalesTaxRateID],
+             [StateProvinceID],
+             [TaxType],
+             [TaxRate],
+             [Name],
+             [rowguid],
+             [ModifiedDate]
+ from [Sales].[SalesTaxRate]";
 
         protected override SalesTaxRateModel ToModel(SqlDataReader dataReader)
         {
@@ -30,17 +30,17 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Sales.SalesTaxRate
+        public override string InsertQuery => @"Insert Into [Sales].[SalesTaxRate]
 (
-StateProvinceID,
-TaxType,
-TaxRate,
-Name,
-rowguid,
-ModifiedDate
+[StateProvinceID],
+[TaxType],
+[TaxRate],
+[Name],
+[rowguid],
+[ModifiedDate]
 )
 output 
-inserted.SalesTaxRateID
+inserted.[SalesTaxRateID]
 
 VALUES
 (
@@ -69,17 +69,17 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Sales.SalesTaxRate
+            @"Update [Sales].[SalesTaxRate]
 Set
-    StateProvinceID=@StateProvinceID,
-    TaxType=@TaxType,
-    TaxRate=@TaxRate,
-    Name=@Name,
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [StateProvinceID]=@StateProvinceID,
+    [TaxType]=@TaxType,
+    [TaxRate]=@TaxRate,
+    [Name]=@Name,
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-SalesTaxRateID=@SalesTaxRateID 
+[SalesTaxRateID]=@SalesTaxRateID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, SalesTaxRateModel updated)
@@ -99,9 +99,9 @@ SalesTaxRateID=@SalesTaxRateID
 
         public override string DeleteQuery =>
 @"delete from
-    Sales.SalesTaxRate
+    [Sales].[SalesTaxRate]
 where
-SalesTaxRateID=@SalesTaxRateID 
+[SalesTaxRateID]=@SalesTaxRateID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, SalesTaxRateModel deleted)

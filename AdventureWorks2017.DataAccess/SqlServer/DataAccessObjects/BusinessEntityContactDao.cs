@@ -8,12 +8,12 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class BusinessEntityContactDao : AbstractDaoWithPrimaryKey<BusinessEntityContactModel,BusinessEntityContactModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             BusinessEntityID,
-             PersonID,
-             ContactTypeID,
-             rowguid,
-             ModifiedDate
- from Person.BusinessEntityContact";
+             [BusinessEntityID],
+             [PersonID],
+             [ContactTypeID],
+             [rowguid],
+             [ModifiedDate]
+ from [Person].[BusinessEntityContact]";
 
         protected override BusinessEntityContactModel ToModel(SqlDataReader dataReader)
         {
@@ -26,13 +26,13 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Person.BusinessEntityContact
+        public override string InsertQuery => @"Insert Into [Person].[BusinessEntityContact]
 (
-BusinessEntityID,
-PersonID,
-ContactTypeID,
-rowguid,
-ModifiedDate
+[BusinessEntityID],
+[PersonID],
+[ContactTypeID],
+[rowguid],
+[ModifiedDate]
 )
 
 VALUES
@@ -59,15 +59,15 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Person.BusinessEntityContact
+            @"Update [Person].[BusinessEntityContact]
 Set
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-BusinessEntityID=@BusinessEntityID  AND 
-PersonID=@PersonID  AND 
-ContactTypeID=@ContactTypeID 
+[BusinessEntityID]=@BusinessEntityID  AND 
+[PersonID]=@PersonID  AND 
+[ContactTypeID]=@ContactTypeID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, BusinessEntityContactModel updated)
@@ -85,11 +85,11 @@ ContactTypeID=@ContactTypeID
 
         public override string DeleteQuery =>
 @"delete from
-    Person.BusinessEntityContact
+    [Person].[BusinessEntityContact]
 where
-BusinessEntityID=@BusinessEntityID  AND 
-PersonID=@PersonID  AND 
-ContactTypeID=@ContactTypeID 
+[BusinessEntityID]=@BusinessEntityID  AND 
+[PersonID]=@PersonID  AND 
+[ContactTypeID]=@ContactTypeID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, BusinessEntityContactModel deleted)

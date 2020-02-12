@@ -8,18 +8,18 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class SpecialOfferDao : AbstractDaoWithPrimaryKey<SpecialOfferModel,SpecialOfferModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             SpecialOfferID,
-             Description,
-             DiscountPct,
-             Type,
-             Category,
-             StartDate,
-             EndDate,
-             MinQty,
-             MaxQty,
-             rowguid,
-             ModifiedDate
- from Sales.SpecialOffer";
+             [SpecialOfferID],
+             [Description],
+             [DiscountPct],
+             [Type],
+             [Category],
+             [StartDate],
+             [EndDate],
+             [MinQty],
+             [MaxQty],
+             [rowguid],
+             [ModifiedDate]
+ from [Sales].[SpecialOffer]";
 
         protected override SpecialOfferModel ToModel(SqlDataReader dataReader)
         {
@@ -38,21 +38,21 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Sales.SpecialOffer
+        public override string InsertQuery => @"Insert Into [Sales].[SpecialOffer]
 (
-Description,
-DiscountPct,
-Type,
-Category,
-StartDate,
-EndDate,
-MinQty,
-MaxQty,
-rowguid,
-ModifiedDate
+[Description],
+[DiscountPct],
+[Type],
+[Category],
+[StartDate],
+[EndDate],
+[MinQty],
+[MaxQty],
+[rowguid],
+[ModifiedDate]
 )
 output 
-inserted.SpecialOfferID
+inserted.[SpecialOfferID]
 
 VALUES
 (
@@ -89,21 +89,21 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Sales.SpecialOffer
+            @"Update [Sales].[SpecialOffer]
 Set
-    Description=@Description,
-    DiscountPct=@DiscountPct,
-    Type=@Type,
-    Category=@Category,
-    StartDate=@StartDate,
-    EndDate=@EndDate,
-    MinQty=@MinQty,
-    MaxQty=@MaxQty,
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [Description]=@Description,
+    [DiscountPct]=@DiscountPct,
+    [Type]=@Type,
+    [Category]=@Category,
+    [StartDate]=@StartDate,
+    [EndDate]=@EndDate,
+    [MinQty]=@MinQty,
+    [MaxQty]=@MaxQty,
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-SpecialOfferID=@SpecialOfferID 
+[SpecialOfferID]=@SpecialOfferID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, SpecialOfferModel updated)
@@ -127,9 +127,9 @@ SpecialOfferID=@SpecialOfferID
 
         public override string DeleteQuery =>
 @"delete from
-    Sales.SpecialOffer
+    [Sales].[SpecialOffer]
 where
-SpecialOfferID=@SpecialOfferID 
+[SpecialOfferID]=@SpecialOfferID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, SpecialOfferModel deleted)

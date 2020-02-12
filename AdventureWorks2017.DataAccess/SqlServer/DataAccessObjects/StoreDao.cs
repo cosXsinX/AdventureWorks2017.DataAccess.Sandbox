@@ -8,34 +8,34 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class StoreDao : AbstractDaoWithPrimaryKey<StoreModel,StoreModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             BusinessEntityID,
-             Name,
-             SalesPersonID,
-             Demographics,
-             rowguid,
-             ModifiedDate
- from Sales.Store";
+             [BusinessEntityID],
+             [Name],
+             [SalesPersonID],
+             [Demographics],
+             [rowguid],
+             [ModifiedDate]
+ from [Sales].[Store]";
 
         protected override StoreModel ToModel(SqlDataReader dataReader)
         {
             var result = new StoreModel();
              result.BusinessEntityID = (int)(dataReader["BusinessEntityID"]);
              result.Name = (string)(dataReader["Name"]);
-             result.SalesPersonID = (int)(dataReader["SalesPersonID"] is DBNull ? null : dataReader["SalesPersonID"]);
-             result.Demographics = (System.Xml.XmlDocument)(dataReader["Demographics"] is DBNull ? null : dataReader["Demographics"]);
+             result.SalesPersonID = (int?)(dataReader["SalesPersonID"] is DBNull ? null : dataReader["SalesPersonID"]);
+             result.Demographics = (System.Xml.XmlDocument?)(dataReader["Demographics"] is DBNull ? null : dataReader["Demographics"]);
              result.rowguid = (Guid)(dataReader["rowguid"]);
              result.ModifiedDate = (DateTime)(dataReader["ModifiedDate"]);
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Sales.Store
+        public override string InsertQuery => @"Insert Into [Sales].[Store]
 (
-BusinessEntityID,
-Name,
-SalesPersonID,
-Demographics,
-rowguid,
-ModifiedDate
+[BusinessEntityID],
+[Name],
+[SalesPersonID],
+[Demographics],
+[rowguid],
+[ModifiedDate]
 )
 
 VALUES
@@ -64,16 +64,16 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Sales.Store
+            @"Update [Sales].[Store]
 Set
-    Name=@Name,
-    SalesPersonID=@SalesPersonID,
-    Demographics=@Demographics,
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [Name]=@Name,
+    [SalesPersonID]=@SalesPersonID,
+    [Demographics]=@Demographics,
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-BusinessEntityID=@BusinessEntityID 
+[BusinessEntityID]=@BusinessEntityID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, StoreModel updated)
@@ -92,9 +92,9 @@ BusinessEntityID=@BusinessEntityID
 
         public override string DeleteQuery =>
 @"delete from
-    Sales.Store
+    [Sales].[Store]
 where
-BusinessEntityID=@BusinessEntityID 
+[BusinessEntityID]=@BusinessEntityID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, StoreModel deleted)

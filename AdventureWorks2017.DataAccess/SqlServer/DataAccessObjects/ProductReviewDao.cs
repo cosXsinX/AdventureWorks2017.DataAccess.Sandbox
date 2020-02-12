@@ -8,15 +8,15 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class ProductReviewDao : AbstractDaoWithPrimaryKey<ProductReviewModel,ProductReviewModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             ProductReviewID,
-             ProductID,
-             ReviewerName,
-             ReviewDate,
-             EmailAddress,
-             Rating,
-             Comments,
-             ModifiedDate
- from Production.ProductReview";
+             [ProductReviewID],
+             [ProductID],
+             [ReviewerName],
+             [ReviewDate],
+             [EmailAddress],
+             [Rating],
+             [Comments],
+             [ModifiedDate]
+ from [Production].[ProductReview]";
 
         protected override ProductReviewModel ToModel(SqlDataReader dataReader)
         {
@@ -27,23 +27,23 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              result.ReviewDate = (DateTime)(dataReader["ReviewDate"]);
              result.EmailAddress = (string)(dataReader["EmailAddress"]);
              result.Rating = (int)(dataReader["Rating"]);
-             result.Comments = (string)(dataReader["Comments"] is DBNull ? null : dataReader["Comments"]);
+             result.Comments = (string?)(dataReader["Comments"] is DBNull ? null : dataReader["Comments"]);
              result.ModifiedDate = (DateTime)(dataReader["ModifiedDate"]);
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Production.ProductReview
+        public override string InsertQuery => @"Insert Into [Production].[ProductReview]
 (
-ProductID,
-ReviewerName,
-ReviewDate,
-EmailAddress,
-Rating,
-Comments,
-ModifiedDate
+[ProductID],
+[ReviewerName],
+[ReviewDate],
+[EmailAddress],
+[Rating],
+[Comments],
+[ModifiedDate]
 )
 output 
-inserted.ProductReviewID
+inserted.[ProductReviewID]
 
 VALUES
 (
@@ -74,18 +74,18 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Production.ProductReview
+            @"Update [Production].[ProductReview]
 Set
-    ProductID=@ProductID,
-    ReviewerName=@ReviewerName,
-    ReviewDate=@ReviewDate,
-    EmailAddress=@EmailAddress,
-    Rating=@Rating,
-    Comments=@Comments,
-    ModifiedDate=@ModifiedDate
+    [ProductID]=@ProductID,
+    [ReviewerName]=@ReviewerName,
+    [ReviewDate]=@ReviewDate,
+    [EmailAddress]=@EmailAddress,
+    [Rating]=@Rating,
+    [Comments]=@Comments,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-ProductReviewID=@ProductReviewID 
+[ProductReviewID]=@ProductReviewID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ProductReviewModel updated)
@@ -106,9 +106,9 @@ ProductReviewID=@ProductReviewID
 
         public override string DeleteQuery =>
 @"delete from
-    Production.ProductReview
+    [Production].[ProductReview]
 where
-ProductReviewID=@ProductReviewID 
+[ProductReviewID]=@ProductReviewID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ProductReviewModel deleted)

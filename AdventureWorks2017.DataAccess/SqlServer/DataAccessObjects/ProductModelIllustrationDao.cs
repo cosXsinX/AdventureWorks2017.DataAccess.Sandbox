@@ -8,10 +8,10 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class ProductModelIllustrationDao : AbstractDaoWithPrimaryKey<ProductModelIllustrationModel,ProductModelIllustrationModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             ProductModelID,
-             IllustrationID,
-             ModifiedDate
- from Production.ProductModelIllustration";
+             [ProductModelID],
+             [IllustrationID],
+             [ModifiedDate]
+ from [Production].[ProductModelIllustration]";
 
         protected override ProductModelIllustrationModel ToModel(SqlDataReader dataReader)
         {
@@ -22,11 +22,11 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Production.ProductModelIllustration
+        public override string InsertQuery => @"Insert Into [Production].[ProductModelIllustration]
 (
-ProductModelID,
-IllustrationID,
-ModifiedDate
+[ProductModelID],
+[IllustrationID],
+[ModifiedDate]
 )
 
 VALUES
@@ -49,13 +49,13 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Production.ProductModelIllustration
+            @"Update [Production].[ProductModelIllustration]
 Set
-    ModifiedDate=@ModifiedDate
+    [ModifiedDate]=@ModifiedDate
 
 Where
-ProductModelID=@ProductModelID  AND 
-IllustrationID=@IllustrationID 
+[ProductModelID]=@ProductModelID  AND 
+[IllustrationID]=@IllustrationID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ProductModelIllustrationModel updated)
@@ -71,10 +71,10 @@ IllustrationID=@IllustrationID
 
         public override string DeleteQuery =>
 @"delete from
-    Production.ProductModelIllustration
+    [Production].[ProductModelIllustration]
 where
-ProductModelID=@ProductModelID  AND 
-IllustrationID=@IllustrationID 
+[ProductModelID]=@ProductModelID  AND 
+[IllustrationID]=@IllustrationID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ProductModelIllustrationModel deleted)

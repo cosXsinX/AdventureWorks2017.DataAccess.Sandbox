@@ -8,18 +8,18 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class PurchaseOrderDetailDao : AbstractDaoWithPrimaryKey<PurchaseOrderDetailModel,PurchaseOrderDetailModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             PurchaseOrderID,
-             PurchaseOrderDetailID,
-             DueDate,
-             OrderQty,
-             ProductID,
-             UnitPrice,
-             LineTotal,
-             ReceivedQty,
-             RejectedQty,
-             StockedQty,
-             ModifiedDate
- from Purchasing.PurchaseOrderDetail";
+             [PurchaseOrderID],
+             [PurchaseOrderDetailID],
+             [DueDate],
+             [OrderQty],
+             [ProductID],
+             [UnitPrice],
+             [LineTotal],
+             [ReceivedQty],
+             [RejectedQty],
+             [StockedQty],
+             [ModifiedDate]
+ from [Purchasing].[PurchaseOrderDetail]";
 
         protected override PurchaseOrderDetailModel ToModel(SqlDataReader dataReader)
         {
@@ -38,21 +38,21 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Purchasing.PurchaseOrderDetail
+        public override string InsertQuery => @"Insert Into [Purchasing].[PurchaseOrderDetail]
 (
-PurchaseOrderID,
-DueDate,
-OrderQty,
-ProductID,
-UnitPrice,
-LineTotal,
-ReceivedQty,
-RejectedQty,
-StockedQty,
-ModifiedDate
+[PurchaseOrderID],
+[DueDate],
+[OrderQty],
+[ProductID],
+[UnitPrice],
+[LineTotal],
+[ReceivedQty],
+[RejectedQty],
+[StockedQty],
+[ModifiedDate]
 )
 output 
-inserted.PurchaseOrderDetailID
+inserted.[PurchaseOrderDetailID]
 
 VALUES
 (
@@ -89,21 +89,21 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Purchasing.PurchaseOrderDetail
+            @"Update [Purchasing].[PurchaseOrderDetail]
 Set
-    DueDate=@DueDate,
-    OrderQty=@OrderQty,
-    ProductID=@ProductID,
-    UnitPrice=@UnitPrice,
-    LineTotal=@LineTotal,
-    ReceivedQty=@ReceivedQty,
-    RejectedQty=@RejectedQty,
-    StockedQty=@StockedQty,
-    ModifiedDate=@ModifiedDate
+    [DueDate]=@DueDate,
+    [OrderQty]=@OrderQty,
+    [ProductID]=@ProductID,
+    [UnitPrice]=@UnitPrice,
+    [LineTotal]=@LineTotal,
+    [ReceivedQty]=@ReceivedQty,
+    [RejectedQty]=@RejectedQty,
+    [StockedQty]=@StockedQty,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-PurchaseOrderID=@PurchaseOrderID  AND 
-PurchaseOrderDetailID=@PurchaseOrderDetailID 
+[PurchaseOrderID]=@PurchaseOrderID  AND 
+[PurchaseOrderDetailID]=@PurchaseOrderDetailID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, PurchaseOrderDetailModel updated)
@@ -127,10 +127,10 @@ PurchaseOrderDetailID=@PurchaseOrderDetailID
 
         public override string DeleteQuery =>
 @"delete from
-    Purchasing.PurchaseOrderDetail
+    [Purchasing].[PurchaseOrderDetail]
 where
-PurchaseOrderID=@PurchaseOrderID  AND 
-PurchaseOrderDetailID=@PurchaseOrderDetailID 
+[PurchaseOrderID]=@PurchaseOrderID  AND 
+[PurchaseOrderDetailID]=@PurchaseOrderDetailID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, PurchaseOrderDetailModel deleted)

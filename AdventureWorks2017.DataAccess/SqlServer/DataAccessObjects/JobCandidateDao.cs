@@ -8,30 +8,30 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class JobCandidateDao : AbstractDaoWithPrimaryKey<JobCandidateModel,JobCandidateModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             JobCandidateID,
-             BusinessEntityID,
-             Resume,
-             ModifiedDate
- from HumanResources.JobCandidate";
+             [JobCandidateID],
+             [BusinessEntityID],
+             [Resume],
+             [ModifiedDate]
+ from [HumanResources].[JobCandidate]";
 
         protected override JobCandidateModel ToModel(SqlDataReader dataReader)
         {
             var result = new JobCandidateModel();
              result.JobCandidateID = (int)(dataReader["JobCandidateID"]);
              result.BusinessEntityID = (int?)(dataReader["BusinessEntityID"] is DBNull ? null : dataReader["BusinessEntityID"]);
-             result.Resume = (System.Xml.XmlDocument)(dataReader["Resume"] is DBNull ? null : dataReader["Resume"]);
+             result.Resume = (System.Xml.XmlDocument?)(dataReader["Resume"] is DBNull ? null : dataReader["Resume"]);
              result.ModifiedDate = (DateTime)(dataReader["ModifiedDate"]);
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into HumanResources.JobCandidate
+        public override string InsertQuery => @"Insert Into [HumanResources].[JobCandidate]
 (
-BusinessEntityID,
-Resume,
-ModifiedDate
+[BusinessEntityID],
+[Resume],
+[ModifiedDate]
 )
 output 
-inserted.JobCandidateID
+inserted.[JobCandidateID]
 
 VALUES
 (
@@ -54,14 +54,14 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update HumanResources.JobCandidate
+            @"Update [HumanResources].[JobCandidate]
 Set
-    BusinessEntityID=@BusinessEntityID,
-    Resume=@Resume,
-    ModifiedDate=@ModifiedDate
+    [BusinessEntityID]=@BusinessEntityID,
+    [Resume]=@Resume,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-JobCandidateID=@JobCandidateID 
+[JobCandidateID]=@JobCandidateID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, JobCandidateModel updated)
@@ -78,9 +78,9 @@ JobCandidateID=@JobCandidateID
 
         public override string DeleteQuery =>
 @"delete from
-    HumanResources.JobCandidate
+    [HumanResources].[JobCandidate]
 where
-JobCandidateID=@JobCandidateID 
+[JobCandidateID]=@JobCandidateID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, JobCandidateModel deleted)

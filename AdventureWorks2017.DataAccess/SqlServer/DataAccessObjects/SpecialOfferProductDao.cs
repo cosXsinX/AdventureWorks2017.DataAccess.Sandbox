@@ -8,11 +8,11 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class SpecialOfferProductDao : AbstractDaoWithPrimaryKey<SpecialOfferProductModel,SpecialOfferProductModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             SpecialOfferID,
-             ProductID,
-             rowguid,
-             ModifiedDate
- from Sales.SpecialOfferProduct";
+             [SpecialOfferID],
+             [ProductID],
+             [rowguid],
+             [ModifiedDate]
+ from [Sales].[SpecialOfferProduct]";
 
         protected override SpecialOfferProductModel ToModel(SqlDataReader dataReader)
         {
@@ -24,12 +24,12 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Sales.SpecialOfferProduct
+        public override string InsertQuery => @"Insert Into [Sales].[SpecialOfferProduct]
 (
-SpecialOfferID,
-ProductID,
-rowguid,
-ModifiedDate
+[SpecialOfferID],
+[ProductID],
+[rowguid],
+[ModifiedDate]
 )
 
 VALUES
@@ -54,14 +54,14 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Sales.SpecialOfferProduct
+            @"Update [Sales].[SpecialOfferProduct]
 Set
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-SpecialOfferID=@SpecialOfferID  AND 
-ProductID=@ProductID 
+[SpecialOfferID]=@SpecialOfferID  AND 
+[ProductID]=@ProductID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, SpecialOfferProductModel updated)
@@ -78,10 +78,10 @@ ProductID=@ProductID
 
         public override string DeleteQuery =>
 @"delete from
-    Sales.SpecialOfferProduct
+    [Sales].[SpecialOfferProduct]
 where
-SpecialOfferID=@SpecialOfferID  AND 
-ProductID=@ProductID 
+[SpecialOfferID]=@SpecialOfferID  AND 
+[ProductID]=@ProductID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, SpecialOfferProductModel deleted)

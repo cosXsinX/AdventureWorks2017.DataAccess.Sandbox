@@ -8,11 +8,11 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class DepartmentDao : AbstractDaoWithPrimaryKey<DepartmentModel,DepartmentModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             DepartmentID,
-             Name,
-             GroupName,
-             ModifiedDate
- from HumanResources.Department";
+             [DepartmentID],
+             [Name],
+             [GroupName],
+             [ModifiedDate]
+ from [HumanResources].[Department]";
 
         protected override DepartmentModel ToModel(SqlDataReader dataReader)
         {
@@ -24,14 +24,14 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into HumanResources.Department
+        public override string InsertQuery => @"Insert Into [HumanResources].[Department]
 (
-Name,
-GroupName,
-ModifiedDate
+[Name],
+[GroupName],
+[ModifiedDate]
 )
 output 
-inserted.DepartmentID
+inserted.[DepartmentID]
 
 VALUES
 (
@@ -54,14 +54,14 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update HumanResources.Department
+            @"Update [HumanResources].[Department]
 Set
-    Name=@Name,
-    GroupName=@GroupName,
-    ModifiedDate=@ModifiedDate
+    [Name]=@Name,
+    [GroupName]=@GroupName,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-DepartmentID=@DepartmentID 
+[DepartmentID]=@DepartmentID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, DepartmentModel updated)
@@ -78,9 +78,9 @@ DepartmentID=@DepartmentID
 
         public override string DeleteQuery =>
 @"delete from
-    HumanResources.Department
+    [HumanResources].[Department]
 where
-DepartmentID=@DepartmentID 
+[DepartmentID]=@DepartmentID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, DepartmentModel deleted)

@@ -8,14 +8,14 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class CustomerDao : AbstractDaoWithPrimaryKey<CustomerModel,CustomerModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             CustomerID,
-             PersonID,
-             StoreID,
-             TerritoryID,
-             AccountNumber,
-             rowguid,
-             ModifiedDate
- from Sales.Customer";
+             [CustomerID],
+             [PersonID],
+             [StoreID],
+             [TerritoryID],
+             [AccountNumber],
+             [rowguid],
+             [ModifiedDate]
+ from [Sales].[Customer]";
 
         protected override CustomerModel ToModel(SqlDataReader dataReader)
         {
@@ -30,17 +30,17 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Sales.Customer
+        public override string InsertQuery => @"Insert Into [Sales].[Customer]
 (
-PersonID,
-StoreID,
-TerritoryID,
-AccountNumber,
-rowguid,
-ModifiedDate
+[PersonID],
+[StoreID],
+[TerritoryID],
+[AccountNumber],
+[rowguid],
+[ModifiedDate]
 )
 output 
-inserted.CustomerID
+inserted.[CustomerID]
 
 VALUES
 (
@@ -69,17 +69,17 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Sales.Customer
+            @"Update [Sales].[Customer]
 Set
-    PersonID=@PersonID,
-    StoreID=@StoreID,
-    TerritoryID=@TerritoryID,
-    AccountNumber=@AccountNumber,
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [PersonID]=@PersonID,
+    [StoreID]=@StoreID,
+    [TerritoryID]=@TerritoryID,
+    [AccountNumber]=@AccountNumber,
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-CustomerID=@CustomerID 
+[CustomerID]=@CustomerID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, CustomerModel updated)
@@ -99,9 +99,9 @@ CustomerID=@CustomerID
 
         public override string DeleteQuery =>
 @"delete from
-    Sales.Customer
+    [Sales].[Customer]
 where
-CustomerID=@CustomerID 
+[CustomerID]=@CustomerID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, CustomerModel deleted)

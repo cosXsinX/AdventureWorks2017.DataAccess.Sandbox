@@ -8,10 +8,10 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class CountryRegionDao : AbstractDaoWithPrimaryKey<CountryRegionModel,CountryRegionModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             CountryRegionCode,
-             Name,
-             ModifiedDate
- from Person.CountryRegion";
+             [CountryRegionCode],
+             [Name],
+             [ModifiedDate]
+ from [Person].[CountryRegion]";
 
         protected override CountryRegionModel ToModel(SqlDataReader dataReader)
         {
@@ -22,11 +22,11 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Person.CountryRegion
+        public override string InsertQuery => @"Insert Into [Person].[CountryRegion]
 (
-CountryRegionCode,
-Name,
-ModifiedDate
+[CountryRegionCode],
+[Name],
+[ModifiedDate]
 )
 
 VALUES
@@ -49,13 +49,13 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Person.CountryRegion
+            @"Update [Person].[CountryRegion]
 Set
-    Name=@Name,
-    ModifiedDate=@ModifiedDate
+    [Name]=@Name,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-CountryRegionCode=@CountryRegionCode 
+[CountryRegionCode]=@CountryRegionCode 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, CountryRegionModel updated)
@@ -71,9 +71,9 @@ CountryRegionCode=@CountryRegionCode
 
         public override string DeleteQuery =>
 @"delete from
-    Person.CountryRegion
+    [Person].[CountryRegion]
 where
-CountryRegionCode=@CountryRegionCode 
+[CountryRegionCode]=@CountryRegionCode 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, CountryRegionModel deleted)

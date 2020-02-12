@@ -8,10 +8,10 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class CultureDao : AbstractDaoWithPrimaryKey<CultureModel,CultureModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             CultureID,
-             Name,
-             ModifiedDate
- from Production.Culture";
+             [CultureID],
+             [Name],
+             [ModifiedDate]
+ from [Production].[Culture]";
 
         protected override CultureModel ToModel(SqlDataReader dataReader)
         {
@@ -22,11 +22,11 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Production.Culture
+        public override string InsertQuery => @"Insert Into [Production].[Culture]
 (
-CultureID,
-Name,
-ModifiedDate
+[CultureID],
+[Name],
+[ModifiedDate]
 )
 
 VALUES
@@ -49,13 +49,13 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Production.Culture
+            @"Update [Production].[Culture]
 Set
-    Name=@Name,
-    ModifiedDate=@ModifiedDate
+    [Name]=@Name,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-CultureID=@CultureID 
+[CultureID]=@CultureID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, CultureModel updated)
@@ -71,9 +71,9 @@ CultureID=@CultureID
 
         public override string DeleteQuery =>
 @"delete from
-    Production.Culture
+    [Production].[Culture]
 where
-CultureID=@CultureID 
+[CultureID]=@CultureID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, CultureModel deleted)

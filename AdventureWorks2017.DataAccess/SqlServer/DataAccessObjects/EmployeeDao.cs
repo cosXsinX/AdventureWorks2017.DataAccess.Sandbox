@@ -8,23 +8,23 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class EmployeeDao : AbstractDaoWithPrimaryKey<EmployeeModel,EmployeeModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             BusinessEntityID,
-             NationalIDNumber,
-             LoginID,
-             OrganizationNode,
-             OrganizationLevel,
-             JobTitle,
-             BirthDate,
-             MaritalStatus,
-             Gender,
-             HireDate,
-             SalariedFlag,
-             VacationHours,
-             SickLeaveHours,
-             CurrentFlag,
-             rowguid,
-             ModifiedDate
- from HumanResources.Employee";
+             [BusinessEntityID],
+             [NationalIDNumber],
+             [LoginID],
+             [OrganizationNode],
+             [OrganizationLevel],
+             [JobTitle],
+             [BirthDate],
+             [MaritalStatus],
+             [Gender],
+             [HireDate],
+             [SalariedFlag],
+             [VacationHours],
+             [SickLeaveHours],
+             [CurrentFlag],
+             [rowguid],
+             [ModifiedDate]
+ from [HumanResources].[Employee]";
 
         protected override EmployeeModel ToModel(SqlDataReader dataReader)
         {
@@ -32,8 +32,8 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              result.BusinessEntityID = (int)(dataReader["BusinessEntityID"]);
              result.NationalIDNumber = (string)(dataReader["NationalIDNumber"]);
              result.LoginID = (string)(dataReader["LoginID"]);
-             result.OrganizationNode = (Microsoft.SqlServer.Types.SqlHierarchyId)(dataReader["OrganizationNode"] is DBNull ? null : dataReader["OrganizationNode"]);
-             result.OrganizationLevel = (short)(dataReader["OrganizationLevel"] is DBNull ? null : dataReader["OrganizationLevel"]);
+             result.OrganizationNode = (Microsoft.SqlServer.Types.SqlHierarchyId?)(dataReader["OrganizationNode"] is DBNull ? null : dataReader["OrganizationNode"]);
+             result.OrganizationLevel = (short?)(dataReader["OrganizationLevel"] is DBNull ? null : dataReader["OrganizationLevel"]);
              result.JobTitle = (string)(dataReader["JobTitle"]);
              result.BirthDate = (DateTime)(dataReader["BirthDate"]);
              result.MaritalStatus = (string)(dataReader["MaritalStatus"]);
@@ -48,24 +48,24 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into HumanResources.Employee
+        public override string InsertQuery => @"Insert Into [HumanResources].[Employee]
 (
-BusinessEntityID,
-NationalIDNumber,
-LoginID,
-OrganizationNode,
-OrganizationLevel,
-JobTitle,
-BirthDate,
-MaritalStatus,
-Gender,
-HireDate,
-SalariedFlag,
-VacationHours,
-SickLeaveHours,
-CurrentFlag,
-rowguid,
-ModifiedDate
+[BusinessEntityID],
+[NationalIDNumber],
+[LoginID],
+[OrganizationNode],
+[OrganizationLevel],
+[JobTitle],
+[BirthDate],
+[MaritalStatus],
+[Gender],
+[HireDate],
+[SalariedFlag],
+[VacationHours],
+[SickLeaveHours],
+[CurrentFlag],
+[rowguid],
+[ModifiedDate]
 )
 
 VALUES
@@ -114,26 +114,26 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update HumanResources.Employee
+            @"Update [HumanResources].[Employee]
 Set
-    NationalIDNumber=@NationalIDNumber,
-    LoginID=@LoginID,
-    OrganizationNode=@OrganizationNode,
-    OrganizationLevel=@OrganizationLevel,
-    JobTitle=@JobTitle,
-    BirthDate=@BirthDate,
-    MaritalStatus=@MaritalStatus,
-    Gender=@Gender,
-    HireDate=@HireDate,
-    SalariedFlag=@SalariedFlag,
-    VacationHours=@VacationHours,
-    SickLeaveHours=@SickLeaveHours,
-    CurrentFlag=@CurrentFlag,
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [NationalIDNumber]=@NationalIDNumber,
+    [LoginID]=@LoginID,
+    [OrganizationNode]=@OrganizationNode,
+    [OrganizationLevel]=@OrganizationLevel,
+    [JobTitle]=@JobTitle,
+    [BirthDate]=@BirthDate,
+    [MaritalStatus]=@MaritalStatus,
+    [Gender]=@Gender,
+    [HireDate]=@HireDate,
+    [SalariedFlag]=@SalariedFlag,
+    [VacationHours]=@VacationHours,
+    [SickLeaveHours]=@SickLeaveHours,
+    [CurrentFlag]=@CurrentFlag,
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-BusinessEntityID=@BusinessEntityID 
+[BusinessEntityID]=@BusinessEntityID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, EmployeeModel updated)
@@ -162,9 +162,9 @@ BusinessEntityID=@BusinessEntityID
 
         public override string DeleteQuery =>
 @"delete from
-    HumanResources.Employee
+    [HumanResources].[Employee]
 where
-BusinessEntityID=@BusinessEntityID 
+[BusinessEntityID]=@BusinessEntityID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, EmployeeModel deleted)

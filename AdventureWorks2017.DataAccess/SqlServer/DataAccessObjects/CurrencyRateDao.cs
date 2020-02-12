@@ -8,14 +8,14 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class CurrencyRateDao : AbstractDaoWithPrimaryKey<CurrencyRateModel,CurrencyRateModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             CurrencyRateID,
-             CurrencyRateDate,
-             FromCurrencyCode,
-             ToCurrencyCode,
-             AverageRate,
-             EndOfDayRate,
-             ModifiedDate
- from Sales.CurrencyRate";
+             [CurrencyRateID],
+             [CurrencyRateDate],
+             [FromCurrencyCode],
+             [ToCurrencyCode],
+             [AverageRate],
+             [EndOfDayRate],
+             [ModifiedDate]
+ from [Sales].[CurrencyRate]";
 
         protected override CurrencyRateModel ToModel(SqlDataReader dataReader)
         {
@@ -30,17 +30,17 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Sales.CurrencyRate
+        public override string InsertQuery => @"Insert Into [Sales].[CurrencyRate]
 (
-CurrencyRateDate,
-FromCurrencyCode,
-ToCurrencyCode,
-AverageRate,
-EndOfDayRate,
-ModifiedDate
+[CurrencyRateDate],
+[FromCurrencyCode],
+[ToCurrencyCode],
+[AverageRate],
+[EndOfDayRate],
+[ModifiedDate]
 )
 output 
-inserted.CurrencyRateID
+inserted.[CurrencyRateID]
 
 VALUES
 (
@@ -69,17 +69,17 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Sales.CurrencyRate
+            @"Update [Sales].[CurrencyRate]
 Set
-    CurrencyRateDate=@CurrencyRateDate,
-    FromCurrencyCode=@FromCurrencyCode,
-    ToCurrencyCode=@ToCurrencyCode,
-    AverageRate=@AverageRate,
-    EndOfDayRate=@EndOfDayRate,
-    ModifiedDate=@ModifiedDate
+    [CurrencyRateDate]=@CurrencyRateDate,
+    [FromCurrencyCode]=@FromCurrencyCode,
+    [ToCurrencyCode]=@ToCurrencyCode,
+    [AverageRate]=@AverageRate,
+    [EndOfDayRate]=@EndOfDayRate,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-CurrencyRateID=@CurrencyRateID 
+[CurrencyRateID]=@CurrencyRateID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, CurrencyRateModel updated)
@@ -99,9 +99,9 @@ CurrencyRateID=@CurrencyRateID
 
         public override string DeleteQuery =>
 @"delete from
-    Sales.CurrencyRate
+    [Sales].[CurrencyRate]
 where
-CurrencyRateID=@CurrencyRateID 
+[CurrencyRateID]=@CurrencyRateID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, CurrencyRateModel deleted)

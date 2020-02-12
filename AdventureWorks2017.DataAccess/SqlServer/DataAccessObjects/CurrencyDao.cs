@@ -8,10 +8,10 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class CurrencyDao : AbstractDaoWithPrimaryKey<CurrencyModel,CurrencyModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             CurrencyCode,
-             Name,
-             ModifiedDate
- from Sales.Currency";
+             [CurrencyCode],
+             [Name],
+             [ModifiedDate]
+ from [Sales].[Currency]";
 
         protected override CurrencyModel ToModel(SqlDataReader dataReader)
         {
@@ -22,11 +22,11 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Sales.Currency
+        public override string InsertQuery => @"Insert Into [Sales].[Currency]
 (
-CurrencyCode,
-Name,
-ModifiedDate
+[CurrencyCode],
+[Name],
+[ModifiedDate]
 )
 
 VALUES
@@ -49,13 +49,13 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Sales.Currency
+            @"Update [Sales].[Currency]
 Set
-    Name=@Name,
-    ModifiedDate=@ModifiedDate
+    [Name]=@Name,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-CurrencyCode=@CurrencyCode 
+[CurrencyCode]=@CurrencyCode 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, CurrencyModel updated)
@@ -71,9 +71,9 @@ CurrencyCode=@CurrencyCode
 
         public override string DeleteQuery =>
 @"delete from
-    Sales.Currency
+    [Sales].[Currency]
 where
-CurrencyCode=@CurrencyCode 
+[CurrencyCode]=@CurrencyCode 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, CurrencyModel deleted)

@@ -8,13 +8,13 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class CreditCardDao : AbstractDaoWithPrimaryKey<CreditCardModel,CreditCardModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             CreditCardID,
-             CardType,
-             CardNumber,
-             ExpMonth,
-             ExpYear,
-             ModifiedDate
- from Sales.CreditCard";
+             [CreditCardID],
+             [CardType],
+             [CardNumber],
+             [ExpMonth],
+             [ExpYear],
+             [ModifiedDate]
+ from [Sales].[CreditCard]";
 
         protected override CreditCardModel ToModel(SqlDataReader dataReader)
         {
@@ -28,16 +28,16 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Sales.CreditCard
+        public override string InsertQuery => @"Insert Into [Sales].[CreditCard]
 (
-CardType,
-CardNumber,
-ExpMonth,
-ExpYear,
-ModifiedDate
+[CardType],
+[CardNumber],
+[ExpMonth],
+[ExpYear],
+[ModifiedDate]
 )
 output 
-inserted.CreditCardID
+inserted.[CreditCardID]
 
 VALUES
 (
@@ -64,16 +64,16 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Sales.CreditCard
+            @"Update [Sales].[CreditCard]
 Set
-    CardType=@CardType,
-    CardNumber=@CardNumber,
-    ExpMonth=@ExpMonth,
-    ExpYear=@ExpYear,
-    ModifiedDate=@ModifiedDate
+    [CardType]=@CardType,
+    [CardNumber]=@CardNumber,
+    [ExpMonth]=@ExpMonth,
+    [ExpYear]=@ExpYear,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-CreditCardID=@CreditCardID 
+[CreditCardID]=@CreditCardID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, CreditCardModel updated)
@@ -92,9 +92,9 @@ CreditCardID=@CreditCardID
 
         public override string DeleteQuery =>
 @"delete from
-    Sales.CreditCard
+    [Sales].[CreditCard]
 where
-CreditCardID=@CreditCardID 
+[CreditCardID]=@CreditCardID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, CreditCardModel deleted)

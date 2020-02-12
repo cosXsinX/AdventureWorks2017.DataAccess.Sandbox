@@ -8,10 +8,10 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class CountryRegionCurrencyDao : AbstractDaoWithPrimaryKey<CountryRegionCurrencyModel,CountryRegionCurrencyModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             CountryRegionCode,
-             CurrencyCode,
-             ModifiedDate
- from Sales.CountryRegionCurrency";
+             [CountryRegionCode],
+             [CurrencyCode],
+             [ModifiedDate]
+ from [Sales].[CountryRegionCurrency]";
 
         protected override CountryRegionCurrencyModel ToModel(SqlDataReader dataReader)
         {
@@ -22,11 +22,11 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Sales.CountryRegionCurrency
+        public override string InsertQuery => @"Insert Into [Sales].[CountryRegionCurrency]
 (
-CountryRegionCode,
-CurrencyCode,
-ModifiedDate
+[CountryRegionCode],
+[CurrencyCode],
+[ModifiedDate]
 )
 
 VALUES
@@ -49,13 +49,13 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Sales.CountryRegionCurrency
+            @"Update [Sales].[CountryRegionCurrency]
 Set
-    ModifiedDate=@ModifiedDate
+    [ModifiedDate]=@ModifiedDate
 
 Where
-CountryRegionCode=@CountryRegionCode  AND 
-CurrencyCode=@CurrencyCode 
+[CountryRegionCode]=@CountryRegionCode  AND 
+[CurrencyCode]=@CurrencyCode 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, CountryRegionCurrencyModel updated)
@@ -71,10 +71,10 @@ CurrencyCode=@CurrencyCode
 
         public override string DeleteQuery =>
 @"delete from
-    Sales.CountryRegionCurrency
+    [Sales].[CountryRegionCurrency]
 where
-CountryRegionCode=@CountryRegionCode  AND 
-CurrencyCode=@CurrencyCode 
+[CountryRegionCode]=@CountryRegionCode  AND 
+[CurrencyCode]=@CurrencyCode 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, CountryRegionCurrencyModel deleted)

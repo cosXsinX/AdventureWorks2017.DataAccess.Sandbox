@@ -8,17 +8,17 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class WorkOrderDao : AbstractDaoWithPrimaryKey<WorkOrderModel,WorkOrderModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             WorkOrderID,
-             ProductID,
-             OrderQty,
-             StockedQty,
-             ScrappedQty,
-             StartDate,
-             EndDate,
-             DueDate,
-             ScrapReasonID,
-             ModifiedDate
- from Production.WorkOrder";
+             [WorkOrderID],
+             [ProductID],
+             [OrderQty],
+             [StockedQty],
+             [ScrappedQty],
+             [StartDate],
+             [EndDate],
+             [DueDate],
+             [ScrapReasonID],
+             [ModifiedDate]
+ from [Production].[WorkOrder]";
 
         protected override WorkOrderModel ToModel(SqlDataReader dataReader)
         {
@@ -29,27 +29,27 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              result.StockedQty = (int)(dataReader["StockedQty"]);
              result.ScrappedQty = (short)(dataReader["ScrappedQty"]);
              result.StartDate = (DateTime)(dataReader["StartDate"]);
-             result.EndDate = (DateTime)(dataReader["EndDate"] is DBNull ? null : dataReader["EndDate"]);
+             result.EndDate = (DateTime?)(dataReader["EndDate"] is DBNull ? null : dataReader["EndDate"]);
              result.DueDate = (DateTime)(dataReader["DueDate"]);
              result.ScrapReasonID = (short?)(dataReader["ScrapReasonID"] is DBNull ? null : dataReader["ScrapReasonID"]);
              result.ModifiedDate = (DateTime)(dataReader["ModifiedDate"]);
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Production.WorkOrder
+        public override string InsertQuery => @"Insert Into [Production].[WorkOrder]
 (
-ProductID,
-OrderQty,
-StockedQty,
-ScrappedQty,
-StartDate,
-EndDate,
-DueDate,
-ScrapReasonID,
-ModifiedDate
+[ProductID],
+[OrderQty],
+[StockedQty],
+[ScrappedQty],
+[StartDate],
+[EndDate],
+[DueDate],
+[ScrapReasonID],
+[ModifiedDate]
 )
 output 
-inserted.WorkOrderID
+inserted.[WorkOrderID]
 
 VALUES
 (
@@ -84,20 +84,20 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Production.WorkOrder
+            @"Update [Production].[WorkOrder]
 Set
-    ProductID=@ProductID,
-    OrderQty=@OrderQty,
-    StockedQty=@StockedQty,
-    ScrappedQty=@ScrappedQty,
-    StartDate=@StartDate,
-    EndDate=@EndDate,
-    DueDate=@DueDate,
-    ScrapReasonID=@ScrapReasonID,
-    ModifiedDate=@ModifiedDate
+    [ProductID]=@ProductID,
+    [OrderQty]=@OrderQty,
+    [StockedQty]=@StockedQty,
+    [ScrappedQty]=@ScrappedQty,
+    [StartDate]=@StartDate,
+    [EndDate]=@EndDate,
+    [DueDate]=@DueDate,
+    [ScrapReasonID]=@ScrapReasonID,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-WorkOrderID=@WorkOrderID 
+[WorkOrderID]=@WorkOrderID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, WorkOrderModel updated)
@@ -120,9 +120,9 @@ WorkOrderID=@WorkOrderID
 
         public override string DeleteQuery =>
 @"delete from
-    Production.WorkOrder
+    [Production].[WorkOrder]
 where
-WorkOrderID=@WorkOrderID 
+[WorkOrderID]=@WorkOrderID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, WorkOrderModel deleted)

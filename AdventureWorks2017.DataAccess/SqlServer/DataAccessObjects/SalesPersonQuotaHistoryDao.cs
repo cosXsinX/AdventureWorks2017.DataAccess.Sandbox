@@ -8,12 +8,12 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class SalesPersonQuotaHistoryDao : AbstractDaoWithPrimaryKey<SalesPersonQuotaHistoryModel,SalesPersonQuotaHistoryModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             BusinessEntityID,
-             QuotaDate,
-             SalesQuota,
-             rowguid,
-             ModifiedDate
- from Sales.SalesPersonQuotaHistory";
+             [BusinessEntityID],
+             [QuotaDate],
+             [SalesQuota],
+             [rowguid],
+             [ModifiedDate]
+ from [Sales].[SalesPersonQuotaHistory]";
 
         protected override SalesPersonQuotaHistoryModel ToModel(SqlDataReader dataReader)
         {
@@ -26,13 +26,13 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Sales.SalesPersonQuotaHistory
+        public override string InsertQuery => @"Insert Into [Sales].[SalesPersonQuotaHistory]
 (
-BusinessEntityID,
-QuotaDate,
-SalesQuota,
-rowguid,
-ModifiedDate
+[BusinessEntityID],
+[QuotaDate],
+[SalesQuota],
+[rowguid],
+[ModifiedDate]
 )
 
 VALUES
@@ -59,15 +59,15 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Sales.SalesPersonQuotaHistory
+            @"Update [Sales].[SalesPersonQuotaHistory]
 Set
-    SalesQuota=@SalesQuota,
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [SalesQuota]=@SalesQuota,
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-BusinessEntityID=@BusinessEntityID  AND 
-QuotaDate=@QuotaDate 
+[BusinessEntityID]=@BusinessEntityID  AND 
+[QuotaDate]=@QuotaDate 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, SalesPersonQuotaHistoryModel updated)
@@ -85,10 +85,10 @@ QuotaDate=@QuotaDate
 
         public override string DeleteQuery =>
 @"delete from
-    Sales.SalesPersonQuotaHistory
+    [Sales].[SalesPersonQuotaHistory]
 where
-BusinessEntityID=@BusinessEntityID  AND 
-QuotaDate=@QuotaDate 
+[BusinessEntityID]=@BusinessEntityID  AND 
+[QuotaDate]=@QuotaDate 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, SalesPersonQuotaHistoryModel deleted)

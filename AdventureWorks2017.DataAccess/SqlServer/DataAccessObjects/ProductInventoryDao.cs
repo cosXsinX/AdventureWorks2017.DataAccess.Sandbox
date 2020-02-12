@@ -8,14 +8,14 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class ProductInventoryDao : AbstractDaoWithPrimaryKey<ProductInventoryModel,ProductInventoryModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             ProductID,
-             LocationID,
-             Shelf,
-             Bin,
-             Quantity,
-             rowguid,
-             ModifiedDate
- from Production.ProductInventory";
+             [ProductID],
+             [LocationID],
+             [Shelf],
+             [Bin],
+             [Quantity],
+             [rowguid],
+             [ModifiedDate]
+ from [Production].[ProductInventory]";
 
         protected override ProductInventoryModel ToModel(SqlDataReader dataReader)
         {
@@ -30,15 +30,15 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Production.ProductInventory
+        public override string InsertQuery => @"Insert Into [Production].[ProductInventory]
 (
-ProductID,
-LocationID,
-Shelf,
-Bin,
-Quantity,
-rowguid,
-ModifiedDate
+[ProductID],
+[LocationID],
+[Shelf],
+[Bin],
+[Quantity],
+[rowguid],
+[ModifiedDate]
 )
 
 VALUES
@@ -69,17 +69,17 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Production.ProductInventory
+            @"Update [Production].[ProductInventory]
 Set
-    Shelf=@Shelf,
-    Bin=@Bin,
-    Quantity=@Quantity,
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [Shelf]=@Shelf,
+    [Bin]=@Bin,
+    [Quantity]=@Quantity,
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-ProductID=@ProductID  AND 
-LocationID=@LocationID 
+[ProductID]=@ProductID  AND 
+[LocationID]=@LocationID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ProductInventoryModel updated)
@@ -99,10 +99,10 @@ LocationID=@LocationID
 
         public override string DeleteQuery =>
 @"delete from
-    Production.ProductInventory
+    [Production].[ProductInventory]
 where
-ProductID=@ProductID  AND 
-LocationID=@LocationID 
+[ProductID]=@ProductID  AND 
+[LocationID]=@LocationID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ProductInventoryModel deleted)

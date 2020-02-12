@@ -8,27 +8,27 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class DocumentDao : AbstractDaoWithPrimaryKey<DocumentModel,DocumentModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             DocumentNode,
-             DocumentLevel,
-             Title,
-             Owner,
-             FolderFlag,
-             FileName,
-             FileExtension,
-             Revision,
-             ChangeNumber,
-             Status,
-             DocumentSummary,
-             Document,
-             rowguid,
-             ModifiedDate
- from Production.Document";
+             [DocumentNode],
+             [DocumentLevel],
+             [Title],
+             [Owner],
+             [FolderFlag],
+             [FileName],
+             [FileExtension],
+             [Revision],
+             [ChangeNumber],
+             [Status],
+             [DocumentSummary],
+             [Document],
+             [rowguid],
+             [ModifiedDate]
+ from [Production].[Document]";
 
         protected override DocumentModel ToModel(SqlDataReader dataReader)
         {
             var result = new DocumentModel();
              result.DocumentNode = (Microsoft.SqlServer.Types.SqlHierarchyId)(dataReader["DocumentNode"]);
-             result.DocumentLevel = (short)(dataReader["DocumentLevel"] is DBNull ? null : dataReader["DocumentLevel"]);
+             result.DocumentLevel = (short?)(dataReader["DocumentLevel"] is DBNull ? null : dataReader["DocumentLevel"]);
              result.Title = (string)(dataReader["Title"]);
              result.Owner = (int)(dataReader["Owner"]);
              result.FolderFlag = (bool)(dataReader["FolderFlag"]);
@@ -37,29 +37,29 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              result.Revision = (string)(dataReader["Revision"]);
              result.ChangeNumber = (int)(dataReader["ChangeNumber"]);
              result.Status = (byte)(dataReader["Status"]);
-             result.DocumentSummary = (string)(dataReader["DocumentSummary"] is DBNull ? null : dataReader["DocumentSummary"]);
-             result.Document = (byte[])(dataReader["Document"] is DBNull ? null : dataReader["Document"]);
+             result.DocumentSummary = (string?)(dataReader["DocumentSummary"] is DBNull ? null : dataReader["DocumentSummary"]);
+             result.Document = (byte[]?)(dataReader["Document"] is DBNull ? null : dataReader["Document"]);
              result.rowguid = (Guid)(dataReader["rowguid"]);
              result.ModifiedDate = (DateTime)(dataReader["ModifiedDate"]);
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Production.Document
+        public override string InsertQuery => @"Insert Into [Production].[Document]
 (
-DocumentNode,
-DocumentLevel,
-Title,
-Owner,
-FolderFlag,
-FileName,
-FileExtension,
-Revision,
-ChangeNumber,
-Status,
-DocumentSummary,
-Document,
-rowguid,
-ModifiedDate
+[DocumentNode],
+[DocumentLevel],
+[Title],
+[Owner],
+[FolderFlag],
+[FileName],
+[FileExtension],
+[Revision],
+[ChangeNumber],
+[Status],
+[DocumentSummary],
+[Document],
+[rowguid],
+[ModifiedDate]
 )
 
 VALUES
@@ -104,24 +104,24 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Production.Document
+            @"Update [Production].[Document]
 Set
-    DocumentLevel=@DocumentLevel,
-    Title=@Title,
-    Owner=@Owner,
-    FolderFlag=@FolderFlag,
-    FileName=@FileName,
-    FileExtension=@FileExtension,
-    Revision=@Revision,
-    ChangeNumber=@ChangeNumber,
-    Status=@Status,
-    DocumentSummary=@DocumentSummary,
-    Document=@Document,
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [DocumentLevel]=@DocumentLevel,
+    [Title]=@Title,
+    [Owner]=@Owner,
+    [FolderFlag]=@FolderFlag,
+    [FileName]=@FileName,
+    [FileExtension]=@FileExtension,
+    [Revision]=@Revision,
+    [ChangeNumber]=@ChangeNumber,
+    [Status]=@Status,
+    [DocumentSummary]=@DocumentSummary,
+    [Document]=@Document,
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-DocumentNode=@DocumentNode 
+[DocumentNode]=@DocumentNode 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, DocumentModel updated)
@@ -148,9 +148,9 @@ DocumentNode=@DocumentNode
 
         public override string DeleteQuery =>
 @"delete from
-    Production.Document
+    [Production].[Document]
 where
-DocumentNode=@DocumentNode 
+[DocumentNode]=@DocumentNode 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, DocumentModel deleted)

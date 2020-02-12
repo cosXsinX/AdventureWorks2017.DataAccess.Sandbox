@@ -8,16 +8,16 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class TransactionHistoryDao : AbstractDaoWithPrimaryKey<TransactionHistoryModel,TransactionHistoryModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             TransactionID,
-             ProductID,
-             ReferenceOrderID,
-             ReferenceOrderLineID,
-             TransactionDate,
-             TransactionType,
-             Quantity,
-             ActualCost,
-             ModifiedDate
- from Production.TransactionHistory";
+             [TransactionID],
+             [ProductID],
+             [ReferenceOrderID],
+             [ReferenceOrderLineID],
+             [TransactionDate],
+             [TransactionType],
+             [Quantity],
+             [ActualCost],
+             [ModifiedDate]
+ from [Production].[TransactionHistory]";
 
         protected override TransactionHistoryModel ToModel(SqlDataReader dataReader)
         {
@@ -34,19 +34,19 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Production.TransactionHistory
+        public override string InsertQuery => @"Insert Into [Production].[TransactionHistory]
 (
-ProductID,
-ReferenceOrderID,
-ReferenceOrderLineID,
-TransactionDate,
-TransactionType,
-Quantity,
-ActualCost,
-ModifiedDate
+[ProductID],
+[ReferenceOrderID],
+[ReferenceOrderLineID],
+[TransactionDate],
+[TransactionType],
+[Quantity],
+[ActualCost],
+[ModifiedDate]
 )
 output 
-inserted.TransactionID
+inserted.[TransactionID]
 
 VALUES
 (
@@ -79,19 +79,19 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Production.TransactionHistory
+            @"Update [Production].[TransactionHistory]
 Set
-    ProductID=@ProductID,
-    ReferenceOrderID=@ReferenceOrderID,
-    ReferenceOrderLineID=@ReferenceOrderLineID,
-    TransactionDate=@TransactionDate,
-    TransactionType=@TransactionType,
-    Quantity=@Quantity,
-    ActualCost=@ActualCost,
-    ModifiedDate=@ModifiedDate
+    [ProductID]=@ProductID,
+    [ReferenceOrderID]=@ReferenceOrderID,
+    [ReferenceOrderLineID]=@ReferenceOrderLineID,
+    [TransactionDate]=@TransactionDate,
+    [TransactionType]=@TransactionType,
+    [Quantity]=@Quantity,
+    [ActualCost]=@ActualCost,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-TransactionID=@TransactionID 
+[TransactionID]=@TransactionID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, TransactionHistoryModel updated)
@@ -113,9 +113,9 @@ TransactionID=@TransactionID
 
         public override string DeleteQuery =>
 @"delete from
-    Production.TransactionHistory
+    [Production].[TransactionHistory]
 where
-TransactionID=@TransactionID 
+[TransactionID]=@TransactionID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, TransactionHistoryModel deleted)

@@ -8,10 +8,10 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class UnitMeasureDao : AbstractDaoWithPrimaryKey<UnitMeasureModel,UnitMeasureModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             UnitMeasureCode,
-             Name,
-             ModifiedDate
- from Production.UnitMeasure";
+             [UnitMeasureCode],
+             [Name],
+             [ModifiedDate]
+ from [Production].[UnitMeasure]";
 
         protected override UnitMeasureModel ToModel(SqlDataReader dataReader)
         {
@@ -22,11 +22,11 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Production.UnitMeasure
+        public override string InsertQuery => @"Insert Into [Production].[UnitMeasure]
 (
-UnitMeasureCode,
-Name,
-ModifiedDate
+[UnitMeasureCode],
+[Name],
+[ModifiedDate]
 )
 
 VALUES
@@ -49,13 +49,13 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Production.UnitMeasure
+            @"Update [Production].[UnitMeasure]
 Set
-    Name=@Name,
-    ModifiedDate=@ModifiedDate
+    [Name]=@Name,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-UnitMeasureCode=@UnitMeasureCode 
+[UnitMeasureCode]=@UnitMeasureCode 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, UnitMeasureModel updated)
@@ -71,9 +71,9 @@ UnitMeasureCode=@UnitMeasureCode
 
         public override string DeleteQuery =>
 @"delete from
-    Production.UnitMeasure
+    [Production].[UnitMeasure]
 where
-UnitMeasureCode=@UnitMeasureCode 
+[UnitMeasureCode]=@UnitMeasureCode 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, UnitMeasureModel deleted)

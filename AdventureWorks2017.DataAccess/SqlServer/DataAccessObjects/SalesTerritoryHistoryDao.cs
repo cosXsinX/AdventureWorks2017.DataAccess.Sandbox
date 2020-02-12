@@ -8,13 +8,13 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class SalesTerritoryHistoryDao : AbstractDaoWithPrimaryKey<SalesTerritoryHistoryModel,SalesTerritoryHistoryModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             BusinessEntityID,
-             TerritoryID,
-             StartDate,
-             EndDate,
-             rowguid,
-             ModifiedDate
- from Sales.SalesTerritoryHistory";
+             [BusinessEntityID],
+             [TerritoryID],
+             [StartDate],
+             [EndDate],
+             [rowguid],
+             [ModifiedDate]
+ from [Sales].[SalesTerritoryHistory]";
 
         protected override SalesTerritoryHistoryModel ToModel(SqlDataReader dataReader)
         {
@@ -28,14 +28,14 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Sales.SalesTerritoryHistory
+        public override string InsertQuery => @"Insert Into [Sales].[SalesTerritoryHistory]
 (
-BusinessEntityID,
-TerritoryID,
-StartDate,
-EndDate,
-rowguid,
-ModifiedDate
+[BusinessEntityID],
+[TerritoryID],
+[StartDate],
+[EndDate],
+[rowguid],
+[ModifiedDate]
 )
 
 VALUES
@@ -64,16 +64,16 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Sales.SalesTerritoryHistory
+            @"Update [Sales].[SalesTerritoryHistory]
 Set
-    EndDate=@EndDate,
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [EndDate]=@EndDate,
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-BusinessEntityID=@BusinessEntityID  AND 
-TerritoryID=@TerritoryID  AND 
-StartDate=@StartDate 
+[BusinessEntityID]=@BusinessEntityID  AND 
+[TerritoryID]=@TerritoryID  AND 
+[StartDate]=@StartDate 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, SalesTerritoryHistoryModel updated)
@@ -92,11 +92,11 @@ StartDate=@StartDate
 
         public override string DeleteQuery =>
 @"delete from
-    Sales.SalesTerritoryHistory
+    [Sales].[SalesTerritoryHistory]
 where
-BusinessEntityID=@BusinessEntityID  AND 
-TerritoryID=@TerritoryID  AND 
-StartDate=@StartDate 
+[BusinessEntityID]=@BusinessEntityID  AND 
+[TerritoryID]=@TerritoryID  AND 
+[StartDate]=@StartDate 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, SalesTerritoryHistoryModel deleted)

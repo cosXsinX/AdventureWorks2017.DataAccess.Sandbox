@@ -8,36 +8,36 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class ProductModelDao : AbstractDaoWithPrimaryKey<ProductModelModel,ProductModelModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             ProductModelID,
-             Name,
-             CatalogDescription,
-             Instructions,
-             rowguid,
-             ModifiedDate
- from Production.ProductModel";
+             [ProductModelID],
+             [Name],
+             [CatalogDescription],
+             [Instructions],
+             [rowguid],
+             [ModifiedDate]
+ from [Production].[ProductModel]";
 
         protected override ProductModelModel ToModel(SqlDataReader dataReader)
         {
             var result = new ProductModelModel();
              result.ProductModelID = (int)(dataReader["ProductModelID"]);
              result.Name = (string)(dataReader["Name"]);
-             result.CatalogDescription = (System.Xml.XmlDocument)(dataReader["CatalogDescription"] is DBNull ? null : dataReader["CatalogDescription"]);
-             result.Instructions = (System.Xml.XmlDocument)(dataReader["Instructions"] is DBNull ? null : dataReader["Instructions"]);
+             result.CatalogDescription = (System.Xml.XmlDocument?)(dataReader["CatalogDescription"] is DBNull ? null : dataReader["CatalogDescription"]);
+             result.Instructions = (System.Xml.XmlDocument?)(dataReader["Instructions"] is DBNull ? null : dataReader["Instructions"]);
              result.rowguid = (Guid)(dataReader["rowguid"]);
              result.ModifiedDate = (DateTime)(dataReader["ModifiedDate"]);
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Production.ProductModel
+        public override string InsertQuery => @"Insert Into [Production].[ProductModel]
 (
-Name,
-CatalogDescription,
-Instructions,
-rowguid,
-ModifiedDate
+[Name],
+[CatalogDescription],
+[Instructions],
+[rowguid],
+[ModifiedDate]
 )
 output 
-inserted.ProductModelID
+inserted.[ProductModelID]
 
 VALUES
 (
@@ -64,16 +64,16 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Production.ProductModel
+            @"Update [Production].[ProductModel]
 Set
-    Name=@Name,
-    CatalogDescription=@CatalogDescription,
-    Instructions=@Instructions,
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [Name]=@Name,
+    [CatalogDescription]=@CatalogDescription,
+    [Instructions]=@Instructions,
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-ProductModelID=@ProductModelID 
+[ProductModelID]=@ProductModelID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ProductModelModel updated)
@@ -92,9 +92,9 @@ ProductModelID=@ProductModelID
 
         public override string DeleteQuery =>
 @"delete from
-    Production.ProductModel
+    [Production].[ProductModel]
 where
-ProductModelID=@ProductModelID 
+[ProductModelID]=@ProductModelID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ProductModelModel deleted)

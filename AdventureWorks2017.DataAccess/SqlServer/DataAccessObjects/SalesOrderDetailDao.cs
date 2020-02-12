@@ -8,25 +8,25 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class SalesOrderDetailDao : AbstractDaoWithPrimaryKey<SalesOrderDetailModel,SalesOrderDetailModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             SalesOrderID,
-             SalesOrderDetailID,
-             CarrierTrackingNumber,
-             OrderQty,
-             ProductID,
-             SpecialOfferID,
-             UnitPrice,
-             UnitPriceDiscount,
-             LineTotal,
-             rowguid,
-             ModifiedDate
- from Sales.SalesOrderDetail";
+             [SalesOrderID],
+             [SalesOrderDetailID],
+             [CarrierTrackingNumber],
+             [OrderQty],
+             [ProductID],
+             [SpecialOfferID],
+             [UnitPrice],
+             [UnitPriceDiscount],
+             [LineTotal],
+             [rowguid],
+             [ModifiedDate]
+ from [Sales].[SalesOrderDetail]";
 
         protected override SalesOrderDetailModel ToModel(SqlDataReader dataReader)
         {
             var result = new SalesOrderDetailModel();
              result.SalesOrderID = (int)(dataReader["SalesOrderID"]);
              result.SalesOrderDetailID = (int)(dataReader["SalesOrderDetailID"]);
-             result.CarrierTrackingNumber = (string)(dataReader["CarrierTrackingNumber"] is DBNull ? null : dataReader["CarrierTrackingNumber"]);
+             result.CarrierTrackingNumber = (string?)(dataReader["CarrierTrackingNumber"] is DBNull ? null : dataReader["CarrierTrackingNumber"]);
              result.OrderQty = (short)(dataReader["OrderQty"]);
              result.ProductID = (int)(dataReader["ProductID"]);
              result.SpecialOfferID = (int)(dataReader["SpecialOfferID"]);
@@ -38,21 +38,21 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Sales.SalesOrderDetail
+        public override string InsertQuery => @"Insert Into [Sales].[SalesOrderDetail]
 (
-SalesOrderID,
-CarrierTrackingNumber,
-OrderQty,
-ProductID,
-SpecialOfferID,
-UnitPrice,
-UnitPriceDiscount,
-LineTotal,
-rowguid,
-ModifiedDate
+[SalesOrderID],
+[CarrierTrackingNumber],
+[OrderQty],
+[ProductID],
+[SpecialOfferID],
+[UnitPrice],
+[UnitPriceDiscount],
+[LineTotal],
+[rowguid],
+[ModifiedDate]
 )
 output 
-inserted.SalesOrderDetailID
+inserted.[SalesOrderDetailID]
 
 VALUES
 (
@@ -89,21 +89,21 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Sales.SalesOrderDetail
+            @"Update [Sales].[SalesOrderDetail]
 Set
-    CarrierTrackingNumber=@CarrierTrackingNumber,
-    OrderQty=@OrderQty,
-    ProductID=@ProductID,
-    SpecialOfferID=@SpecialOfferID,
-    UnitPrice=@UnitPrice,
-    UnitPriceDiscount=@UnitPriceDiscount,
-    LineTotal=@LineTotal,
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [CarrierTrackingNumber]=@CarrierTrackingNumber,
+    [OrderQty]=@OrderQty,
+    [ProductID]=@ProductID,
+    [SpecialOfferID]=@SpecialOfferID,
+    [UnitPrice]=@UnitPrice,
+    [UnitPriceDiscount]=@UnitPriceDiscount,
+    [LineTotal]=@LineTotal,
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-SalesOrderID=@SalesOrderID  AND 
-SalesOrderDetailID=@SalesOrderDetailID 
+[SalesOrderID]=@SalesOrderID  AND 
+[SalesOrderDetailID]=@SalesOrderDetailID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, SalesOrderDetailModel updated)
@@ -127,10 +127,10 @@ SalesOrderDetailID=@SalesOrderDetailID
 
         public override string DeleteQuery =>
 @"delete from
-    Sales.SalesOrderDetail
+    [Sales].[SalesOrderDetail]
 where
-SalesOrderID=@SalesOrderID  AND 
-SalesOrderDetailID=@SalesOrderDetailID 
+[SalesOrderID]=@SalesOrderID  AND 
+[SalesOrderDetailID]=@SalesOrderDetailID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, SalesOrderDetailModel deleted)

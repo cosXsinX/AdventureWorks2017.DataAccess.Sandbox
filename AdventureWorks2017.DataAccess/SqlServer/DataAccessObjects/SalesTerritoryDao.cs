@@ -8,17 +8,17 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class SalesTerritoryDao : AbstractDaoWithPrimaryKey<SalesTerritoryModel,SalesTerritoryModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             TerritoryID,
-             Name,
-             CountryRegionCode,
+             [TerritoryID],
+             [Name],
+             [CountryRegionCode],
              [Group],
-             SalesYTD,
-             SalesLastYear,
-             CostYTD,
-             CostLastYear,
-             rowguid,
-             ModifiedDate
- from Sales.SalesTerritory";
+             [SalesYTD],
+             [SalesLastYear],
+             [CostYTD],
+             [CostLastYear],
+             [rowguid],
+             [ModifiedDate]
+ from [Sales].[SalesTerritory]";
 
         protected override SalesTerritoryModel ToModel(SqlDataReader dataReader)
         {
@@ -36,20 +36,20 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Sales.SalesTerritory
+        public override string InsertQuery => @"Insert Into [Sales].[SalesTerritory]
 (
-Name,
-CountryRegionCode,
-Group,
-SalesYTD,
-SalesLastYear,
-CostYTD,
-CostLastYear,
-rowguid,
-ModifiedDate
+[Name],
+[CountryRegionCode],
+[Group],
+[SalesYTD],
+[SalesLastYear],
+[CostYTD],
+[CostLastYear],
+[rowguid],
+[ModifiedDate]
 )
 output 
-inserted.TerritoryID
+inserted.[TerritoryID]
 
 VALUES
 (
@@ -84,20 +84,20 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Sales.SalesTerritory
+            @"Update [Sales].[SalesTerritory]
 Set
-    Name=@Name,
-    CountryRegionCode=@CountryRegionCode,
-    Group=@Group,
-    SalesYTD=@SalesYTD,
-    SalesLastYear=@SalesLastYear,
-    CostYTD=@CostYTD,
-    CostLastYear=@CostLastYear,
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [Name]=@Name,
+    [CountryRegionCode]=@CountryRegionCode,
+    [Group]=@Group,
+    [SalesYTD]=@SalesYTD,
+    [SalesLastYear]=@SalesLastYear,
+    [CostYTD]=@CostYTD,
+    [CostLastYear]=@CostLastYear,
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-TerritoryID=@TerritoryID 
+[TerritoryID]=@TerritoryID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, SalesTerritoryModel updated)
@@ -120,9 +120,9 @@ TerritoryID=@TerritoryID
 
         public override string DeleteQuery =>
 @"delete from
-    Sales.SalesTerritory
+    [Sales].[SalesTerritory]
 where
-TerritoryID=@TerritoryID 
+[TerritoryID]=@TerritoryID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, SalesTerritoryModel deleted)

@@ -8,12 +8,12 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class EmployeePayHistoryDao : AbstractDaoWithPrimaryKey<EmployeePayHistoryModel,EmployeePayHistoryModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             BusinessEntityID,
-             RateChangeDate,
-             Rate,
-             PayFrequency,
-             ModifiedDate
- from HumanResources.EmployeePayHistory";
+             [BusinessEntityID],
+             [RateChangeDate],
+             [Rate],
+             [PayFrequency],
+             [ModifiedDate]
+ from [HumanResources].[EmployeePayHistory]";
 
         protected override EmployeePayHistoryModel ToModel(SqlDataReader dataReader)
         {
@@ -26,13 +26,13 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into HumanResources.EmployeePayHistory
+        public override string InsertQuery => @"Insert Into [HumanResources].[EmployeePayHistory]
 (
-BusinessEntityID,
-RateChangeDate,
-Rate,
-PayFrequency,
-ModifiedDate
+[BusinessEntityID],
+[RateChangeDate],
+[Rate],
+[PayFrequency],
+[ModifiedDate]
 )
 
 VALUES
@@ -59,15 +59,15 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update HumanResources.EmployeePayHistory
+            @"Update [HumanResources].[EmployeePayHistory]
 Set
-    Rate=@Rate,
-    PayFrequency=@PayFrequency,
-    ModifiedDate=@ModifiedDate
+    [Rate]=@Rate,
+    [PayFrequency]=@PayFrequency,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-BusinessEntityID=@BusinessEntityID  AND 
-RateChangeDate=@RateChangeDate 
+[BusinessEntityID]=@BusinessEntityID  AND 
+[RateChangeDate]=@RateChangeDate 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, EmployeePayHistoryModel updated)
@@ -85,10 +85,10 @@ RateChangeDate=@RateChangeDate
 
         public override string DeleteQuery =>
 @"delete from
-    HumanResources.EmployeePayHistory
+    [HumanResources].[EmployeePayHistory]
 where
-BusinessEntityID=@BusinessEntityID  AND 
-RateChangeDate=@RateChangeDate 
+[BusinessEntityID]=@BusinessEntityID  AND 
+[RateChangeDate]=@RateChangeDate 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, EmployeePayHistoryModel deleted)

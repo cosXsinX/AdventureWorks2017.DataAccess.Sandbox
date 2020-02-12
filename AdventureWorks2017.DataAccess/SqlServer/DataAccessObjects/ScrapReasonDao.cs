@@ -8,10 +8,10 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class ScrapReasonDao : AbstractDaoWithPrimaryKey<ScrapReasonModel,ScrapReasonModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             ScrapReasonID,
-             Name,
-             ModifiedDate
- from Production.ScrapReason";
+             [ScrapReasonID],
+             [Name],
+             [ModifiedDate]
+ from [Production].[ScrapReason]";
 
         protected override ScrapReasonModel ToModel(SqlDataReader dataReader)
         {
@@ -22,13 +22,13 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Production.ScrapReason
+        public override string InsertQuery => @"Insert Into [Production].[ScrapReason]
 (
-Name,
-ModifiedDate
+[Name],
+[ModifiedDate]
 )
 output 
-inserted.ScrapReasonID
+inserted.[ScrapReasonID]
 
 VALUES
 (
@@ -49,13 +49,13 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Production.ScrapReason
+            @"Update [Production].[ScrapReason]
 Set
-    Name=@Name,
-    ModifiedDate=@ModifiedDate
+    [Name]=@Name,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-ScrapReasonID=@ScrapReasonID 
+[ScrapReasonID]=@ScrapReasonID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ScrapReasonModel updated)
@@ -71,9 +71,9 @@ ScrapReasonID=@ScrapReasonID
 
         public override string DeleteQuery =>
 @"delete from
-    Production.ScrapReason
+    [Production].[ScrapReason]
 where
-ScrapReasonID=@ScrapReasonID 
+[ScrapReasonID]=@ScrapReasonID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ScrapReasonModel deleted)

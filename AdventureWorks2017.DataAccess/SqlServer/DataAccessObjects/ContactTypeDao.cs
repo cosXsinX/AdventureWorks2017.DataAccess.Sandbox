@@ -8,10 +8,10 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class ContactTypeDao : AbstractDaoWithPrimaryKey<ContactTypeModel,ContactTypeModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             ContactTypeID,
-             Name,
-             ModifiedDate
- from Person.ContactType";
+             [ContactTypeID],
+             [Name],
+             [ModifiedDate]
+ from [Person].[ContactType]";
 
         protected override ContactTypeModel ToModel(SqlDataReader dataReader)
         {
@@ -22,13 +22,13 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Person.ContactType
+        public override string InsertQuery => @"Insert Into [Person].[ContactType]
 (
-Name,
-ModifiedDate
+[Name],
+[ModifiedDate]
 )
 output 
-inserted.ContactTypeID
+inserted.[ContactTypeID]
 
 VALUES
 (
@@ -49,13 +49,13 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Person.ContactType
+            @"Update [Person].[ContactType]
 Set
-    Name=@Name,
-    ModifiedDate=@ModifiedDate
+    [Name]=@Name,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-ContactTypeID=@ContactTypeID 
+[ContactTypeID]=@ContactTypeID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ContactTypeModel updated)
@@ -71,9 +71,9 @@ ContactTypeID=@ContactTypeID
 
         public override string DeleteQuery =>
 @"delete from
-    Person.ContactType
+    [Person].[ContactType]
 where
-ContactTypeID=@ContactTypeID 
+[ContactTypeID]=@ContactTypeID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ContactTypeModel deleted)

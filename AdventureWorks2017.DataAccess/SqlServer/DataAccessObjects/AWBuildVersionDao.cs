@@ -12,7 +12,7 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              [Database Version],
              [VersionDate],
              [ModifiedDate]
- from dbo.AWBuildVersion";
+ from [dbo].[AWBuildVersion]";
 
         protected override AWBuildVersionModel ToModel(SqlDataReader dataReader)
         {
@@ -24,14 +24,14 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into dbo.AWBuildVersion
+        public override string InsertQuery => @"Insert Into [dbo].[AWBuildVersion]
 (
 [Database Version],
 [VersionDate],
 [ModifiedDate]
 )
 output 
-inserted.SystemInformationID
+inserted.[SystemInformationID]
 
 VALUES
 (
@@ -47,21 +47,21 @@ VALUES
 
         public override void InsertionParameterMapping(SqlCommand sqlCommand, AWBuildVersionModel inserted)
         {
-            sqlCommand.Parameters.AddWithValue("@DatabaseVersion", inserted.DatabaseVersion);
+            sqlCommand.Parameters.AddWithValue("@Database Version", inserted.DatabaseVersion);
             sqlCommand.Parameters.AddWithValue("@VersionDate", inserted.VersionDate);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", inserted.ModifiedDate);
 
         }
 
         public override string UpdateQuery =>
-            @"Update dbo.AWBuildVersion
+            @"Update [dbo].[AWBuildVersion]
 Set
     [Database Version]=@DatabaseVersion,
     [VersionDate]=@VersionDate,
     [ModifiedDate]=@ModifiedDate
 
 Where
-SystemInformationID=@SystemInformationID 
+[SystemInformationID]=@SystemInformationID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, AWBuildVersionModel updated)
@@ -78,9 +78,9 @@ SystemInformationID=@SystemInformationID
 
         public override string DeleteQuery =>
 @"delete from
-    dbo.AWBuildVersion
+    [dbo].[AWBuildVersion]
 where
-SystemInformationID=@SystemInformationID 
+[SystemInformationID]=@SystemInformationID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, AWBuildVersionModel deleted)

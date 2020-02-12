@@ -8,11 +8,11 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class AddressTypeDao : AbstractDaoWithPrimaryKey<AddressTypeModel,AddressTypeModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             AddressTypeID,
-             Name,
-             rowguid,
-             ModifiedDate
- from Person.AddressType";
+             [AddressTypeID],
+             [Name],
+             [rowguid],
+             [ModifiedDate]
+ from [Person].[AddressType]";
 
         protected override AddressTypeModel ToModel(SqlDataReader dataReader)
         {
@@ -24,14 +24,14 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Person.AddressType
+        public override string InsertQuery => @"Insert Into [Person].[AddressType]
 (
-Name,
-rowguid,
-ModifiedDate
+[Name],
+[rowguid],
+[ModifiedDate]
 )
 output 
-inserted.AddressTypeID
+inserted.[AddressTypeID]
 
 VALUES
 (
@@ -54,14 +54,14 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Person.AddressType
+            @"Update [Person].[AddressType]
 Set
-    Name=@Name,
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [Name]=@Name,
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-AddressTypeID=@AddressTypeID 
+[AddressTypeID]=@AddressTypeID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, AddressTypeModel updated)
@@ -78,9 +78,9 @@ AddressTypeID=@AddressTypeID
 
         public override string DeleteQuery =>
 @"delete from
-    Person.AddressType
+    [Person].[AddressType]
 where
-AddressTypeID=@AddressTypeID 
+[AddressTypeID]=@AddressTypeID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, AddressTypeModel deleted)

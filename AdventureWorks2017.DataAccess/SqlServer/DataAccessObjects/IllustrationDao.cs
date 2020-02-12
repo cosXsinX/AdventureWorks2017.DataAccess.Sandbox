@@ -8,27 +8,27 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class IllustrationDao : AbstractDaoWithPrimaryKey<IllustrationModel,IllustrationModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             IllustrationID,
-             Diagram,
-             ModifiedDate
- from Production.Illustration";
+             [IllustrationID],
+             [Diagram],
+             [ModifiedDate]
+ from [Production].[Illustration]";
 
         protected override IllustrationModel ToModel(SqlDataReader dataReader)
         {
             var result = new IllustrationModel();
              result.IllustrationID = (int)(dataReader["IllustrationID"]);
-             result.Diagram = (System.Xml.XmlDocument)(dataReader["Diagram"] is DBNull ? null : dataReader["Diagram"]);
+             result.Diagram = (System.Xml.XmlDocument?)(dataReader["Diagram"] is DBNull ? null : dataReader["Diagram"]);
              result.ModifiedDate = (DateTime)(dataReader["ModifiedDate"]);
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Production.Illustration
+        public override string InsertQuery => @"Insert Into [Production].[Illustration]
 (
-Diagram,
-ModifiedDate
+[Diagram],
+[ModifiedDate]
 )
 output 
-inserted.IllustrationID
+inserted.[IllustrationID]
 
 VALUES
 (
@@ -49,13 +49,13 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Production.Illustration
+            @"Update [Production].[Illustration]
 Set
-    Diagram=@Diagram,
-    ModifiedDate=@ModifiedDate
+    [Diagram]=@Diagram,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-IllustrationID=@IllustrationID 
+[IllustrationID]=@IllustrationID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, IllustrationModel updated)
@@ -71,9 +71,9 @@ IllustrationID=@IllustrationID
 
         public override string DeleteQuery =>
 @"delete from
-    Production.Illustration
+    [Production].[Illustration]
 where
-IllustrationID=@IllustrationID 
+[IllustrationID]=@IllustrationID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, IllustrationModel deleted)

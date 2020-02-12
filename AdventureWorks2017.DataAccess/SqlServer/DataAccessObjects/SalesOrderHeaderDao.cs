@@ -8,33 +8,33 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class SalesOrderHeaderDao : AbstractDaoWithPrimaryKey<SalesOrderHeaderModel,SalesOrderHeaderModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             SalesOrderID,
-             RevisionNumber,
-             OrderDate,
-             DueDate,
-             ShipDate,
-             Status,
-             OnlineOrderFlag,
-             SalesOrderNumber,
-             PurchaseOrderNumber,
-             AccountNumber,
-             CustomerID,
-             SalesPersonID,
-             TerritoryID,
-             BillToAddressID,
-             ShipToAddressID,
-             ShipMethodID,
-             CreditCardID,
-             CreditCardApprovalCode,
-             CurrencyRateID,
-             SubTotal,
-             TaxAmt,
-             Freight,
-             TotalDue,
-             Comment,
-             rowguid,
-             ModifiedDate
- from Sales.SalesOrderHeader";
+             [SalesOrderID],
+             [RevisionNumber],
+             [OrderDate],
+             [DueDate],
+             [ShipDate],
+             [Status],
+             [OnlineOrderFlag],
+             [SalesOrderNumber],
+             [PurchaseOrderNumber],
+             [AccountNumber],
+             [CustomerID],
+             [SalesPersonID],
+             [TerritoryID],
+             [BillToAddressID],
+             [ShipToAddressID],
+             [ShipMethodID],
+             [CreditCardID],
+             [CreditCardApprovalCode],
+             [CurrencyRateID],
+             [SubTotal],
+             [TaxAmt],
+             [Freight],
+             [TotalDue],
+             [Comment],
+             [rowguid],
+             [ModifiedDate]
+ from [Sales].[SalesOrderHeader]";
 
         protected override SalesOrderHeaderModel ToModel(SqlDataReader dataReader)
         {
@@ -43,12 +43,12 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              result.RevisionNumber = (byte)(dataReader["RevisionNumber"]);
              result.OrderDate = (DateTime)(dataReader["OrderDate"]);
              result.DueDate = (DateTime)(dataReader["DueDate"]);
-             result.ShipDate = (DateTime)(dataReader["ShipDate"] is DBNull ? null : dataReader["ShipDate"]);
+             result.ShipDate = (DateTime?)(dataReader["ShipDate"] is DBNull ? null : dataReader["ShipDate"]);
              result.Status = (byte)(dataReader["Status"]);
              result.OnlineOrderFlag = (bool)(dataReader["OnlineOrderFlag"]);
              result.SalesOrderNumber = (string)(dataReader["SalesOrderNumber"]);
-             result.PurchaseOrderNumber = (string)(dataReader["PurchaseOrderNumber"] is DBNull ? null : dataReader["PurchaseOrderNumber"]);
-             result.AccountNumber = (string)(dataReader["AccountNumber"] is DBNull ? null : dataReader["AccountNumber"]);
+             result.PurchaseOrderNumber = (string?)(dataReader["PurchaseOrderNumber"] is DBNull ? null : dataReader["PurchaseOrderNumber"]);
+             result.AccountNumber = (string?)(dataReader["AccountNumber"] is DBNull ? null : dataReader["AccountNumber"]);
              result.CustomerID = (int)(dataReader["CustomerID"]);
              result.SalesPersonID = (int?)(dataReader["SalesPersonID"] is DBNull ? null : dataReader["SalesPersonID"]);
              result.TerritoryID = (int?)(dataReader["TerritoryID"] is DBNull ? null : dataReader["TerritoryID"]);
@@ -56,48 +56,48 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              result.ShipToAddressID = (int)(dataReader["ShipToAddressID"]);
              result.ShipMethodID = (int)(dataReader["ShipMethodID"]);
              result.CreditCardID = (int?)(dataReader["CreditCardID"] is DBNull ? null : dataReader["CreditCardID"]);
-             result.CreditCardApprovalCode = (string)(dataReader["CreditCardApprovalCode"] is DBNull ? null : dataReader["CreditCardApprovalCode"]);
+             result.CreditCardApprovalCode = (string?)(dataReader["CreditCardApprovalCode"] is DBNull ? null : dataReader["CreditCardApprovalCode"]);
              result.CurrencyRateID = (int?)(dataReader["CurrencyRateID"] is DBNull ? null : dataReader["CurrencyRateID"]);
              result.SubTotal = (decimal)(dataReader["SubTotal"]);
              result.TaxAmt = (decimal)(dataReader["TaxAmt"]);
              result.Freight = (decimal)(dataReader["Freight"]);
              result.TotalDue = (decimal)(dataReader["TotalDue"]);
-             result.Comment = (string)(dataReader["Comment"] is DBNull ? null : dataReader["Comment"]);
+             result.Comment = (string?)(dataReader["Comment"] is DBNull ? null : dataReader["Comment"]);
              result.rowguid = (Guid)(dataReader["rowguid"]);
              result.ModifiedDate = (DateTime)(dataReader["ModifiedDate"]);
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Sales.SalesOrderHeader
+        public override string InsertQuery => @"Insert Into [Sales].[SalesOrderHeader]
 (
-RevisionNumber,
-OrderDate,
-DueDate,
-ShipDate,
-Status,
-OnlineOrderFlag,
-SalesOrderNumber,
-PurchaseOrderNumber,
-AccountNumber,
-CustomerID,
-SalesPersonID,
-TerritoryID,
-BillToAddressID,
-ShipToAddressID,
-ShipMethodID,
-CreditCardID,
-CreditCardApprovalCode,
-CurrencyRateID,
-SubTotal,
-TaxAmt,
-Freight,
-TotalDue,
-Comment,
-rowguid,
-ModifiedDate
+[RevisionNumber],
+[OrderDate],
+[DueDate],
+[ShipDate],
+[Status],
+[OnlineOrderFlag],
+[SalesOrderNumber],
+[PurchaseOrderNumber],
+[AccountNumber],
+[CustomerID],
+[SalesPersonID],
+[TerritoryID],
+[BillToAddressID],
+[ShipToAddressID],
+[ShipMethodID],
+[CreditCardID],
+[CreditCardApprovalCode],
+[CurrencyRateID],
+[SubTotal],
+[TaxAmt],
+[Freight],
+[TotalDue],
+[Comment],
+[rowguid],
+[ModifiedDate]
 )
 output 
-inserted.SalesOrderID
+inserted.[SalesOrderID]
 
 VALUES
 (
@@ -164,36 +164,36 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Sales.SalesOrderHeader
+            @"Update [Sales].[SalesOrderHeader]
 Set
-    RevisionNumber=@RevisionNumber,
-    OrderDate=@OrderDate,
-    DueDate=@DueDate,
-    ShipDate=@ShipDate,
-    Status=@Status,
-    OnlineOrderFlag=@OnlineOrderFlag,
-    SalesOrderNumber=@SalesOrderNumber,
-    PurchaseOrderNumber=@PurchaseOrderNumber,
-    AccountNumber=@AccountNumber,
-    CustomerID=@CustomerID,
-    SalesPersonID=@SalesPersonID,
-    TerritoryID=@TerritoryID,
-    BillToAddressID=@BillToAddressID,
-    ShipToAddressID=@ShipToAddressID,
-    ShipMethodID=@ShipMethodID,
-    CreditCardID=@CreditCardID,
-    CreditCardApprovalCode=@CreditCardApprovalCode,
-    CurrencyRateID=@CurrencyRateID,
-    SubTotal=@SubTotal,
-    TaxAmt=@TaxAmt,
-    Freight=@Freight,
-    TotalDue=@TotalDue,
-    Comment=@Comment,
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [RevisionNumber]=@RevisionNumber,
+    [OrderDate]=@OrderDate,
+    [DueDate]=@DueDate,
+    [ShipDate]=@ShipDate,
+    [Status]=@Status,
+    [OnlineOrderFlag]=@OnlineOrderFlag,
+    [SalesOrderNumber]=@SalesOrderNumber,
+    [PurchaseOrderNumber]=@PurchaseOrderNumber,
+    [AccountNumber]=@AccountNumber,
+    [CustomerID]=@CustomerID,
+    [SalesPersonID]=@SalesPersonID,
+    [TerritoryID]=@TerritoryID,
+    [BillToAddressID]=@BillToAddressID,
+    [ShipToAddressID]=@ShipToAddressID,
+    [ShipMethodID]=@ShipMethodID,
+    [CreditCardID]=@CreditCardID,
+    [CreditCardApprovalCode]=@CreditCardApprovalCode,
+    [CurrencyRateID]=@CurrencyRateID,
+    [SubTotal]=@SubTotal,
+    [TaxAmt]=@TaxAmt,
+    [Freight]=@Freight,
+    [TotalDue]=@TotalDue,
+    [Comment]=@Comment,
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-SalesOrderID=@SalesOrderID 
+[SalesOrderID]=@SalesOrderID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, SalesOrderHeaderModel updated)
@@ -232,9 +232,9 @@ SalesOrderID=@SalesOrderID
 
         public override string DeleteQuery =>
 @"delete from
-    Sales.SalesOrderHeader
+    [Sales].[SalesOrderHeader]
 where
-SalesOrderID=@SalesOrderID 
+[SalesOrderID]=@SalesOrderID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, SalesOrderHeaderModel deleted)

@@ -8,32 +8,32 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class ProductDao : AbstractDaoWithPrimaryKey<ProductModel,ProductModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             ProductID,
-             Name,
-             ProductNumber,
-             MakeFlag,
-             FinishedGoodsFlag,
-             Color,
-             SafetyStockLevel,
-             ReorderPoint,
-             StandardCost,
-             ListPrice,
-             Size,
-             SizeUnitMeasureCode,
-             WeightUnitMeasureCode,
-             Weight,
-             DaysToManufacture,
-             ProductLine,
-             Class,
-             Style,
-             ProductSubcategoryID,
-             ProductModelID,
-             SellStartDate,
-             SellEndDate,
-             DiscontinuedDate,
-             rowguid,
-             ModifiedDate
- from Production.Product";
+             [ProductID],
+             [Name],
+             [ProductNumber],
+             [MakeFlag],
+             [FinishedGoodsFlag],
+             [Color],
+             [SafetyStockLevel],
+             [ReorderPoint],
+             [StandardCost],
+             [ListPrice],
+             [Size],
+             [SizeUnitMeasureCode],
+             [WeightUnitMeasureCode],
+             [Weight],
+             [DaysToManufacture],
+             [ProductLine],
+             [Class],
+             [Style],
+             [ProductSubcategoryID],
+             [ProductModelID],
+             [SellStartDate],
+             [SellEndDate],
+             [DiscontinuedDate],
+             [rowguid],
+             [ModifiedDate]
+ from [Production].[Product]";
 
         protected override ProductModel ToModel(SqlDataReader dataReader)
         {
@@ -43,19 +43,19 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              result.ProductNumber = (string)(dataReader["ProductNumber"]);
              result.MakeFlag = (bool)(dataReader["MakeFlag"]);
              result.FinishedGoodsFlag = (bool)(dataReader["FinishedGoodsFlag"]);
-             result.Color = (string)(dataReader["Color"] is DBNull ? null : dataReader["Color"]);
+             result.Color = (string?)(dataReader["Color"] is DBNull ? null : dataReader["Color"]);
              result.SafetyStockLevel = (short)(dataReader["SafetyStockLevel"]);
              result.ReorderPoint = (short)(dataReader["ReorderPoint"]);
              result.StandardCost = (decimal)(dataReader["StandardCost"]);
              result.ListPrice = (decimal)(dataReader["ListPrice"]);
-             result.Size = (string)(dataReader["Size"] is DBNull ? null : dataReader["Size"]);
-             result.SizeUnitMeasureCode = (string)(dataReader["SizeUnitMeasureCode"] is DBNull ? null : dataReader["SizeUnitMeasureCode"]);
-             result.WeightUnitMeasureCode = (string)(dataReader["WeightUnitMeasureCode"] is DBNull ? null : dataReader["WeightUnitMeasureCode"]);
+             result.Size = (string?)(dataReader["Size"] is DBNull ? null : dataReader["Size"]);
+             result.SizeUnitMeasureCode = (string?)(dataReader["SizeUnitMeasureCode"] is DBNull ? null : dataReader["SizeUnitMeasureCode"]);
+             result.WeightUnitMeasureCode = (string?)(dataReader["WeightUnitMeasureCode"] is DBNull ? null : dataReader["WeightUnitMeasureCode"]);
              result.Weight = (decimal?)(dataReader["Weight"] is DBNull ? null : dataReader["Weight"]);
              result.DaysToManufacture = (int)(dataReader["DaysToManufacture"]);
-             result.ProductLine = (string)(dataReader["ProductLine"] is DBNull ? null : dataReader["ProductLine"]);
-             result.Class = (string)(dataReader["Class"] is DBNull ? null : dataReader["Class"]);
-             result.Style = (string)(dataReader["Style"] is DBNull ? null : dataReader["Style"]);
+             result.ProductLine = (string?)(dataReader["ProductLine"] is DBNull ? null : dataReader["ProductLine"]);
+             result.Class = (string?)(dataReader["Class"] is DBNull ? null : dataReader["Class"]);
+             result.Style = (string?)(dataReader["Style"] is DBNull ? null : dataReader["Style"]);
              result.ProductSubcategoryID = (int?)(dataReader["ProductSubcategoryID"] is DBNull ? null : dataReader["ProductSubcategoryID"]);
              result.ProductModelID = (int?)(dataReader["ProductModelID"] is DBNull ? null : dataReader["ProductModelID"]);
              result.SellStartDate = (DateTime)(dataReader["SellStartDate"]);
@@ -66,35 +66,35 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Production.Product
+        public override string InsertQuery => @"Insert Into [Production].[Product]
 (
-Name,
-ProductNumber,
-MakeFlag,
-FinishedGoodsFlag,
-Color,
-SafetyStockLevel,
-ReorderPoint,
-StandardCost,
-ListPrice,
-Size,
-SizeUnitMeasureCode,
-WeightUnitMeasureCode,
-Weight,
-DaysToManufacture,
-ProductLine,
-Class,
-Style,
-ProductSubcategoryID,
-ProductModelID,
-SellStartDate,
-SellEndDate,
-DiscontinuedDate,
-rowguid,
-ModifiedDate
+[Name],
+[ProductNumber],
+[MakeFlag],
+[FinishedGoodsFlag],
+[Color],
+[SafetyStockLevel],
+[ReorderPoint],
+[StandardCost],
+[ListPrice],
+[Size],
+[SizeUnitMeasureCode],
+[WeightUnitMeasureCode],
+[Weight],
+[DaysToManufacture],
+[ProductLine],
+[Class],
+[Style],
+[ProductSubcategoryID],
+[ProductModelID],
+[SellStartDate],
+[SellEndDate],
+[DiscontinuedDate],
+[rowguid],
+[ModifiedDate]
 )
 output 
-inserted.ProductID
+inserted.[ProductID]
 
 VALUES
 (
@@ -159,35 +159,35 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Production.Product
+            @"Update [Production].[Product]
 Set
-    Name=@Name,
-    ProductNumber=@ProductNumber,
-    MakeFlag=@MakeFlag,
-    FinishedGoodsFlag=@FinishedGoodsFlag,
-    Color=@Color,
-    SafetyStockLevel=@SafetyStockLevel,
-    ReorderPoint=@ReorderPoint,
-    StandardCost=@StandardCost,
-    ListPrice=@ListPrice,
-    Size=@Size,
-    SizeUnitMeasureCode=@SizeUnitMeasureCode,
-    WeightUnitMeasureCode=@WeightUnitMeasureCode,
-    Weight=@Weight,
-    DaysToManufacture=@DaysToManufacture,
-    ProductLine=@ProductLine,
-    Class=@Class,
-    Style=@Style,
-    ProductSubcategoryID=@ProductSubcategoryID,
-    ProductModelID=@ProductModelID,
-    SellStartDate=@SellStartDate,
-    SellEndDate=@SellEndDate,
-    DiscontinuedDate=@DiscontinuedDate,
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [Name]=@Name,
+    [ProductNumber]=@ProductNumber,
+    [MakeFlag]=@MakeFlag,
+    [FinishedGoodsFlag]=@FinishedGoodsFlag,
+    [Color]=@Color,
+    [SafetyStockLevel]=@SafetyStockLevel,
+    [ReorderPoint]=@ReorderPoint,
+    [StandardCost]=@StandardCost,
+    [ListPrice]=@ListPrice,
+    [Size]=@Size,
+    [SizeUnitMeasureCode]=@SizeUnitMeasureCode,
+    [WeightUnitMeasureCode]=@WeightUnitMeasureCode,
+    [Weight]=@Weight,
+    [DaysToManufacture]=@DaysToManufacture,
+    [ProductLine]=@ProductLine,
+    [Class]=@Class,
+    [Style]=@Style,
+    [ProductSubcategoryID]=@ProductSubcategoryID,
+    [ProductModelID]=@ProductModelID,
+    [SellStartDate]=@SellStartDate,
+    [SellEndDate]=@SellEndDate,
+    [DiscontinuedDate]=@DiscontinuedDate,
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-ProductID=@ProductID 
+[ProductID]=@ProductID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ProductModel updated)
@@ -225,9 +225,9 @@ ProductID=@ProductID
 
         public override string DeleteQuery =>
 @"delete from
-    Production.Product
+    [Production].[Product]
 where
-ProductID=@ProductID 
+[ProductID]=@ProductID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ProductModel deleted)

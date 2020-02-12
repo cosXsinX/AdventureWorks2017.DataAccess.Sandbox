@@ -8,15 +8,15 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class VendorDao : AbstractDaoWithPrimaryKey<VendorModel,VendorModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             BusinessEntityID,
-             AccountNumber,
-             Name,
-             CreditRating,
-             PreferredVendorStatus,
-             ActiveFlag,
-             PurchasingWebServiceURL,
-             ModifiedDate
- from Purchasing.Vendor";
+             [BusinessEntityID],
+             [AccountNumber],
+             [Name],
+             [CreditRating],
+             [PreferredVendorStatus],
+             [ActiveFlag],
+             [PurchasingWebServiceURL],
+             [ModifiedDate]
+ from [Purchasing].[Vendor]";
 
         protected override VendorModel ToModel(SqlDataReader dataReader)
         {
@@ -27,21 +27,21 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              result.CreditRating = (byte)(dataReader["CreditRating"]);
              result.PreferredVendorStatus = (bool)(dataReader["PreferredVendorStatus"]);
              result.ActiveFlag = (bool)(dataReader["ActiveFlag"]);
-             result.PurchasingWebServiceURL = (string)(dataReader["PurchasingWebServiceURL"] is DBNull ? null : dataReader["PurchasingWebServiceURL"]);
+             result.PurchasingWebServiceURL = (string?)(dataReader["PurchasingWebServiceURL"] is DBNull ? null : dataReader["PurchasingWebServiceURL"]);
              result.ModifiedDate = (DateTime)(dataReader["ModifiedDate"]);
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Purchasing.Vendor
+        public override string InsertQuery => @"Insert Into [Purchasing].[Vendor]
 (
-BusinessEntityID,
-AccountNumber,
-Name,
-CreditRating,
-PreferredVendorStatus,
-ActiveFlag,
-PurchasingWebServiceURL,
-ModifiedDate
+[BusinessEntityID],
+[AccountNumber],
+[Name],
+[CreditRating],
+[PreferredVendorStatus],
+[ActiveFlag],
+[PurchasingWebServiceURL],
+[ModifiedDate]
 )
 
 VALUES
@@ -74,18 +74,18 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Purchasing.Vendor
+            @"Update [Purchasing].[Vendor]
 Set
-    AccountNumber=@AccountNumber,
-    Name=@Name,
-    CreditRating=@CreditRating,
-    PreferredVendorStatus=@PreferredVendorStatus,
-    ActiveFlag=@ActiveFlag,
-    PurchasingWebServiceURL=@PurchasingWebServiceURL,
-    ModifiedDate=@ModifiedDate
+    [AccountNumber]=@AccountNumber,
+    [Name]=@Name,
+    [CreditRating]=@CreditRating,
+    [PreferredVendorStatus]=@PreferredVendorStatus,
+    [ActiveFlag]=@ActiveFlag,
+    [PurchasingWebServiceURL]=@PurchasingWebServiceURL,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-BusinessEntityID=@BusinessEntityID 
+[BusinessEntityID]=@BusinessEntityID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, VendorModel updated)
@@ -106,9 +106,9 @@ BusinessEntityID=@BusinessEntityID
 
         public override string DeleteQuery =>
 @"delete from
-    Purchasing.Vendor
+    [Purchasing].[Vendor]
 where
-BusinessEntityID=@BusinessEntityID 
+[BusinessEntityID]=@BusinessEntityID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, VendorModel deleted)

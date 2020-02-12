@@ -8,11 +8,11 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class ProductProductPhotoDao : AbstractDaoWithPrimaryKey<ProductProductPhotoModel,ProductProductPhotoModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             ProductID,
-             ProductPhotoID,
+             [ProductID],
+             [ProductPhotoID],
              [Primary],
-             ModifiedDate
- from Production.ProductProductPhoto";
+             [ModifiedDate]
+ from [Production].[ProductProductPhoto]";
 
         protected override ProductProductPhotoModel ToModel(SqlDataReader dataReader)
         {
@@ -24,12 +24,12 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Production.ProductProductPhoto
+        public override string InsertQuery => @"Insert Into [Production].[ProductProductPhoto]
 (
-ProductID,
-ProductPhotoID,
-Primary,
-ModifiedDate
+[ProductID],
+[ProductPhotoID],
+[Primary],
+[ModifiedDate]
 )
 
 VALUES
@@ -54,14 +54,14 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Production.ProductProductPhoto
+            @"Update [Production].[ProductProductPhoto]
 Set
-    Primary=@Primary,
-    ModifiedDate=@ModifiedDate
+    [Primary]=@Primary,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-ProductID=@ProductID  AND 
-ProductPhotoID=@ProductPhotoID 
+[ProductID]=@ProductID  AND 
+[ProductPhotoID]=@ProductPhotoID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ProductProductPhotoModel updated)
@@ -78,10 +78,10 @@ ProductPhotoID=@ProductPhotoID
 
         public override string DeleteQuery =>
 @"delete from
-    Production.ProductProductPhoto
+    [Production].[ProductProductPhoto]
 where
-ProductID=@ProductID  AND 
-ProductPhotoID=@ProductPhotoID 
+[ProductID]=@ProductID  AND 
+[ProductPhotoID]=@ProductPhotoID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ProductProductPhotoModel deleted)

@@ -8,10 +8,10 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class ProductDocumentDao : AbstractDaoWithPrimaryKey<ProductDocumentModel,ProductDocumentModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             ProductID,
-             DocumentNode,
-             ModifiedDate
- from Production.ProductDocument";
+             [ProductID],
+             [DocumentNode],
+             [ModifiedDate]
+ from [Production].[ProductDocument]";
 
         protected override ProductDocumentModel ToModel(SqlDataReader dataReader)
         {
@@ -22,11 +22,11 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Production.ProductDocument
+        public override string InsertQuery => @"Insert Into [Production].[ProductDocument]
 (
-ProductID,
-DocumentNode,
-ModifiedDate
+[ProductID],
+[DocumentNode],
+[ModifiedDate]
 )
 
 VALUES
@@ -49,13 +49,13 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Production.ProductDocument
+            @"Update [Production].[ProductDocument]
 Set
-    ModifiedDate=@ModifiedDate
+    [ModifiedDate]=@ModifiedDate
 
 Where
-ProductID=@ProductID  AND 
-DocumentNode=@DocumentNode 
+[ProductID]=@ProductID  AND 
+[DocumentNode]=@DocumentNode 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ProductDocumentModel updated)
@@ -71,10 +71,10 @@ DocumentNode=@DocumentNode
 
         public override string DeleteQuery =>
 @"delete from
-    Production.ProductDocument
+    [Production].[ProductDocument]
 where
-ProductID=@ProductID  AND 
-DocumentNode=@DocumentNode 
+[ProductID]=@ProductID  AND 
+[DocumentNode]=@DocumentNode 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ProductDocumentModel deleted)

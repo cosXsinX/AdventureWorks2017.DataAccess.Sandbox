@@ -8,12 +8,12 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class LocationDao : AbstractDaoWithPrimaryKey<LocationModel,LocationModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             LocationID,
-             Name,
-             CostRate,
-             Availability,
-             ModifiedDate
- from Production.Location";
+             [LocationID],
+             [Name],
+             [CostRate],
+             [Availability],
+             [ModifiedDate]
+ from [Production].[Location]";
 
         protected override LocationModel ToModel(SqlDataReader dataReader)
         {
@@ -26,15 +26,15 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Production.Location
+        public override string InsertQuery => @"Insert Into [Production].[Location]
 (
-Name,
-CostRate,
-Availability,
-ModifiedDate
+[Name],
+[CostRate],
+[Availability],
+[ModifiedDate]
 )
 output 
-inserted.LocationID
+inserted.[LocationID]
 
 VALUES
 (
@@ -59,15 +59,15 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Production.Location
+            @"Update [Production].[Location]
 Set
-    Name=@Name,
-    CostRate=@CostRate,
-    Availability=@Availability,
-    ModifiedDate=@ModifiedDate
+    [Name]=@Name,
+    [CostRate]=@CostRate,
+    [Availability]=@Availability,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-LocationID=@LocationID 
+[LocationID]=@LocationID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, LocationModel updated)
@@ -85,9 +85,9 @@ LocationID=@LocationID
 
         public override string DeleteQuery =>
 @"delete from
-    Production.Location
+    [Production].[Location]
 where
-LocationID=@LocationID 
+[LocationID]=@LocationID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, LocationModel deleted)

@@ -8,13 +8,13 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class EmployeeDepartmentHistoryDao : AbstractDaoWithPrimaryKey<EmployeeDepartmentHistoryModel,EmployeeDepartmentHistoryModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             BusinessEntityID,
-             DepartmentID,
-             ShiftID,
-             StartDate,
-             EndDate,
-             ModifiedDate
- from HumanResources.EmployeeDepartmentHistory";
+             [BusinessEntityID],
+             [DepartmentID],
+             [ShiftID],
+             [StartDate],
+             [EndDate],
+             [ModifiedDate]
+ from [HumanResources].[EmployeeDepartmentHistory]";
 
         protected override EmployeeDepartmentHistoryModel ToModel(SqlDataReader dataReader)
         {
@@ -28,14 +28,14 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into HumanResources.EmployeeDepartmentHistory
+        public override string InsertQuery => @"Insert Into [HumanResources].[EmployeeDepartmentHistory]
 (
-BusinessEntityID,
-DepartmentID,
-ShiftID,
-StartDate,
-EndDate,
-ModifiedDate
+[BusinessEntityID],
+[DepartmentID],
+[ShiftID],
+[StartDate],
+[EndDate],
+[ModifiedDate]
 )
 
 VALUES
@@ -64,16 +64,16 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update HumanResources.EmployeeDepartmentHistory
+            @"Update [HumanResources].[EmployeeDepartmentHistory]
 Set
-    EndDate=@EndDate,
-    ModifiedDate=@ModifiedDate
+    [EndDate]=@EndDate,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-BusinessEntityID=@BusinessEntityID  AND 
-DepartmentID=@DepartmentID  AND 
-ShiftID=@ShiftID  AND 
-StartDate=@StartDate 
+[BusinessEntityID]=@BusinessEntityID  AND 
+[DepartmentID]=@DepartmentID  AND 
+[ShiftID]=@ShiftID  AND 
+[StartDate]=@StartDate 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, EmployeeDepartmentHistoryModel updated)
@@ -92,12 +92,12 @@ StartDate=@StartDate
 
         public override string DeleteQuery =>
 @"delete from
-    HumanResources.EmployeeDepartmentHistory
+    [HumanResources].[EmployeeDepartmentHistory]
 where
-BusinessEntityID=@BusinessEntityID  AND 
-DepartmentID=@DepartmentID  AND 
-ShiftID=@ShiftID  AND 
-StartDate=@StartDate 
+[BusinessEntityID]=@BusinessEntityID  AND 
+[DepartmentID]=@DepartmentID  AND 
+[ShiftID]=@ShiftID  AND 
+[StartDate]=@StartDate 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, EmployeeDepartmentHistoryModel deleted)

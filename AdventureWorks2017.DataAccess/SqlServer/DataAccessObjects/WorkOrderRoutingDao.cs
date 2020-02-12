@@ -8,19 +8,19 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class WorkOrderRoutingDao : AbstractDaoWithPrimaryKey<WorkOrderRoutingModel,WorkOrderRoutingModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             WorkOrderID,
-             ProductID,
-             OperationSequence,
-             LocationID,
-             ScheduledStartDate,
-             ScheduledEndDate,
-             ActualStartDate,
-             ActualEndDate,
-             ActualResourceHrs,
-             PlannedCost,
-             ActualCost,
-             ModifiedDate
- from Production.WorkOrderRouting";
+             [WorkOrderID],
+             [ProductID],
+             [OperationSequence],
+             [LocationID],
+             [ScheduledStartDate],
+             [ScheduledEndDate],
+             [ActualStartDate],
+             [ActualEndDate],
+             [ActualResourceHrs],
+             [PlannedCost],
+             [ActualCost],
+             [ModifiedDate]
+ from [Production].[WorkOrderRouting]";
 
         protected override WorkOrderRoutingModel ToModel(SqlDataReader dataReader)
         {
@@ -31,29 +31,29 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              result.LocationID = (short)(dataReader["LocationID"]);
              result.ScheduledStartDate = (DateTime)(dataReader["ScheduledStartDate"]);
              result.ScheduledEndDate = (DateTime)(dataReader["ScheduledEndDate"]);
-             result.ActualStartDate = (DateTime)(dataReader["ActualStartDate"] is DBNull ? null : dataReader["ActualStartDate"]);
-             result.ActualEndDate = (DateTime)(dataReader["ActualEndDate"] is DBNull ? null : dataReader["ActualEndDate"]);
-             result.ActualResourceHrs = (decimal)(dataReader["ActualResourceHrs"] is DBNull ? null : dataReader["ActualResourceHrs"]);
+             result.ActualStartDate = (DateTime?)(dataReader["ActualStartDate"] is DBNull ? null : dataReader["ActualStartDate"]);
+             result.ActualEndDate = (DateTime?)(dataReader["ActualEndDate"] is DBNull ? null : dataReader["ActualEndDate"]);
+             result.ActualResourceHrs = (decimal?)(dataReader["ActualResourceHrs"] is DBNull ? null : dataReader["ActualResourceHrs"]);
              result.PlannedCost = (decimal)(dataReader["PlannedCost"]);
-             result.ActualCost = (decimal)(dataReader["ActualCost"] is DBNull ? null : dataReader["ActualCost"]);
+             result.ActualCost = (decimal?)(dataReader["ActualCost"] is DBNull ? null : dataReader["ActualCost"]);
              result.ModifiedDate = (DateTime)(dataReader["ModifiedDate"]);
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Production.WorkOrderRouting
+        public override string InsertQuery => @"Insert Into [Production].[WorkOrderRouting]
 (
-WorkOrderID,
-ProductID,
-OperationSequence,
-LocationID,
-ScheduledStartDate,
-ScheduledEndDate,
-ActualStartDate,
-ActualEndDate,
-ActualResourceHrs,
-PlannedCost,
-ActualCost,
-ModifiedDate
+[WorkOrderID],
+[ProductID],
+[OperationSequence],
+[LocationID],
+[ScheduledStartDate],
+[ScheduledEndDate],
+[ActualStartDate],
+[ActualEndDate],
+[ActualResourceHrs],
+[PlannedCost],
+[ActualCost],
+[ModifiedDate]
 )
 
 VALUES
@@ -94,22 +94,22 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Production.WorkOrderRouting
+            @"Update [Production].[WorkOrderRouting]
 Set
-    LocationID=@LocationID,
-    ScheduledStartDate=@ScheduledStartDate,
-    ScheduledEndDate=@ScheduledEndDate,
-    ActualStartDate=@ActualStartDate,
-    ActualEndDate=@ActualEndDate,
-    ActualResourceHrs=@ActualResourceHrs,
-    PlannedCost=@PlannedCost,
-    ActualCost=@ActualCost,
-    ModifiedDate=@ModifiedDate
+    [LocationID]=@LocationID,
+    [ScheduledStartDate]=@ScheduledStartDate,
+    [ScheduledEndDate]=@ScheduledEndDate,
+    [ActualStartDate]=@ActualStartDate,
+    [ActualEndDate]=@ActualEndDate,
+    [ActualResourceHrs]=@ActualResourceHrs,
+    [PlannedCost]=@PlannedCost,
+    [ActualCost]=@ActualCost,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-WorkOrderID=@WorkOrderID  AND 
-ProductID=@ProductID  AND 
-OperationSequence=@OperationSequence 
+[WorkOrderID]=@WorkOrderID  AND 
+[ProductID]=@ProductID  AND 
+[OperationSequence]=@OperationSequence 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, WorkOrderRoutingModel updated)
@@ -134,11 +134,11 @@ OperationSequence=@OperationSequence
 
         public override string DeleteQuery =>
 @"delete from
-    Production.WorkOrderRouting
+    [Production].[WorkOrderRouting]
 where
-WorkOrderID=@WorkOrderID  AND 
-ProductID=@ProductID  AND 
-OperationSequence=@OperationSequence 
+[WorkOrderID]=@WorkOrderID  AND 
+[ProductID]=@ProductID  AND 
+[OperationSequence]=@OperationSequence 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, WorkOrderRoutingModel deleted)

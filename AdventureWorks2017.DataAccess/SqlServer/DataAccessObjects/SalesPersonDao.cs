@@ -8,23 +8,23 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class SalesPersonDao : AbstractDaoWithPrimaryKey<SalesPersonModel,SalesPersonModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             BusinessEntityID,
-             TerritoryID,
-             SalesQuota,
-             Bonus,
-             CommissionPct,
-             SalesYTD,
-             SalesLastYear,
-             rowguid,
-             ModifiedDate
- from Sales.SalesPerson";
+             [BusinessEntityID],
+             [TerritoryID],
+             [SalesQuota],
+             [Bonus],
+             [CommissionPct],
+             [SalesYTD],
+             [SalesLastYear],
+             [rowguid],
+             [ModifiedDate]
+ from [Sales].[SalesPerson]";
 
         protected override SalesPersonModel ToModel(SqlDataReader dataReader)
         {
             var result = new SalesPersonModel();
              result.BusinessEntityID = (int)(dataReader["BusinessEntityID"]);
              result.TerritoryID = (int?)(dataReader["TerritoryID"] is DBNull ? null : dataReader["TerritoryID"]);
-             result.SalesQuota = (decimal)(dataReader["SalesQuota"] is DBNull ? null : dataReader["SalesQuota"]);
+             result.SalesQuota = (decimal?)(dataReader["SalesQuota"] is DBNull ? null : dataReader["SalesQuota"]);
              result.Bonus = (decimal)(dataReader["Bonus"]);
              result.CommissionPct = (decimal)(dataReader["CommissionPct"]);
              result.SalesYTD = (decimal)(dataReader["SalesYTD"]);
@@ -34,17 +34,17 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Sales.SalesPerson
+        public override string InsertQuery => @"Insert Into [Sales].[SalesPerson]
 (
-BusinessEntityID,
-TerritoryID,
-SalesQuota,
-Bonus,
-CommissionPct,
-SalesYTD,
-SalesLastYear,
-rowguid,
-ModifiedDate
+[BusinessEntityID],
+[TerritoryID],
+[SalesQuota],
+[Bonus],
+[CommissionPct],
+[SalesYTD],
+[SalesLastYear],
+[rowguid],
+[ModifiedDate]
 )
 
 VALUES
@@ -79,19 +79,19 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Sales.SalesPerson
+            @"Update [Sales].[SalesPerson]
 Set
-    TerritoryID=@TerritoryID,
-    SalesQuota=@SalesQuota,
-    Bonus=@Bonus,
-    CommissionPct=@CommissionPct,
-    SalesYTD=@SalesYTD,
-    SalesLastYear=@SalesLastYear,
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [TerritoryID]=@TerritoryID,
+    [SalesQuota]=@SalesQuota,
+    [Bonus]=@Bonus,
+    [CommissionPct]=@CommissionPct,
+    [SalesYTD]=@SalesYTD,
+    [SalesLastYear]=@SalesLastYear,
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-BusinessEntityID=@BusinessEntityID 
+[BusinessEntityID]=@BusinessEntityID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, SalesPersonModel updated)
@@ -113,9 +113,9 @@ BusinessEntityID=@BusinessEntityID
 
         public override string DeleteQuery =>
 @"delete from
-    Sales.SalesPerson
+    [Sales].[SalesPerson]
 where
-BusinessEntityID=@BusinessEntityID 
+[BusinessEntityID]=@BusinessEntityID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, SalesPersonModel deleted)

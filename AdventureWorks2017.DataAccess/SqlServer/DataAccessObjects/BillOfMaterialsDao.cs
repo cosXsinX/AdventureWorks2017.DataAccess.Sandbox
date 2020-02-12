@@ -8,16 +8,16 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class BillOfMaterialsDao : AbstractDaoWithPrimaryKey<BillOfMaterialsModel,BillOfMaterialsModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             BillOfMaterialsID,
-             ProductAssemblyID,
-             ComponentID,
-             StartDate,
-             EndDate,
-             UnitMeasureCode,
-             BOMLevel,
-             PerAssemblyQty,
-             ModifiedDate
- from Production.BillOfMaterials";
+             [BillOfMaterialsID],
+             [ProductAssemblyID],
+             [ComponentID],
+             [StartDate],
+             [EndDate],
+             [UnitMeasureCode],
+             [BOMLevel],
+             [PerAssemblyQty],
+             [ModifiedDate]
+ from [Production].[BillOfMaterials]";
 
         protected override BillOfMaterialsModel ToModel(SqlDataReader dataReader)
         {
@@ -34,19 +34,19 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Production.BillOfMaterials
+        public override string InsertQuery => @"Insert Into [Production].[BillOfMaterials]
 (
-ProductAssemblyID,
-ComponentID,
-StartDate,
-EndDate,
-UnitMeasureCode,
-BOMLevel,
-PerAssemblyQty,
-ModifiedDate
+[ProductAssemblyID],
+[ComponentID],
+[StartDate],
+[EndDate],
+[UnitMeasureCode],
+[BOMLevel],
+[PerAssemblyQty],
+[ModifiedDate]
 )
 output 
-inserted.BillOfMaterialsID
+inserted.[BillOfMaterialsID]
 
 VALUES
 (
@@ -79,19 +79,19 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Production.BillOfMaterials
+            @"Update [Production].[BillOfMaterials]
 Set
-    ProductAssemblyID=@ProductAssemblyID,
-    ComponentID=@ComponentID,
-    StartDate=@StartDate,
-    EndDate=@EndDate,
-    UnitMeasureCode=@UnitMeasureCode,
-    BOMLevel=@BOMLevel,
-    PerAssemblyQty=@PerAssemblyQty,
-    ModifiedDate=@ModifiedDate
+    [ProductAssemblyID]=@ProductAssemblyID,
+    [ComponentID]=@ComponentID,
+    [StartDate]=@StartDate,
+    [EndDate]=@EndDate,
+    [UnitMeasureCode]=@UnitMeasureCode,
+    [BOMLevel]=@BOMLevel,
+    [PerAssemblyQty]=@PerAssemblyQty,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-BillOfMaterialsID=@BillOfMaterialsID 
+[BillOfMaterialsID]=@BillOfMaterialsID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, BillOfMaterialsModel updated)
@@ -113,9 +113,9 @@ BillOfMaterialsID=@BillOfMaterialsID
 
         public override string DeleteQuery =>
 @"delete from
-    Production.BillOfMaterials
+    [Production].[BillOfMaterials]
 where
-BillOfMaterialsID=@BillOfMaterialsID 
+[BillOfMaterialsID]=@BillOfMaterialsID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, BillOfMaterialsModel deleted)

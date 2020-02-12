@@ -8,15 +8,15 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class DatabaseLogDao : AbstractDaoWithPrimaryKey<DatabaseLogModel,DatabaseLogModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             DatabaseLogID,
-             PostTime,
-             DatabaseUser,
-             Event,
-             Schema,
-             Object,
-             TSQL,
-             XmlEvent
- from dbo.DatabaseLog";
+             [DatabaseLogID],
+             [PostTime],
+             [DatabaseUser],
+             [Event],
+             [Schema],
+             [Object],
+             [TSQL],
+             [XmlEvent]
+ from [dbo].[DatabaseLog]";
 
         protected override DatabaseLogModel ToModel(SqlDataReader dataReader)
         {
@@ -25,25 +25,25 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              result.PostTime = (DateTime)(dataReader["PostTime"]);
              result.DatabaseUser = (string)(dataReader["DatabaseUser"]);
              result.Event = (string)(dataReader["Event"]);
-             result.Schema = (string)(dataReader["Schema"] is DBNull ? null : dataReader["Schema"]);
-             result.Object = (string)(dataReader["Object"] is DBNull ? null : dataReader["Object"]);
+             result.Schema = (string?)(dataReader["Schema"] is DBNull ? null : dataReader["Schema"]);
+             result.Object = (string?)(dataReader["Object"] is DBNull ? null : dataReader["Object"]);
              result.TSQL = (string)(dataReader["TSQL"]);
              result.XmlEvent = (System.Xml.XmlDocument)(dataReader["XmlEvent"]);
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into dbo.DatabaseLog
+        public override string InsertQuery => @"Insert Into [dbo].[DatabaseLog]
 (
-PostTime,
-DatabaseUser,
-Event,
-Schema,
-Object,
-TSQL,
-XmlEvent
+[PostTime],
+[DatabaseUser],
+[Event],
+[Schema],
+[Object],
+[TSQL],
+[XmlEvent]
 )
 output 
-inserted.DatabaseLogID
+inserted.[DatabaseLogID]
 
 VALUES
 (
@@ -74,18 +74,18 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update dbo.DatabaseLog
+            @"Update [dbo].[DatabaseLog]
 Set
-    PostTime=@PostTime,
-    DatabaseUser=@DatabaseUser,
-    Event=@Event,
-    Schema=@Schema,
-    Object=@Object,
-    TSQL=@TSQL,
-    XmlEvent=@XmlEvent
+    [PostTime]=@PostTime,
+    [DatabaseUser]=@DatabaseUser,
+    [Event]=@Event,
+    [Schema]=@Schema,
+    [Object]=@Object,
+    [TSQL]=@TSQL,
+    [XmlEvent]=@XmlEvent
 
 Where
-DatabaseLogID=@DatabaseLogID 
+[DatabaseLogID]=@DatabaseLogID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, DatabaseLogModel updated)
@@ -106,9 +106,9 @@ DatabaseLogID=@DatabaseLogID
 
         public override string DeleteQuery =>
 @"delete from
-    dbo.DatabaseLog
+    [dbo].[DatabaseLog]
 where
-DatabaseLogID=@DatabaseLogID 
+[DatabaseLogID]=@DatabaseLogID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, DatabaseLogModel deleted)

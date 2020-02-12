@@ -8,11 +8,11 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class PersonPhoneDao : AbstractDaoWithPrimaryKey<PersonPhoneModel,PersonPhoneModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             BusinessEntityID,
-             PhoneNumber,
-             PhoneNumberTypeID,
-             ModifiedDate
- from Person.PersonPhone";
+             [BusinessEntityID],
+             [PhoneNumber],
+             [PhoneNumberTypeID],
+             [ModifiedDate]
+ from [Person].[PersonPhone]";
 
         protected override PersonPhoneModel ToModel(SqlDataReader dataReader)
         {
@@ -24,12 +24,12 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Person.PersonPhone
+        public override string InsertQuery => @"Insert Into [Person].[PersonPhone]
 (
-BusinessEntityID,
-PhoneNumber,
-PhoneNumberTypeID,
-ModifiedDate
+[BusinessEntityID],
+[PhoneNumber],
+[PhoneNumberTypeID],
+[ModifiedDate]
 )
 
 VALUES
@@ -54,14 +54,14 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Person.PersonPhone
+            @"Update [Person].[PersonPhone]
 Set
-    ModifiedDate=@ModifiedDate
+    [ModifiedDate]=@ModifiedDate
 
 Where
-BusinessEntityID=@BusinessEntityID  AND 
-PhoneNumber=@PhoneNumber  AND 
-PhoneNumberTypeID=@PhoneNumberTypeID 
+[BusinessEntityID]=@BusinessEntityID  AND 
+[PhoneNumber]=@PhoneNumber  AND 
+[PhoneNumberTypeID]=@PhoneNumberTypeID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, PersonPhoneModel updated)
@@ -78,11 +78,11 @@ PhoneNumberTypeID=@PhoneNumberTypeID
 
         public override string DeleteQuery =>
 @"delete from
-    Person.PersonPhone
+    [Person].[PersonPhone]
 where
-BusinessEntityID=@BusinessEntityID  AND 
-PhoneNumber=@PhoneNumber  AND 
-PhoneNumberTypeID=@PhoneNumberTypeID 
+[BusinessEntityID]=@BusinessEntityID  AND 
+[PhoneNumber]=@PhoneNumber  AND 
+[PhoneNumberTypeID]=@PhoneNumberTypeID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, PersonPhoneModel deleted)

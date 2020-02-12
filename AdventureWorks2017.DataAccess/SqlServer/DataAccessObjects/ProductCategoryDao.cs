@@ -8,11 +8,11 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class ProductCategoryDao : AbstractDaoWithPrimaryKey<ProductCategoryModel,ProductCategoryModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             ProductCategoryID,
-             Name,
-             rowguid,
-             ModifiedDate
- from Production.ProductCategory";
+             [ProductCategoryID],
+             [Name],
+             [rowguid],
+             [ModifiedDate]
+ from [Production].[ProductCategory]";
 
         protected override ProductCategoryModel ToModel(SqlDataReader dataReader)
         {
@@ -24,14 +24,14 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Production.ProductCategory
+        public override string InsertQuery => @"Insert Into [Production].[ProductCategory]
 (
-Name,
-rowguid,
-ModifiedDate
+[Name],
+[rowguid],
+[ModifiedDate]
 )
 output 
-inserted.ProductCategoryID
+inserted.[ProductCategoryID]
 
 VALUES
 (
@@ -54,14 +54,14 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Production.ProductCategory
+            @"Update [Production].[ProductCategory]
 Set
-    Name=@Name,
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [Name]=@Name,
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-ProductCategoryID=@ProductCategoryID 
+[ProductCategoryID]=@ProductCategoryID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ProductCategoryModel updated)
@@ -78,9 +78,9 @@ ProductCategoryID=@ProductCategoryID
 
         public override string DeleteQuery =>
 @"delete from
-    Production.ProductCategory
+    [Production].[ProductCategory]
 where
-ProductCategoryID=@ProductCategoryID 
+[ProductCategoryID]=@ProductCategoryID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ProductCategoryModel deleted)

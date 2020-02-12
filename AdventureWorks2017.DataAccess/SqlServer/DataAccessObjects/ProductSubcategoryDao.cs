@@ -8,12 +8,12 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class ProductSubcategoryDao : AbstractDaoWithPrimaryKey<ProductSubcategoryModel,ProductSubcategoryModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             ProductSubcategoryID,
-             ProductCategoryID,
-             Name,
-             rowguid,
-             ModifiedDate
- from Production.ProductSubcategory";
+             [ProductSubcategoryID],
+             [ProductCategoryID],
+             [Name],
+             [rowguid],
+             [ModifiedDate]
+ from [Production].[ProductSubcategory]";
 
         protected override ProductSubcategoryModel ToModel(SqlDataReader dataReader)
         {
@@ -26,15 +26,15 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Production.ProductSubcategory
+        public override string InsertQuery => @"Insert Into [Production].[ProductSubcategory]
 (
-ProductCategoryID,
-Name,
-rowguid,
-ModifiedDate
+[ProductCategoryID],
+[Name],
+[rowguid],
+[ModifiedDate]
 )
 output 
-inserted.ProductSubcategoryID
+inserted.[ProductSubcategoryID]
 
 VALUES
 (
@@ -59,15 +59,15 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Production.ProductSubcategory
+            @"Update [Production].[ProductSubcategory]
 Set
-    ProductCategoryID=@ProductCategoryID,
-    Name=@Name,
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [ProductCategoryID]=@ProductCategoryID,
+    [Name]=@Name,
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-ProductSubcategoryID=@ProductSubcategoryID 
+[ProductSubcategoryID]=@ProductSubcategoryID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ProductSubcategoryModel updated)
@@ -85,9 +85,9 @@ ProductSubcategoryID=@ProductSubcategoryID
 
         public override string DeleteQuery =>
 @"delete from
-    Production.ProductSubcategory
+    [Production].[ProductSubcategory]
 where
-ProductSubcategoryID=@ProductSubcategoryID 
+[ProductSubcategoryID]=@ProductSubcategoryID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ProductSubcategoryModel deleted)

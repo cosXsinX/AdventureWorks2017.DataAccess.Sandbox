@@ -8,16 +8,16 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class ErrorLogDao : AbstractDaoWithPrimaryKey<ErrorLogModel,ErrorLogModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             ErrorLogID,
-             ErrorTime,
-             UserName,
-             ErrorNumber,
-             ErrorSeverity,
-             ErrorState,
-             ErrorProcedure,
-             ErrorLine,
-             ErrorMessage
- from dbo.ErrorLog";
+             [ErrorLogID],
+             [ErrorTime],
+             [UserName],
+             [ErrorNumber],
+             [ErrorSeverity],
+             [ErrorState],
+             [ErrorProcedure],
+             [ErrorLine],
+             [ErrorMessage]
+ from [dbo].[ErrorLog]";
 
         protected override ErrorLogModel ToModel(SqlDataReader dataReader)
         {
@@ -26,27 +26,27 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              result.ErrorTime = (DateTime)(dataReader["ErrorTime"]);
              result.UserName = (string)(dataReader["UserName"]);
              result.ErrorNumber = (int)(dataReader["ErrorNumber"]);
-             result.ErrorSeverity = (int)(dataReader["ErrorSeverity"] is DBNull ? null : dataReader["ErrorSeverity"]);
-             result.ErrorState = (int)(dataReader["ErrorState"] is DBNull ? null : dataReader["ErrorState"]);
-             result.ErrorProcedure = (string)(dataReader["ErrorProcedure"] is DBNull ? null : dataReader["ErrorProcedure"]);
-             result.ErrorLine = (int)(dataReader["ErrorLine"] is DBNull ? null : dataReader["ErrorLine"]);
+             result.ErrorSeverity = (int?)(dataReader["ErrorSeverity"] is DBNull ? null : dataReader["ErrorSeverity"]);
+             result.ErrorState = (int?)(dataReader["ErrorState"] is DBNull ? null : dataReader["ErrorState"]);
+             result.ErrorProcedure = (string?)(dataReader["ErrorProcedure"] is DBNull ? null : dataReader["ErrorProcedure"]);
+             result.ErrorLine = (int?)(dataReader["ErrorLine"] is DBNull ? null : dataReader["ErrorLine"]);
              result.ErrorMessage = (string)(dataReader["ErrorMessage"]);
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into dbo.ErrorLog
+        public override string InsertQuery => @"Insert Into [dbo].[ErrorLog]
 (
-ErrorTime,
-UserName,
-ErrorNumber,
-ErrorSeverity,
-ErrorState,
-ErrorProcedure,
-ErrorLine,
-ErrorMessage
+[ErrorTime],
+[UserName],
+[ErrorNumber],
+[ErrorSeverity],
+[ErrorState],
+[ErrorProcedure],
+[ErrorLine],
+[ErrorMessage]
 )
 output 
-inserted.ErrorLogID
+inserted.[ErrorLogID]
 
 VALUES
 (
@@ -79,19 +79,19 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update dbo.ErrorLog
+            @"Update [dbo].[ErrorLog]
 Set
-    ErrorTime=@ErrorTime,
-    UserName=@UserName,
-    ErrorNumber=@ErrorNumber,
-    ErrorSeverity=@ErrorSeverity,
-    ErrorState=@ErrorState,
-    ErrorProcedure=@ErrorProcedure,
-    ErrorLine=@ErrorLine,
-    ErrorMessage=@ErrorMessage
+    [ErrorTime]=@ErrorTime,
+    [UserName]=@UserName,
+    [ErrorNumber]=@ErrorNumber,
+    [ErrorSeverity]=@ErrorSeverity,
+    [ErrorState]=@ErrorState,
+    [ErrorProcedure]=@ErrorProcedure,
+    [ErrorLine]=@ErrorLine,
+    [ErrorMessage]=@ErrorMessage
 
 Where
-ErrorLogID=@ErrorLogID 
+[ErrorLogID]=@ErrorLogID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ErrorLogModel updated)
@@ -113,9 +113,9 @@ ErrorLogID=@ErrorLogID
 
         public override string DeleteQuery =>
 @"delete from
-    dbo.ErrorLog
+    [dbo].[ErrorLog]
 where
-ErrorLogID=@ErrorLogID 
+[ErrorLogID]=@ErrorLogID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ErrorLogModel deleted)

@@ -8,15 +8,15 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class StateProvinceDao : AbstractDaoWithPrimaryKey<StateProvinceModel,StateProvinceModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             StateProvinceID,
-             StateProvinceCode,
-             CountryRegionCode,
-             IsOnlyStateProvinceFlag,
-             Name,
-             TerritoryID,
-             rowguid,
-             ModifiedDate
- from Person.StateProvince";
+             [StateProvinceID],
+             [StateProvinceCode],
+             [CountryRegionCode],
+             [IsOnlyStateProvinceFlag],
+             [Name],
+             [TerritoryID],
+             [rowguid],
+             [ModifiedDate]
+ from [Person].[StateProvince]";
 
         protected override StateProvinceModel ToModel(SqlDataReader dataReader)
         {
@@ -32,18 +32,18 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Person.StateProvince
+        public override string InsertQuery => @"Insert Into [Person].[StateProvince]
 (
-StateProvinceCode,
-CountryRegionCode,
-IsOnlyStateProvinceFlag,
-Name,
-TerritoryID,
-rowguid,
-ModifiedDate
+[StateProvinceCode],
+[CountryRegionCode],
+[IsOnlyStateProvinceFlag],
+[Name],
+[TerritoryID],
+[rowguid],
+[ModifiedDate]
 )
 output 
-inserted.StateProvinceID
+inserted.[StateProvinceID]
 
 VALUES
 (
@@ -74,18 +74,18 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Person.StateProvince
+            @"Update [Person].[StateProvince]
 Set
-    StateProvinceCode=@StateProvinceCode,
-    CountryRegionCode=@CountryRegionCode,
-    IsOnlyStateProvinceFlag=@IsOnlyStateProvinceFlag,
-    Name=@Name,
-    TerritoryID=@TerritoryID,
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [StateProvinceCode]=@StateProvinceCode,
+    [CountryRegionCode]=@CountryRegionCode,
+    [IsOnlyStateProvinceFlag]=@IsOnlyStateProvinceFlag,
+    [Name]=@Name,
+    [TerritoryID]=@TerritoryID,
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-StateProvinceID=@StateProvinceID 
+[StateProvinceID]=@StateProvinceID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, StateProvinceModel updated)
@@ -106,9 +106,9 @@ StateProvinceID=@StateProvinceID
 
         public override string DeleteQuery =>
 @"delete from
-    Person.StateProvince
+    [Person].[StateProvince]
 where
-StateProvinceID=@StateProvinceID 
+[StateProvinceID]=@StateProvinceID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, StateProvinceModel deleted)

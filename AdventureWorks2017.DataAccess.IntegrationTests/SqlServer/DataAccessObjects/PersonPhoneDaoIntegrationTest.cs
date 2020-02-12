@@ -25,18 +25,18 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
         [Test]
         public void GetAllIntegrationTest()
         {
-            var _connection = TestSession.GetConnection();
-            _connection.Open();
-            var selecteds = _tested.GetAll(_connection);
+            var connection = TestSession.GetConnection();
+            connection.Open();
+            var selecteds = _tested.GetAll(connection);
             Assert.IsNotNull(selecteds);
-            _connection.Close();
+            connection.Close();
         }
 
         [Test]
         public void IntegrationTest()
         {
-            var _connection = TestSession.GetConnection();
-            _connection.Open();
+            var connection = TestSession.GetConnection();
+            connection.Open();
             #region good insertion and select by id test
             PersonPhoneModel inserted = new PersonPhoneModel();
             inserted.BusinessEntityID = TestSession.Random.Next();
@@ -44,9 +44,9 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             inserted.PhoneNumberTypeID = TestSession.Random.Next();
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 
-            _tested.Insert(_connection,new[] { inserted });
+            _tested.Insert(connection,new[] { inserted });
 
-            var selectedAfterInsertion = _tested.GetByPrimaryKey(_connection, new PersonPhoneModelPrimaryKey()
+            var selectedAfterInsertion = _tested.GetByPrimaryKey(connection, new PersonPhoneModelPrimaryKey()
             {
                 BusinessEntityID = inserted.BusinessEntityID,
                 PhoneNumber = inserted.PhoneNumber,
@@ -65,9 +65,9 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #region update and select by id test
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 
-            _tested.Update(_connection, new[] { inserted });
+            _tested.Update(connection, new[] { inserted });
 
-            var selectedAfterUpdateAddresss = _tested.GetByPrimaryKey(_connection, new PersonPhoneModelPrimaryKey()
+            var selectedAfterUpdateAddresss = _tested.GetByPrimaryKey(connection, new PersonPhoneModelPrimaryKey()
             {
                 BusinessEntityID = inserted.BusinessEntityID,
                 PhoneNumber = inserted.PhoneNumber,
@@ -84,8 +84,8 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #endregion
 
             #region delete test
-            _tested.Delete(_connection, new[] { inserted });
-            var selectedAfterDeleteAddresss = _tested.GetByPrimaryKey(_connection, new PersonPhoneModelPrimaryKey()
+            _tested.Delete(connection, new[] { inserted });
+            var selectedAfterDeleteAddresss = _tested.GetByPrimaryKey(connection, new PersonPhoneModelPrimaryKey()
             {
                 BusinessEntityID = inserted.BusinessEntityID,
                 PhoneNumber = inserted.PhoneNumber,
@@ -93,7 +93,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             });
             CollectionAssert.IsEmpty(selectedAfterDeleteAddresss);
             #endregion
-            _connection.Close();
+            connection.Close();
         }
     }
 }

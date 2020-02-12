@@ -8,13 +8,13 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class ShoppingCartItemDao : AbstractDaoWithPrimaryKey<ShoppingCartItemModel,ShoppingCartItemModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             ShoppingCartItemID,
-             ShoppingCartID,
-             Quantity,
-             ProductID,
-             DateCreated,
-             ModifiedDate
- from Sales.ShoppingCartItem";
+             [ShoppingCartItemID],
+             [ShoppingCartID],
+             [Quantity],
+             [ProductID],
+             [DateCreated],
+             [ModifiedDate]
+ from [Sales].[ShoppingCartItem]";
 
         protected override ShoppingCartItemModel ToModel(SqlDataReader dataReader)
         {
@@ -28,16 +28,16 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Sales.ShoppingCartItem
+        public override string InsertQuery => @"Insert Into [Sales].[ShoppingCartItem]
 (
-ShoppingCartID,
-Quantity,
-ProductID,
-DateCreated,
-ModifiedDate
+[ShoppingCartID],
+[Quantity],
+[ProductID],
+[DateCreated],
+[ModifiedDate]
 )
 output 
-inserted.ShoppingCartItemID
+inserted.[ShoppingCartItemID]
 
 VALUES
 (
@@ -64,16 +64,16 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Sales.ShoppingCartItem
+            @"Update [Sales].[ShoppingCartItem]
 Set
-    ShoppingCartID=@ShoppingCartID,
-    Quantity=@Quantity,
-    ProductID=@ProductID,
-    DateCreated=@DateCreated,
-    ModifiedDate=@ModifiedDate
+    [ShoppingCartID]=@ShoppingCartID,
+    [Quantity]=@Quantity,
+    [ProductID]=@ProductID,
+    [DateCreated]=@DateCreated,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-ShoppingCartItemID=@ShoppingCartItemID 
+[ShoppingCartItemID]=@ShoppingCartItemID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ShoppingCartItemModel updated)
@@ -92,9 +92,9 @@ ShoppingCartItemID=@ShoppingCartItemID
 
         public override string DeleteQuery =>
 @"delete from
-    Sales.ShoppingCartItem
+    [Sales].[ShoppingCartItem]
 where
-ShoppingCartItemID=@ShoppingCartItemID 
+[ShoppingCartItemID]=@ShoppingCartItemID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ShoppingCartItemModel deleted)

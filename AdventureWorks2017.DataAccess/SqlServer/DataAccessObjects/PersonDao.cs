@@ -8,20 +8,20 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class PersonDao : AbstractDaoWithPrimaryKey<PersonModel,PersonModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             BusinessEntityID,
-             PersonType,
-             NameStyle,
-             Title,
-             FirstName,
-             MiddleName,
-             LastName,
-             Suffix,
-             EmailPromotion,
-             AdditionalContactInfo,
-             Demographics,
-             rowguid,
-             ModifiedDate
- from Person.Person";
+             [BusinessEntityID],
+             [PersonType],
+             [NameStyle],
+             [Title],
+             [FirstName],
+             [MiddleName],
+             [LastName],
+             [Suffix],
+             [EmailPromotion],
+             [AdditionalContactInfo],
+             [Demographics],
+             [rowguid],
+             [ModifiedDate]
+ from [Person].[Person]";
 
         protected override PersonModel ToModel(SqlDataReader dataReader)
         {
@@ -29,34 +29,34 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              result.BusinessEntityID = (int)(dataReader["BusinessEntityID"]);
              result.PersonType = (string)(dataReader["PersonType"]);
              result.NameStyle = (bool)(dataReader["NameStyle"]);
-             result.Title = (string)(dataReader["Title"] is DBNull ? null : dataReader["Title"]);
+             result.Title = (string?)(dataReader["Title"] is DBNull ? null : dataReader["Title"]);
              result.FirstName = (string)(dataReader["FirstName"]);
-             result.MiddleName = (string)(dataReader["MiddleName"] is DBNull ? null : dataReader["MiddleName"]);
+             result.MiddleName = (string?)(dataReader["MiddleName"] is DBNull ? null : dataReader["MiddleName"]);
              result.LastName = (string)(dataReader["LastName"]);
-             result.Suffix = (string)(dataReader["Suffix"] is DBNull ? null : dataReader["Suffix"]);
+             result.Suffix = (string?)(dataReader["Suffix"] is DBNull ? null : dataReader["Suffix"]);
              result.EmailPromotion = (int)(dataReader["EmailPromotion"]);
-             result.AdditionalContactInfo = (System.Xml.XmlDocument)(dataReader["AdditionalContactInfo"] is DBNull ? null : dataReader["AdditionalContactInfo"]);
-             result.Demographics = (System.Xml.XmlDocument)(dataReader["Demographics"] is DBNull ? null : dataReader["Demographics"]);
+             result.AdditionalContactInfo = (System.Xml.XmlDocument?)(dataReader["AdditionalContactInfo"] is DBNull ? null : dataReader["AdditionalContactInfo"]);
+             result.Demographics = (System.Xml.XmlDocument?)(dataReader["Demographics"] is DBNull ? null : dataReader["Demographics"]);
              result.rowguid = (Guid)(dataReader["rowguid"]);
              result.ModifiedDate = (DateTime)(dataReader["ModifiedDate"]);
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Person.Person
+        public override string InsertQuery => @"Insert Into [Person].[Person]
 (
-BusinessEntityID,
-PersonType,
-NameStyle,
-Title,
-FirstName,
-MiddleName,
-LastName,
-Suffix,
-EmailPromotion,
-AdditionalContactInfo,
-Demographics,
-rowguid,
-ModifiedDate
+[BusinessEntityID],
+[PersonType],
+[NameStyle],
+[Title],
+[FirstName],
+[MiddleName],
+[LastName],
+[Suffix],
+[EmailPromotion],
+[AdditionalContactInfo],
+[Demographics],
+[rowguid],
+[ModifiedDate]
 )
 
 VALUES
@@ -99,23 +99,23 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Person.Person
+            @"Update [Person].[Person]
 Set
-    PersonType=@PersonType,
-    NameStyle=@NameStyle,
-    Title=@Title,
-    FirstName=@FirstName,
-    MiddleName=@MiddleName,
-    LastName=@LastName,
-    Suffix=@Suffix,
-    EmailPromotion=@EmailPromotion,
-    AdditionalContactInfo=@AdditionalContactInfo,
-    Demographics=@Demographics,
-    rowguid=@rowguid,
-    ModifiedDate=@ModifiedDate
+    [PersonType]=@PersonType,
+    [NameStyle]=@NameStyle,
+    [Title]=@Title,
+    [FirstName]=@FirstName,
+    [MiddleName]=@MiddleName,
+    [LastName]=@LastName,
+    [Suffix]=@Suffix,
+    [EmailPromotion]=@EmailPromotion,
+    [AdditionalContactInfo]=@AdditionalContactInfo,
+    [Demographics]=@Demographics,
+    [rowguid]=@rowguid,
+    [ModifiedDate]=@ModifiedDate
 
 Where
-BusinessEntityID=@BusinessEntityID 
+[BusinessEntityID]=@BusinessEntityID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, PersonModel updated)
@@ -141,9 +141,9 @@ BusinessEntityID=@BusinessEntityID
 
         public override string DeleteQuery =>
 @"delete from
-    Person.Person
+    [Person].[Person]
 where
-BusinessEntityID=@BusinessEntityID 
+[BusinessEntityID]=@BusinessEntityID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, PersonModel deleted)

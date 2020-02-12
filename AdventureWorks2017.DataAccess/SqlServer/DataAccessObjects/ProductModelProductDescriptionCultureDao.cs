@@ -8,11 +8,11 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
     public class ProductModelProductDescriptionCultureDao : AbstractDaoWithPrimaryKey<ProductModelProductDescriptionCultureModel,ProductModelProductDescriptionCultureModelPrimaryKey>
     {
         public override string SelectQuery => @"select 
-             ProductModelID,
-             ProductDescriptionID,
-             CultureID,
-             ModifiedDate
- from Production.ProductModelProductDescriptionCulture";
+             [ProductModelID],
+             [ProductDescriptionID],
+             [CultureID],
+             [ModifiedDate]
+ from [Production].[ProductModelProductDescriptionCulture]";
 
         protected override ProductModelProductDescriptionCultureModel ToModel(SqlDataReader dataReader)
         {
@@ -24,12 +24,12 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             return result;
         }
         
-        public override string InsertQuery => @"Insert Into Production.ProductModelProductDescriptionCulture
+        public override string InsertQuery => @"Insert Into [Production].[ProductModelProductDescriptionCulture]
 (
-ProductModelID,
-ProductDescriptionID,
-CultureID,
-ModifiedDate
+[ProductModelID],
+[ProductDescriptionID],
+[CultureID],
+[ModifiedDate]
 )
 
 VALUES
@@ -54,14 +54,14 @@ VALUES
         }
 
         public override string UpdateQuery =>
-            @"Update Production.ProductModelProductDescriptionCulture
+            @"Update [Production].[ProductModelProductDescriptionCulture]
 Set
-    ModifiedDate=@ModifiedDate
+    [ModifiedDate]=@ModifiedDate
 
 Where
-ProductModelID=@ProductModelID  AND 
-ProductDescriptionID=@ProductDescriptionID  AND 
-CultureID=@CultureID 
+[ProductModelID]=@ProductModelID  AND 
+[ProductDescriptionID]=@ProductDescriptionID  AND 
+[CultureID]=@CultureID 
 ";
 
         public override void UpdateParameterMapping(SqlCommand sqlCommand, ProductModelProductDescriptionCultureModel updated)
@@ -78,11 +78,11 @@ CultureID=@CultureID
 
         public override string DeleteQuery =>
 @"delete from
-    Production.ProductModelProductDescriptionCulture
+    [Production].[ProductModelProductDescriptionCulture]
 where
-ProductModelID=@ProductModelID  AND 
-ProductDescriptionID=@ProductDescriptionID  AND 
-CultureID=@CultureID 
+[ProductModelID]=@ProductModelID  AND 
+[ProductDescriptionID]=@ProductDescriptionID  AND 
+[CultureID]=@CultureID 
 ";
 
         public override void DeleteWhereParameterMapping(SqlCommand sqlCommand, ProductModelProductDescriptionCultureModel deleted)
