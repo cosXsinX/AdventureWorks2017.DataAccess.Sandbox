@@ -40,7 +40,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #region good insertion and select by id test
             PersonPhoneModel inserted = new PersonPhoneModel();
             inserted.BusinessEntityID = TestSession.Random.Next();
-            inserted.PhoneNumber = TestSession.Random.RandomString(50);
+            inserted.PhoneNumber = TestSession.Random.RandomString(25);
             inserted.PhoneNumberTypeID = TestSession.Random.Next();
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 

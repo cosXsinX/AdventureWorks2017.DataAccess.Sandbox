@@ -40,13 +40,13 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #region good insertion and select by id test
             PersonModel inserted = new PersonModel();
             inserted.BusinessEntityID = TestSession.Random.Next();
-            inserted.PersonType = TestSession.Random.RandomString(4);
+            inserted.PersonType = TestSession.Random.RandomString(2);
             inserted.NameStyle = Convert.ToBoolean(TestSession.Random.Next(1));
-            inserted.Title = TestSession.Random.RandomString(16);
-            inserted.FirstName = TestSession.Random.RandomString(100);
-            inserted.MiddleName = TestSession.Random.RandomString(100);
-            inserted.LastName = TestSession.Random.RandomString(100);
-            inserted.Suffix = TestSession.Random.RandomString(20);
+            inserted.Title = TestSession.Random.RandomString(8);
+            inserted.FirstName = TestSession.Random.RandomString(50);
+            inserted.MiddleName = TestSession.Random.RandomString(50);
+            inserted.LastName = TestSession.Random.RandomString(50);
+            inserted.Suffix = TestSession.Random.RandomString(10);
             inserted.EmailPromotion = TestSession.Random.Next();
             inserted.AdditionalContactInfo = null; //TODO define how to generate random xml;
             inserted.Demographics = null; //TODO define how to generate random xml;
@@ -79,13 +79,13 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #endregion
 
             #region update and select by id test
-            inserted.PersonType = TestSession.Random.RandomString(4);
+            inserted.PersonType = TestSession.Random.RandomString(2);
             inserted.NameStyle = Convert.ToBoolean(TestSession.Random.Next(1));
-            inserted.Title = TestSession.Random.RandomString(16);
-            inserted.FirstName = TestSession.Random.RandomString(100);
-            inserted.MiddleName = TestSession.Random.RandomString(100);
-            inserted.LastName = TestSession.Random.RandomString(100);
-            inserted.Suffix = TestSession.Random.RandomString(20);
+            inserted.Title = TestSession.Random.RandomString(8);
+            inserted.FirstName = TestSession.Random.RandomString(50);
+            inserted.MiddleName = TestSession.Random.RandomString(50);
+            inserted.LastName = TestSession.Random.RandomString(50);
+            inserted.Suffix = TestSession.Random.RandomString(10);
             inserted.EmailPromotion = TestSession.Random.Next();
             inserted.AdditionalContactInfo = null; //TODO define how to generate random xml;
             inserted.Demographics = null; //TODO define how to generate random xml;

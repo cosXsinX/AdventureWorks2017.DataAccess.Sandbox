@@ -39,7 +39,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             connection.Open();
             #region good insertion and select by id test
             ShoppingCartItemModel inserted = new ShoppingCartItemModel();
-            inserted.ShoppingCartID = TestSession.Random.RandomString(100);
+            inserted.ShoppingCartID = TestSession.Random.RandomString(50);
             inserted.Quantity = TestSession.Random.Next();
             inserted.ProductID = TestSession.Random.Next();
             inserted.DateCreated = TestSession.Random.RandomDateTime();
@@ -64,7 +64,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #endregion
 
             #region update and select by id test
-            inserted.ShoppingCartID = TestSession.Random.RandomString(100);
+            inserted.ShoppingCartID = TestSession.Random.RandomString(50);
             inserted.Quantity = TestSession.Random.Next();
             inserted.ProductID = TestSession.Random.Next();
             inserted.DateCreated = TestSession.Random.RandomDateTime();

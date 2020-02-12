@@ -41,7 +41,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             ProductModelProductDescriptionCultureModel inserted = new ProductModelProductDescriptionCultureModel();
             inserted.ProductModelID = TestSession.Random.Next();
             inserted.ProductDescriptionID = TestSession.Random.Next();
-            inserted.CultureID = TestSession.Random.RandomString(12);
+            inserted.CultureID = TestSession.Random.RandomString(6);
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 
             _tested.Insert(connection,new[] { inserted });

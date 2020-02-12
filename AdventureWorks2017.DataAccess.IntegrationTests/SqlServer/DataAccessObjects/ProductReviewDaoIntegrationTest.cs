@@ -40,11 +40,11 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #region good insertion and select by id test
             ProductReviewModel inserted = new ProductReviewModel();
             inserted.ProductID = TestSession.Random.Next();
-            inserted.ReviewerName = TestSession.Random.RandomString(100);
+            inserted.ReviewerName = TestSession.Random.RandomString(50);
             inserted.ReviewDate = TestSession.Random.RandomDateTime();
-            inserted.EmailAddress = TestSession.Random.RandomString(100);
+            inserted.EmailAddress = TestSession.Random.RandomString(50);
             inserted.Rating = TestSession.Random.Next();
-            inserted.Comments = TestSession.Random.RandomString(7700);
+            inserted.Comments = TestSession.Random.RandomString(3850);
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 
             _tested.Insert(connection,new[] { inserted });
@@ -69,11 +69,11 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
 
             #region update and select by id test
             inserted.ProductID = TestSession.Random.Next();
-            inserted.ReviewerName = TestSession.Random.RandomString(100);
+            inserted.ReviewerName = TestSession.Random.RandomString(50);
             inserted.ReviewDate = TestSession.Random.RandomDateTime();
-            inserted.EmailAddress = TestSession.Random.RandomString(100);
+            inserted.EmailAddress = TestSession.Random.RandomString(50);
             inserted.Rating = TestSession.Random.Next();
-            inserted.Comments = TestSession.Random.RandomString(7700);
+            inserted.Comments = TestSession.Random.RandomString(3850);
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 
             _tested.Update(connection, new[] { inserted });

@@ -40,7 +40,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #region good insertion and select by id test
             StoreModel inserted = new StoreModel();
             inserted.BusinessEntityID = TestSession.Random.Next();
-            inserted.Name = TestSession.Random.RandomString(100);
+            inserted.Name = TestSession.Random.RandomString(50);
             inserted.SalesPersonID = TestSession.Random.Next();
             inserted.Demographics = null; //TODO define how to generate random xml;
             inserted.rowguid = Guid.NewGuid();
@@ -65,7 +65,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #endregion
 
             #region update and select by id test
-            inserted.Name = TestSession.Random.RandomString(100);
+            inserted.Name = TestSession.Random.RandomString(50);
             inserted.SalesPersonID = TestSession.Random.Next();
             inserted.Demographics = null; //TODO define how to generate random xml;
             inserted.rowguid = Guid.NewGuid();

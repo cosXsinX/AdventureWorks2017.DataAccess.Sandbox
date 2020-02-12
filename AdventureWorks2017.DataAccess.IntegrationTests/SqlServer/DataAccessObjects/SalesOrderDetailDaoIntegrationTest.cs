@@ -40,7 +40,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #region good insertion and select by id test
             SalesOrderDetailModel inserted = new SalesOrderDetailModel();
             inserted.SalesOrderID = TestSession.Random.Next();
-            inserted.CarrierTrackingNumber = TestSession.Random.RandomString(50);
+            inserted.CarrierTrackingNumber = TestSession.Random.RandomString(25);
             inserted.OrderQty = TestSession.Random.RandomShort();
             inserted.ProductID = TestSession.Random.Next();
             inserted.SpecialOfferID = TestSession.Random.Next();
@@ -75,7 +75,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #endregion
 
             #region update and select by id test
-            inserted.CarrierTrackingNumber = TestSession.Random.RandomString(50);
+            inserted.CarrierTrackingNumber = TestSession.Random.RandomString(25);
             inserted.OrderQty = TestSession.Random.RandomShort();
             inserted.ProductID = TestSession.Random.Next();
             inserted.SpecialOfferID = TestSession.Random.Next();

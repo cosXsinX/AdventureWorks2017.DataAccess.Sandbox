@@ -40,9 +40,9 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #region good insertion and select by id test
             SalesTaxRateModel inserted = new SalesTaxRateModel();
             inserted.StateProvinceID = TestSession.Random.Next();
-            inserted.TaxType = Convert.ToByte(TestSession.Random.RandomString(1));
+            inserted.TaxType = Convert.ToByte(TestSession.Random.RandomString(3));
             inserted.TaxRate = Convert.ToDecimal(TestSession.Random.Next());
-            inserted.Name = TestSession.Random.RandomString(100);
+            inserted.Name = TestSession.Random.RandomString(50);
             inserted.rowguid = Guid.NewGuid();
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 
@@ -67,9 +67,9 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
 
             #region update and select by id test
             inserted.StateProvinceID = TestSession.Random.Next();
-            inserted.TaxType = Convert.ToByte(TestSession.Random.RandomString(1));
+            inserted.TaxType = Convert.ToByte(TestSession.Random.RandomString(3));
             inserted.TaxRate = Convert.ToDecimal(TestSession.Random.Next());
-            inserted.Name = TestSession.Random.RandomString(100);
+            inserted.Name = TestSession.Random.RandomString(50);
             inserted.rowguid = Guid.NewGuid();
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 

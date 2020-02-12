@@ -43,7 +43,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             inserted.ReferenceOrderID = TestSession.Random.Next();
             inserted.ReferenceOrderLineID = TestSession.Random.Next();
             inserted.TransactionDate = TestSession.Random.RandomDateTime();
-            inserted.TransactionType = TestSession.Random.RandomString(2);
+            inserted.TransactionType = TestSession.Random.RandomString(1);
             inserted.Quantity = TestSession.Random.Next();
             inserted.ActualCost = TestSession.Random.RandomDecimal();
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
@@ -74,7 +74,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             inserted.ReferenceOrderID = TestSession.Random.Next();
             inserted.ReferenceOrderLineID = TestSession.Random.Next();
             inserted.TransactionDate = TestSession.Random.RandomDateTime();
-            inserted.TransactionType = TestSession.Random.RandomString(2);
+            inserted.TransactionType = TestSession.Random.RandomString(1);
             inserted.Quantity = TestSession.Random.Next();
             inserted.ActualCost = TestSession.Random.RandomDecimal();
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();

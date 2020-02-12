@@ -41,8 +41,8 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             ProductInventoryModel inserted = new ProductInventoryModel();
             inserted.ProductID = TestSession.Random.Next();
             inserted.LocationID = TestSession.Random.RandomShort();
-            inserted.Shelf = TestSession.Random.RandomString(20);
-            inserted.Bin = Convert.ToByte(TestSession.Random.RandomString(1));
+            inserted.Shelf = TestSession.Random.RandomString(10);
+            inserted.Bin = Convert.ToByte(TestSession.Random.RandomString(3));
             inserted.Quantity = TestSession.Random.RandomShort();
             inserted.rowguid = Guid.NewGuid();
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
@@ -68,8 +68,8 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #endregion
 
             #region update and select by id test
-            inserted.Shelf = TestSession.Random.RandomString(20);
-            inserted.Bin = Convert.ToByte(TestSession.Random.RandomString(1));
+            inserted.Shelf = TestSession.Random.RandomString(10);
+            inserted.Bin = Convert.ToByte(TestSession.Random.RandomString(3));
             inserted.Quantity = TestSession.Random.RandomShort();
             inserted.rowguid = Guid.NewGuid();
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();

@@ -40,10 +40,10 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #region good insertion and select by id test
             DatabaseLogModel inserted = new DatabaseLogModel();
             inserted.PostTime = TestSession.Random.RandomDateTime();
-            inserted.DatabaseUser = TestSession.Random.RandomString(256);
-            inserted.Event = TestSession.Random.RandomString(256);
-            inserted.Schema = TestSession.Random.RandomString(256);
-            inserted.Object = TestSession.Random.RandomString(256);
+            inserted.DatabaseUser = TestSession.Random.RandomString(128);
+            inserted.Event = TestSession.Random.RandomString(128);
+            inserted.Schema = TestSession.Random.RandomString(128);
+            inserted.Object = TestSession.Random.RandomString(128);
             inserted.TSQL = TestSession.Random.RandomString(-1);
             inserted.XmlEvent = null; //TODO define how to generate random xml;
 
@@ -69,10 +69,10 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
 
             #region update and select by id test
             inserted.PostTime = TestSession.Random.RandomDateTime();
-            inserted.DatabaseUser = TestSession.Random.RandomString(256);
-            inserted.Event = TestSession.Random.RandomString(256);
-            inserted.Schema = TestSession.Random.RandomString(256);
-            inserted.Object = TestSession.Random.RandomString(256);
+            inserted.DatabaseUser = TestSession.Random.RandomString(128);
+            inserted.Event = TestSession.Random.RandomString(128);
+            inserted.Schema = TestSession.Random.RandomString(128);
+            inserted.Object = TestSession.Random.RandomString(128);
             inserted.TSQL = TestSession.Random.RandomString(-1);
             inserted.XmlEvent = null; //TODO define how to generate random xml;
 

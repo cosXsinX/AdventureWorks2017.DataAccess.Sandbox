@@ -39,23 +39,23 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             connection.Open();
             #region good insertion and select by id test
             ProductModel inserted = new ProductModel();
-            inserted.Name = TestSession.Random.RandomString(100);
-            inserted.ProductNumber = TestSession.Random.RandomString(50);
+            inserted.Name = TestSession.Random.RandomString(50);
+            inserted.ProductNumber = TestSession.Random.RandomString(25);
             inserted.MakeFlag = Convert.ToBoolean(TestSession.Random.Next(1));
             inserted.FinishedGoodsFlag = Convert.ToBoolean(TestSession.Random.Next(1));
-            inserted.Color = TestSession.Random.RandomString(30);
+            inserted.Color = TestSession.Random.RandomString(15);
             inserted.SafetyStockLevel = TestSession.Random.RandomShort();
             inserted.ReorderPoint = TestSession.Random.RandomShort();
             inserted.StandardCost = TestSession.Random.RandomDecimal();
             inserted.ListPrice = TestSession.Random.RandomDecimal();
-            inserted.Size = TestSession.Random.RandomString(10);
-            inserted.SizeUnitMeasureCode = TestSession.Random.RandomString(6);
-            inserted.WeightUnitMeasureCode = TestSession.Random.RandomString(6);
+            inserted.Size = TestSession.Random.RandomString(5);
+            inserted.SizeUnitMeasureCode = TestSession.Random.RandomString(3);
+            inserted.WeightUnitMeasureCode = TestSession.Random.RandomString(3);
             inserted.Weight = TestSession.Random.RandomDecimal();
             inserted.DaysToManufacture = TestSession.Random.Next();
-            inserted.ProductLine = TestSession.Random.RandomString(4);
-            inserted.Class = TestSession.Random.RandomString(4);
-            inserted.Style = TestSession.Random.RandomString(4);
+            inserted.ProductLine = TestSession.Random.RandomString(2);
+            inserted.Class = TestSession.Random.RandomString(2);
+            inserted.Style = TestSession.Random.RandomString(2);
             inserted.ProductSubcategoryID = TestSession.Random.Next();
             inserted.ProductModelID = TestSession.Random.Next();
             inserted.SellStartDate = TestSession.Random.RandomDateTime();
@@ -102,23 +102,23 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #endregion
 
             #region update and select by id test
-            inserted.Name = TestSession.Random.RandomString(100);
-            inserted.ProductNumber = TestSession.Random.RandomString(50);
+            inserted.Name = TestSession.Random.RandomString(50);
+            inserted.ProductNumber = TestSession.Random.RandomString(25);
             inserted.MakeFlag = Convert.ToBoolean(TestSession.Random.Next(1));
             inserted.FinishedGoodsFlag = Convert.ToBoolean(TestSession.Random.Next(1));
-            inserted.Color = TestSession.Random.RandomString(30);
+            inserted.Color = TestSession.Random.RandomString(15);
             inserted.SafetyStockLevel = TestSession.Random.RandomShort();
             inserted.ReorderPoint = TestSession.Random.RandomShort();
             inserted.StandardCost = TestSession.Random.RandomDecimal();
             inserted.ListPrice = TestSession.Random.RandomDecimal();
-            inserted.Size = TestSession.Random.RandomString(10);
-            inserted.SizeUnitMeasureCode = TestSession.Random.RandomString(6);
-            inserted.WeightUnitMeasureCode = TestSession.Random.RandomString(6);
+            inserted.Size = TestSession.Random.RandomString(5);
+            inserted.SizeUnitMeasureCode = TestSession.Random.RandomString(3);
+            inserted.WeightUnitMeasureCode = TestSession.Random.RandomString(3);
             inserted.Weight = TestSession.Random.RandomDecimal();
             inserted.DaysToManufacture = TestSession.Random.Next();
-            inserted.ProductLine = TestSession.Random.RandomString(4);
-            inserted.Class = TestSession.Random.RandomString(4);
-            inserted.Style = TestSession.Random.RandomString(4);
+            inserted.ProductLine = TestSession.Random.RandomString(2);
+            inserted.Class = TestSession.Random.RandomString(2);
+            inserted.Style = TestSession.Random.RandomString(2);
             inserted.ProductSubcategoryID = TestSession.Random.Next();
             inserted.ProductModelID = TestSession.Random.Next();
             inserted.SellStartDate = TestSession.Random.RandomDateTime();

@@ -39,10 +39,10 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             connection.Open();
             #region good insertion and select by id test
             SpecialOfferModel inserted = new SpecialOfferModel();
-            inserted.Description = TestSession.Random.RandomString(510);
+            inserted.Description = TestSession.Random.RandomString(255);
             inserted.DiscountPct = Convert.ToDecimal(TestSession.Random.Next());
-            inserted.Type = TestSession.Random.RandomString(100);
-            inserted.Category = TestSession.Random.RandomString(100);
+            inserted.Type = TestSession.Random.RandomString(50);
+            inserted.Category = TestSession.Random.RandomString(50);
             inserted.StartDate = TestSession.Random.RandomDateTime();
             inserted.EndDate = TestSession.Random.RandomDateTime();
             inserted.MinQty = TestSession.Random.Next();
@@ -74,10 +74,10 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #endregion
 
             #region update and select by id test
-            inserted.Description = TestSession.Random.RandomString(510);
+            inserted.Description = TestSession.Random.RandomString(255);
             inserted.DiscountPct = Convert.ToDecimal(TestSession.Random.Next());
-            inserted.Type = TestSession.Random.RandomString(100);
-            inserted.Category = TestSession.Random.RandomString(100);
+            inserted.Type = TestSession.Random.RandomString(50);
+            inserted.Category = TestSession.Random.RandomString(50);
             inserted.StartDate = TestSession.Random.RandomDateTime();
             inserted.EndDate = TestSession.Random.RandomDateTime();
             inserted.MinQty = TestSession.Random.Next();

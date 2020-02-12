@@ -39,7 +39,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             connection.Open();
             #region good insertion and select by id test
             ProductModelModel inserted = new ProductModelModel();
-            inserted.Name = TestSession.Random.RandomString(100);
+            inserted.Name = TestSession.Random.RandomString(50);
             inserted.CatalogDescription = null; //TODO define how to generate random xml;
             inserted.Instructions = null; //TODO define how to generate random xml;
             inserted.rowguid = Guid.NewGuid();
@@ -64,7 +64,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #endregion
 
             #region update and select by id test
-            inserted.Name = TestSession.Random.RandomString(100);
+            inserted.Name = TestSession.Random.RandomString(50);
             inserted.CatalogDescription = null; //TODO define how to generate random xml;
             inserted.Instructions = null; //TODO define how to generate random xml;
             inserted.rowguid = Guid.NewGuid();

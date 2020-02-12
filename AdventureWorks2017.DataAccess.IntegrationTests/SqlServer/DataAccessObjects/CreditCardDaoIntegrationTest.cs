@@ -39,9 +39,9 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             connection.Open();
             #region good insertion and select by id test
             CreditCardModel inserted = new CreditCardModel();
-            inserted.CardType = TestSession.Random.RandomString(100);
-            inserted.CardNumber = TestSession.Random.RandomString(50);
-            inserted.ExpMonth = Convert.ToByte(TestSession.Random.RandomString(1));
+            inserted.CardType = TestSession.Random.RandomString(50);
+            inserted.CardNumber = TestSession.Random.RandomString(25);
+            inserted.ExpMonth = Convert.ToByte(TestSession.Random.RandomString(3));
             inserted.ExpYear = TestSession.Random.RandomShort();
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 
@@ -64,9 +64,9 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #endregion
 
             #region update and select by id test
-            inserted.CardType = TestSession.Random.RandomString(100);
-            inserted.CardNumber = TestSession.Random.RandomString(50);
-            inserted.ExpMonth = Convert.ToByte(TestSession.Random.RandomString(1));
+            inserted.CardType = TestSession.Random.RandomString(50);
+            inserted.CardNumber = TestSession.Random.RandomString(25);
+            inserted.ExpMonth = Convert.ToByte(TestSession.Random.RandomString(3));
             inserted.ExpYear = TestSession.Random.RandomShort();
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 

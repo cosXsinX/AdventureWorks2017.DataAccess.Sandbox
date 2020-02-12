@@ -42,7 +42,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             inserted.BusinessEntityID = TestSession.Random.Next();
             inserted.RateChangeDate = TestSession.Random.RandomDateTime();
             inserted.Rate = TestSession.Random.RandomDecimal();
-            inserted.PayFrequency = Convert.ToByte(TestSession.Random.RandomString(1));
+            inserted.PayFrequency = Convert.ToByte(TestSession.Random.RandomString(3));
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 
             _tested.Insert(connection,new[] { inserted });
@@ -65,7 +65,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
 
             #region update and select by id test
             inserted.Rate = TestSession.Random.RandomDecimal();
-            inserted.PayFrequency = Convert.ToByte(TestSession.Random.RandomString(1));
+            inserted.PayFrequency = Convert.ToByte(TestSession.Random.RandomString(3));
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 
             _tested.Update(connection, new[] { inserted });

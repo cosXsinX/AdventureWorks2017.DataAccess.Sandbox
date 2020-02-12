@@ -40,9 +40,9 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #region good insertion and select by id test
             ProductPhotoModel inserted = new ProductPhotoModel();
             inserted.ThumbNailPhoto = TestSession.Random.RandomBytes();
-            inserted.ThumbnailPhotoFileName = TestSession.Random.RandomString(100);
+            inserted.ThumbnailPhotoFileName = TestSession.Random.RandomString(50);
             inserted.LargePhoto = TestSession.Random.RandomBytes();
-            inserted.LargePhotoFileName = TestSession.Random.RandomString(100);
+            inserted.LargePhotoFileName = TestSession.Random.RandomString(50);
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 
             _tested.Insert(connection,new[] { inserted });
@@ -65,9 +65,9 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
 
             #region update and select by id test
             inserted.ThumbNailPhoto = TestSession.Random.RandomBytes();
-            inserted.ThumbnailPhotoFileName = TestSession.Random.RandomString(100);
+            inserted.ThumbnailPhotoFileName = TestSession.Random.RandomString(50);
             inserted.LargePhoto = TestSession.Random.RandomBytes();
-            inserted.LargePhotoFileName = TestSession.Random.RandomString(100);
+            inserted.LargePhotoFileName = TestSession.Random.RandomString(50);
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 
             _tested.Update(connection, new[] { inserted });

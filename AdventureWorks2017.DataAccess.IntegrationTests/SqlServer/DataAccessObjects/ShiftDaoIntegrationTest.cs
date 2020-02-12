@@ -39,7 +39,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             connection.Open();
             #region good insertion and select by id test
             ShiftModel inserted = new ShiftModel();
-            inserted.Name = TestSession.Random.RandomString(100);
+            inserted.Name = TestSession.Random.RandomString(50);
             inserted.StartTime = new TimeSpan(0, 0, 0,TestSession.Random.Next(86400));
             inserted.EndTime = new TimeSpan(0, 0, 0,TestSession.Random.Next(86400));
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
@@ -62,7 +62,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #endregion
 
             #region update and select by id test
-            inserted.Name = TestSession.Random.RandomString(100);
+            inserted.Name = TestSession.Random.RandomString(50);
             inserted.StartTime = new TimeSpan(0, 0, 0,TestSession.Random.Next(86400));
             inserted.EndTime = new TimeSpan(0, 0, 0,TestSession.Random.Next(86400));
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();

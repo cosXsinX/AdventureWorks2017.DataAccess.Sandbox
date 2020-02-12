@@ -39,10 +39,10 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             connection.Open();
             #region good insertion and select by id test
             StateProvinceModel inserted = new StateProvinceModel();
-            inserted.StateProvinceCode = TestSession.Random.RandomString(6);
-            inserted.CountryRegionCode = TestSession.Random.RandomString(6);
+            inserted.StateProvinceCode = TestSession.Random.RandomString(3);
+            inserted.CountryRegionCode = TestSession.Random.RandomString(3);
             inserted.IsOnlyStateProvinceFlag = Convert.ToBoolean(TestSession.Random.Next(1));
-            inserted.Name = TestSession.Random.RandomString(100);
+            inserted.Name = TestSession.Random.RandomString(50);
             inserted.TerritoryID = TestSession.Random.Next();
             inserted.rowguid = Guid.NewGuid();
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
@@ -68,10 +68,10 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #endregion
 
             #region update and select by id test
-            inserted.StateProvinceCode = TestSession.Random.RandomString(6);
-            inserted.CountryRegionCode = TestSession.Random.RandomString(6);
+            inserted.StateProvinceCode = TestSession.Random.RandomString(3);
+            inserted.CountryRegionCode = TestSession.Random.RandomString(3);
             inserted.IsOnlyStateProvinceFlag = Convert.ToBoolean(TestSession.Random.Next(1));
-            inserted.Name = TestSession.Random.RandomString(100);
+            inserted.Name = TestSession.Random.RandomString(50);
             inserted.TerritoryID = TestSession.Random.Next();
             inserted.rowguid = Guid.NewGuid();
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();

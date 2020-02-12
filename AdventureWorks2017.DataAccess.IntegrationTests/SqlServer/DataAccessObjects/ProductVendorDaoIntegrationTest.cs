@@ -48,7 +48,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             inserted.MinOrderQty = TestSession.Random.Next();
             inserted.MaxOrderQty = TestSession.Random.Next();
             inserted.OnOrderQty = TestSession.Random.Next();
-            inserted.UnitMeasureCode = TestSession.Random.RandomString(6);
+            inserted.UnitMeasureCode = TestSession.Random.RandomString(3);
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 
             _tested.Insert(connection,new[] { inserted });
@@ -83,7 +83,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             inserted.MinOrderQty = TestSession.Random.Next();
             inserted.MaxOrderQty = TestSession.Random.Next();
             inserted.OnOrderQty = TestSession.Random.Next();
-            inserted.UnitMeasureCode = TestSession.Random.RandomString(6);
+            inserted.UnitMeasureCode = TestSession.Random.RandomString(3);
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 
             _tested.Update(connection, new[] { inserted });

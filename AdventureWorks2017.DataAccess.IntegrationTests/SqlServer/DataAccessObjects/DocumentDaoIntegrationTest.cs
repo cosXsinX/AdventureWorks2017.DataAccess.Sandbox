@@ -41,14 +41,14 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             DocumentModel inserted = new DocumentModel();
             inserted.DocumentNode = Microsoft.SqlServer.Types.SqlHierarchyId.Null; //TODO define how to generate random hierarchy id in test session;
             inserted.DocumentLevel = TestSession.Random.RandomShort();
-            inserted.Title = TestSession.Random.RandomString(100);
+            inserted.Title = TestSession.Random.RandomString(50);
             inserted.Owner = TestSession.Random.Next();
             inserted.FolderFlag = Convert.ToBoolean(TestSession.Random.Next(1));
-            inserted.FileName = TestSession.Random.RandomString(800);
-            inserted.FileExtension = TestSession.Random.RandomString(16);
-            inserted.Revision = TestSession.Random.RandomString(10);
+            inserted.FileName = TestSession.Random.RandomString(400);
+            inserted.FileExtension = TestSession.Random.RandomString(8);
+            inserted.Revision = TestSession.Random.RandomString(5);
             inserted.ChangeNumber = TestSession.Random.Next();
-            inserted.Status = Convert.ToByte(TestSession.Random.RandomString(1));
+            inserted.Status = Convert.ToByte(TestSession.Random.RandomString(3));
             inserted.DocumentSummary = TestSession.Random.RandomString(-1);
             inserted.Document = TestSession.Random.RandomBytes();
             inserted.rowguid = Guid.NewGuid();
@@ -82,14 +82,14 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
 
             #region update and select by id test
             inserted.DocumentLevel = TestSession.Random.RandomShort();
-            inserted.Title = TestSession.Random.RandomString(100);
+            inserted.Title = TestSession.Random.RandomString(50);
             inserted.Owner = TestSession.Random.Next();
             inserted.FolderFlag = Convert.ToBoolean(TestSession.Random.Next(1));
-            inserted.FileName = TestSession.Random.RandomString(800);
-            inserted.FileExtension = TestSession.Random.RandomString(16);
-            inserted.Revision = TestSession.Random.RandomString(10);
+            inserted.FileName = TestSession.Random.RandomString(400);
+            inserted.FileExtension = TestSession.Random.RandomString(8);
+            inserted.Revision = TestSession.Random.RandomString(5);
             inserted.ChangeNumber = TestSession.Random.Next();
-            inserted.Status = Convert.ToByte(TestSession.Random.RandomString(1));
+            inserted.Status = Convert.ToByte(TestSession.Random.RandomString(3));
             inserted.DocumentSummary = TestSession.Random.RandomString(-1);
             inserted.Document = TestSession.Random.RandomBytes();
             inserted.rowguid = Guid.NewGuid();

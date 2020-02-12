@@ -40,12 +40,12 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #region good insertion and select by id test
             VendorModel inserted = new VendorModel();
             inserted.BusinessEntityID = TestSession.Random.Next();
-            inserted.AccountNumber = TestSession.Random.RandomString(30);
-            inserted.Name = TestSession.Random.RandomString(100);
-            inserted.CreditRating = Convert.ToByte(TestSession.Random.RandomString(1));
+            inserted.AccountNumber = TestSession.Random.RandomString(15);
+            inserted.Name = TestSession.Random.RandomString(50);
+            inserted.CreditRating = Convert.ToByte(TestSession.Random.RandomString(3));
             inserted.PreferredVendorStatus = Convert.ToBoolean(TestSession.Random.Next(1));
             inserted.ActiveFlag = Convert.ToBoolean(TestSession.Random.Next(1));
-            inserted.PurchasingWebServiceURL = TestSession.Random.RandomString(2048);
+            inserted.PurchasingWebServiceURL = TestSession.Random.RandomString(1024);
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 
             _tested.Insert(connection,new[] { inserted });
@@ -69,12 +69,12 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #endregion
 
             #region update and select by id test
-            inserted.AccountNumber = TestSession.Random.RandomString(30);
-            inserted.Name = TestSession.Random.RandomString(100);
-            inserted.CreditRating = Convert.ToByte(TestSession.Random.RandomString(1));
+            inserted.AccountNumber = TestSession.Random.RandomString(15);
+            inserted.Name = TestSession.Random.RandomString(50);
+            inserted.CreditRating = Convert.ToByte(TestSession.Random.RandomString(3));
             inserted.PreferredVendorStatus = Convert.ToBoolean(TestSession.Random.Next(1));
             inserted.ActiveFlag = Convert.ToBoolean(TestSession.Random.Next(1));
-            inserted.PurchasingWebServiceURL = TestSession.Random.RandomString(2048);
+            inserted.PurchasingWebServiceURL = TestSession.Random.RandomString(1024);
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 
             _tested.Update(connection, new[] { inserted });

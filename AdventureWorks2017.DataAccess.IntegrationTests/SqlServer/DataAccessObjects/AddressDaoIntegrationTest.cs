@@ -39,11 +39,11 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             connection.Open();
             #region good insertion and select by id test
             AddressModel inserted = new AddressModel();
-            inserted.AddressLine1 = TestSession.Random.RandomString(120);
-            inserted.AddressLine2 = TestSession.Random.RandomString(120);
-            inserted.City = TestSession.Random.RandomString(60);
+            inserted.AddressLine1 = TestSession.Random.RandomString(60);
+            inserted.AddressLine2 = TestSession.Random.RandomString(60);
+            inserted.City = TestSession.Random.RandomString(30);
             inserted.StateProvinceID = TestSession.Random.Next();
-            inserted.PostalCode = TestSession.Random.RandomString(30);
+            inserted.PostalCode = TestSession.Random.RandomString(15);
             inserted.SpatialLocation = TestSession.Random.RandomSqlGeography();
             inserted.rowguid = Guid.NewGuid();
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
@@ -70,11 +70,11 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #endregion
 
             #region update and select by id test
-            inserted.AddressLine1 = TestSession.Random.RandomString(120);
-            inserted.AddressLine2 = TestSession.Random.RandomString(120);
-            inserted.City = TestSession.Random.RandomString(60);
+            inserted.AddressLine1 = TestSession.Random.RandomString(60);
+            inserted.AddressLine2 = TestSession.Random.RandomString(60);
+            inserted.City = TestSession.Random.RandomString(30);
             inserted.StateProvinceID = TestSession.Random.Next();
-            inserted.PostalCode = TestSession.Random.RandomString(30);
+            inserted.PostalCode = TestSession.Random.RandomString(15);
             inserted.SpatialLocation = TestSession.Random.RandomSqlGeography();
             inserted.rowguid = Guid.NewGuid();
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();

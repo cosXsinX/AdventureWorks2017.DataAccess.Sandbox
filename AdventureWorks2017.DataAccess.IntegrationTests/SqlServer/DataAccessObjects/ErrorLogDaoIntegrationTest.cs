@@ -40,13 +40,13 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #region good insertion and select by id test
             ErrorLogModel inserted = new ErrorLogModel();
             inserted.ErrorTime = TestSession.Random.RandomDateTime();
-            inserted.UserName = TestSession.Random.RandomString(256);
+            inserted.UserName = TestSession.Random.RandomString(128);
             inserted.ErrorNumber = TestSession.Random.Next();
             inserted.ErrorSeverity = TestSession.Random.Next();
             inserted.ErrorState = TestSession.Random.Next();
-            inserted.ErrorProcedure = TestSession.Random.RandomString(252);
+            inserted.ErrorProcedure = TestSession.Random.RandomString(126);
             inserted.ErrorLine = TestSession.Random.Next();
-            inserted.ErrorMessage = TestSession.Random.RandomString(8000);
+            inserted.ErrorMessage = TestSession.Random.RandomString(4000);
 
             _tested.Insert(connection,new[] { inserted });
 
@@ -71,13 +71,13 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
 
             #region update and select by id test
             inserted.ErrorTime = TestSession.Random.RandomDateTime();
-            inserted.UserName = TestSession.Random.RandomString(256);
+            inserted.UserName = TestSession.Random.RandomString(128);
             inserted.ErrorNumber = TestSession.Random.Next();
             inserted.ErrorSeverity = TestSession.Random.Next();
             inserted.ErrorState = TestSession.Random.Next();
-            inserted.ErrorProcedure = TestSession.Random.RandomString(252);
+            inserted.ErrorProcedure = TestSession.Random.RandomString(126);
             inserted.ErrorLine = TestSession.Random.Next();
-            inserted.ErrorMessage = TestSession.Random.RandomString(8000);
+            inserted.ErrorMessage = TestSession.Random.RandomString(4000);
 
             _tested.Update(connection, new[] { inserted });
 

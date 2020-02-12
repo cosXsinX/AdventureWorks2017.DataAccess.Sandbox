@@ -40,8 +40,8 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #region good insertion and select by id test
             CurrencyRateModel inserted = new CurrencyRateModel();
             inserted.CurrencyRateDate = TestSession.Random.RandomDateTime();
-            inserted.FromCurrencyCode = TestSession.Random.RandomString(6);
-            inserted.ToCurrencyCode = TestSession.Random.RandomString(6);
+            inserted.FromCurrencyCode = TestSession.Random.RandomString(3);
+            inserted.ToCurrencyCode = TestSession.Random.RandomString(3);
             inserted.AverageRate = TestSession.Random.RandomDecimal();
             inserted.EndOfDayRate = TestSession.Random.RandomDecimal();
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
@@ -67,8 +67,8 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
 
             #region update and select by id test
             inserted.CurrencyRateDate = TestSession.Random.RandomDateTime();
-            inserted.FromCurrencyCode = TestSession.Random.RandomString(6);
-            inserted.ToCurrencyCode = TestSession.Random.RandomString(6);
+            inserted.FromCurrencyCode = TestSession.Random.RandomString(3);
+            inserted.ToCurrencyCode = TestSession.Random.RandomString(3);
             inserted.AverageRate = TestSession.Random.RandomDecimal();
             inserted.EndOfDayRate = TestSession.Random.RandomDecimal();
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();

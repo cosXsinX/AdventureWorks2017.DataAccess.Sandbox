@@ -39,15 +39,15 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             connection.Open();
             #region good insertion and select by id test
             SalesOrderHeaderModel inserted = new SalesOrderHeaderModel();
-            inserted.RevisionNumber = Convert.ToByte(TestSession.Random.RandomString(1));
+            inserted.RevisionNumber = Convert.ToByte(TestSession.Random.RandomString(3));
             inserted.OrderDate = TestSession.Random.RandomDateTime();
             inserted.DueDate = TestSession.Random.RandomDateTime();
             inserted.ShipDate = TestSession.Random.RandomDateTime();
-            inserted.Status = Convert.ToByte(TestSession.Random.RandomString(1));
+            inserted.Status = Convert.ToByte(TestSession.Random.RandomString(3));
             inserted.OnlineOrderFlag = Convert.ToBoolean(TestSession.Random.Next(1));
-            inserted.SalesOrderNumber = TestSession.Random.RandomString(50);
-            inserted.PurchaseOrderNumber = TestSession.Random.RandomString(50);
-            inserted.AccountNumber = TestSession.Random.RandomString(30);
+            inserted.SalesOrderNumber = TestSession.Random.RandomString(25);
+            inserted.PurchaseOrderNumber = TestSession.Random.RandomString(25);
+            inserted.AccountNumber = TestSession.Random.RandomString(15);
             inserted.CustomerID = TestSession.Random.Next();
             inserted.SalesPersonID = TestSession.Random.Next();
             inserted.TerritoryID = TestSession.Random.Next();
@@ -61,7 +61,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             inserted.TaxAmt = TestSession.Random.RandomDecimal();
             inserted.Freight = TestSession.Random.RandomDecimal();
             inserted.TotalDue = TestSession.Random.RandomDecimal();
-            inserted.Comment = TestSession.Random.RandomString(256);
+            inserted.Comment = TestSession.Random.RandomString(128);
             inserted.rowguid = Guid.NewGuid();
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 
@@ -104,15 +104,15 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #endregion
 
             #region update and select by id test
-            inserted.RevisionNumber = Convert.ToByte(TestSession.Random.RandomString(1));
+            inserted.RevisionNumber = Convert.ToByte(TestSession.Random.RandomString(3));
             inserted.OrderDate = TestSession.Random.RandomDateTime();
             inserted.DueDate = TestSession.Random.RandomDateTime();
             inserted.ShipDate = TestSession.Random.RandomDateTime();
-            inserted.Status = Convert.ToByte(TestSession.Random.RandomString(1));
+            inserted.Status = Convert.ToByte(TestSession.Random.RandomString(3));
             inserted.OnlineOrderFlag = Convert.ToBoolean(TestSession.Random.Next(1));
-            inserted.SalesOrderNumber = TestSession.Random.RandomString(50);
-            inserted.PurchaseOrderNumber = TestSession.Random.RandomString(50);
-            inserted.AccountNumber = TestSession.Random.RandomString(30);
+            inserted.SalesOrderNumber = TestSession.Random.RandomString(25);
+            inserted.PurchaseOrderNumber = TestSession.Random.RandomString(25);
+            inserted.AccountNumber = TestSession.Random.RandomString(15);
             inserted.CustomerID = TestSession.Random.Next();
             inserted.SalesPersonID = TestSession.Random.Next();
             inserted.TerritoryID = TestSession.Random.Next();
@@ -126,7 +126,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             inserted.TaxAmt = TestSession.Random.RandomDecimal();
             inserted.Freight = TestSession.Random.RandomDecimal();
             inserted.TotalDue = TestSession.Random.RandomDecimal();
-            inserted.Comment = TestSession.Random.RandomString(256);
+            inserted.Comment = TestSession.Random.RandomString(128);
             inserted.rowguid = Guid.NewGuid();
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 

@@ -39,7 +39,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             connection.Open();
             #region good insertion and select by id test
             AWBuildVersionModel inserted = new AWBuildVersionModel();
-            inserted.DatabaseVersion = TestSession.Random.RandomString(50);
+            inserted.DatabaseVersion = TestSession.Random.RandomString(25);
             inserted.VersionDate = TestSession.Random.RandomDateTime();
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 
@@ -60,7 +60,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #endregion
 
             #region update and select by id test
-            inserted.DatabaseVersion = TestSession.Random.RandomString(50);
+            inserted.DatabaseVersion = TestSession.Random.RandomString(25);
             inserted.VersionDate = TestSession.Random.RandomDateTime();
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 

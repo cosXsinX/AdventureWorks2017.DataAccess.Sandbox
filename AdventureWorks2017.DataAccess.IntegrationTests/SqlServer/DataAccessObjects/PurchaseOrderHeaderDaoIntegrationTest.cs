@@ -39,8 +39,8 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             connection.Open();
             #region good insertion and select by id test
             PurchaseOrderHeaderModel inserted = new PurchaseOrderHeaderModel();
-            inserted.RevisionNumber = Convert.ToByte(TestSession.Random.RandomString(1));
-            inserted.Status = Convert.ToByte(TestSession.Random.RandomString(1));
+            inserted.RevisionNumber = Convert.ToByte(TestSession.Random.RandomString(3));
+            inserted.Status = Convert.ToByte(TestSession.Random.RandomString(3));
             inserted.EmployeeID = TestSession.Random.Next();
             inserted.VendorID = TestSession.Random.Next();
             inserted.ShipMethodID = TestSession.Random.Next();
@@ -78,8 +78,8 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #endregion
 
             #region update and select by id test
-            inserted.RevisionNumber = Convert.ToByte(TestSession.Random.RandomString(1));
-            inserted.Status = Convert.ToByte(TestSession.Random.RandomString(1));
+            inserted.RevisionNumber = Convert.ToByte(TestSession.Random.RandomString(3));
+            inserted.Status = Convert.ToByte(TestSession.Random.RandomString(3));
             inserted.EmployeeID = TestSession.Random.Next();
             inserted.VendorID = TestSession.Random.Next();
             inserted.ShipMethodID = TestSession.Random.Next();

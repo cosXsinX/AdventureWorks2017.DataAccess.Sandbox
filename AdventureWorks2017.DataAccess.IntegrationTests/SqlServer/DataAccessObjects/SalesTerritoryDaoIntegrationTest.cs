@@ -39,9 +39,9 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             connection.Open();
             #region good insertion and select by id test
             SalesTerritoryModel inserted = new SalesTerritoryModel();
-            inserted.Name = TestSession.Random.RandomString(100);
-            inserted.CountryRegionCode = TestSession.Random.RandomString(6);
-            inserted.Group = TestSession.Random.RandomString(100);
+            inserted.Name = TestSession.Random.RandomString(50);
+            inserted.CountryRegionCode = TestSession.Random.RandomString(3);
+            inserted.Group = TestSession.Random.RandomString(50);
             inserted.SalesYTD = TestSession.Random.RandomDecimal();
             inserted.SalesLastYear = TestSession.Random.RandomDecimal();
             inserted.CostYTD = TestSession.Random.RandomDecimal();
@@ -72,9 +72,9 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #endregion
 
             #region update and select by id test
-            inserted.Name = TestSession.Random.RandomString(100);
-            inserted.CountryRegionCode = TestSession.Random.RandomString(6);
-            inserted.Group = TestSession.Random.RandomString(100);
+            inserted.Name = TestSession.Random.RandomString(50);
+            inserted.CountryRegionCode = TestSession.Random.RandomString(3);
+            inserted.Group = TestSession.Random.RandomString(50);
             inserted.SalesYTD = TestSession.Random.RandomDecimal();
             inserted.SalesLastYear = TestSession.Random.RandomDecimal();
             inserted.CostYTD = TestSession.Random.RandomDecimal();

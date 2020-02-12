@@ -39,8 +39,8 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             connection.Open();
             #region good insertion and select by id test
             CountryRegionCurrencyModel inserted = new CountryRegionCurrencyModel();
-            inserted.CountryRegionCode = TestSession.Random.RandomString(6);
-            inserted.CurrencyCode = TestSession.Random.RandomString(6);
+            inserted.CountryRegionCode = TestSession.Random.RandomString(3);
+            inserted.CurrencyCode = TestSession.Random.RandomString(3);
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 
             _tested.Insert(connection,new[] { inserted });

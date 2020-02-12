@@ -41,7 +41,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             EmployeeDepartmentHistoryModel inserted = new EmployeeDepartmentHistoryModel();
             inserted.BusinessEntityID = TestSession.Random.Next();
             inserted.DepartmentID = TestSession.Random.RandomShort();
-            inserted.ShiftID = Convert.ToByte(TestSession.Random.RandomString(1));
+            inserted.ShiftID = Convert.ToByte(TestSession.Random.RandomString(3));
             inserted.StartDate = TestSession.Random.RandomDateTime();
             inserted.EndDate = TestSession.Random.RandomDateTime();
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();

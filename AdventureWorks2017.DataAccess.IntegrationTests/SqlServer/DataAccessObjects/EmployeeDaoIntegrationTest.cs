@@ -40,14 +40,14 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #region good insertion and select by id test
             EmployeeModel inserted = new EmployeeModel();
             inserted.BusinessEntityID = TestSession.Random.Next();
-            inserted.NationalIDNumber = TestSession.Random.RandomString(30);
-            inserted.LoginID = TestSession.Random.RandomString(512);
+            inserted.NationalIDNumber = TestSession.Random.RandomString(15);
+            inserted.LoginID = TestSession.Random.RandomString(256);
             inserted.OrganizationNode = Microsoft.SqlServer.Types.SqlHierarchyId.Null; //TODO define how to generate random hierarchy id in test session;
             inserted.OrganizationLevel = TestSession.Random.RandomShort();
-            inserted.JobTitle = TestSession.Random.RandomString(100);
+            inserted.JobTitle = TestSession.Random.RandomString(50);
             inserted.BirthDate = TestSession.Random.RandomDateTime();
-            inserted.MaritalStatus = TestSession.Random.RandomString(2);
-            inserted.Gender = TestSession.Random.RandomString(2);
+            inserted.MaritalStatus = TestSession.Random.RandomString(1);
+            inserted.Gender = TestSession.Random.RandomString(1);
             inserted.HireDate = TestSession.Random.RandomDateTime();
             inserted.SalariedFlag = Convert.ToBoolean(TestSession.Random.Next(1));
             inserted.VacationHours = TestSession.Random.RandomShort();
@@ -85,14 +85,14 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #endregion
 
             #region update and select by id test
-            inserted.NationalIDNumber = TestSession.Random.RandomString(30);
-            inserted.LoginID = TestSession.Random.RandomString(512);
+            inserted.NationalIDNumber = TestSession.Random.RandomString(15);
+            inserted.LoginID = TestSession.Random.RandomString(256);
             inserted.OrganizationNode = Microsoft.SqlServer.Types.SqlHierarchyId.Null; //TODO define how to generate random hierarchy id in test session;
             inserted.OrganizationLevel = TestSession.Random.RandomShort();
-            inserted.JobTitle = TestSession.Random.RandomString(100);
+            inserted.JobTitle = TestSession.Random.RandomString(50);
             inserted.BirthDate = TestSession.Random.RandomDateTime();
-            inserted.MaritalStatus = TestSession.Random.RandomString(2);
-            inserted.Gender = TestSession.Random.RandomString(2);
+            inserted.MaritalStatus = TestSession.Random.RandomString(1);
+            inserted.Gender = TestSession.Random.RandomString(1);
             inserted.HireDate = TestSession.Random.RandomDateTime();
             inserted.SalariedFlag = Convert.ToBoolean(TestSession.Random.Next(1));
             inserted.VacationHours = TestSession.Random.RandomShort();

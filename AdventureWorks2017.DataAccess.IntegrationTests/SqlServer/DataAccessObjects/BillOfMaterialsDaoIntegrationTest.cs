@@ -43,7 +43,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             inserted.ComponentID = TestSession.Random.Next();
             inserted.StartDate = TestSession.Random.RandomDateTime();
             inserted.EndDate = TestSession.Random.RandomDateTime();
-            inserted.UnitMeasureCode = TestSession.Random.RandomString(6);
+            inserted.UnitMeasureCode = TestSession.Random.RandomString(3);
             inserted.BOMLevel = TestSession.Random.RandomShort();
             inserted.PerAssemblyQty = TestSession.Random.RandomDecimal();
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
@@ -74,7 +74,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             inserted.ComponentID = TestSession.Random.Next();
             inserted.StartDate = TestSession.Random.RandomDateTime();
             inserted.EndDate = TestSession.Random.RandomDateTime();
-            inserted.UnitMeasureCode = TestSession.Random.RandomString(6);
+            inserted.UnitMeasureCode = TestSession.Random.RandomString(3);
             inserted.BOMLevel = TestSession.Random.RandomShort();
             inserted.PerAssemblyQty = TestSession.Random.RandomDecimal();
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();

@@ -40,7 +40,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #region good insertion and select by id test
             EmailAddressModel inserted = new EmailAddressModel();
             inserted.BusinessEntityID = TestSession.Random.Next();
-            inserted.EmailAddress = TestSession.Random.RandomString(100);
+            inserted.EmailAddress = TestSession.Random.RandomString(50);
             inserted.rowguid = Guid.NewGuid();
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 
@@ -63,7 +63,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             #endregion
 
             #region update and select by id test
-            inserted.EmailAddress = TestSession.Random.RandomString(100);
+            inserted.EmailAddress = TestSession.Random.RandomString(50);
             inserted.rowguid = Guid.NewGuid();
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 
