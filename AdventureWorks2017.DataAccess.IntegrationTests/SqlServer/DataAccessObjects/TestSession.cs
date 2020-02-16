@@ -86,6 +86,26 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
                                    scale);
             }
 
+            public decimal RandomDecimal(int precision,int scale)
+            {
+                var randomValue = Next((int)Math.Pow(2, precision)-1) * Math.Pow(10,scale);
+                var higherBound = (int)((randomValue / (int)Math.Pow(2, 64))); 
+                var midBound = (int)((randomValue - higherBound)/ (int)Math.Pow(2, 32));
+                var lowerBound =(int)(randomValue - higherBound - midBound);
+
+                var scaleAsByt = scale * (int)Math.Pow(2, 16);
+                var scaleAsBytHexaString = string.Format("0x{0:X}", scaleAsByt);
+                var bits = new int[] { lowerBound, midBound, higherBound, scaleAsByt };
+                return new decimal(bits);
+            }
+
+            public decimal RandomDecimalWithScale(ushort scale)
+            {
+                if (scale > 28) throw new ArgumentException("Should not be greater than 28", nameof(scale));
+                int sign = Next(2) == 1?1:0;
+                return new decimal(new int[] { NextInt32(), NextInt32(), NextInt32(), sign, scale });
+            }
+
             public DateTime RandomDateTime()
             {
                 var generated = DateTime.Today
