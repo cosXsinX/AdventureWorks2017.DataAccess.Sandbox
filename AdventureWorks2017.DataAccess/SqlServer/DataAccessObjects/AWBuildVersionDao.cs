@@ -47,7 +47,7 @@ VALUES
 
         public override void InsertionParameterMapping(SqlCommand sqlCommand, AWBuildVersionModel inserted)
         {
-            sqlCommand.Parameters.AddWithValue("@Database Version", inserted.DatabaseVersion);
+            sqlCommand.Parameters.AddWithValue("@DatabaseVersion", inserted.DatabaseVersion);
             sqlCommand.Parameters.AddWithValue("@VersionDate", inserted.VersionDate);
             sqlCommand.Parameters.AddWithValue("@ModifiedDate", inserted.ModifiedDate);
 
