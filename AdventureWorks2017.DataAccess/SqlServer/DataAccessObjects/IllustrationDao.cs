@@ -1,6 +1,7 @@
 
 using System;
 using System.Data.SqlClient;
+using System.Xml;
 using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
@@ -17,7 +18,13 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
         {
             var result = new IllustrationModel();
              result.IllustrationID = (int)(dataReader["IllustrationID"]);
-             result.Diagram = (System.Xml.XmlDocument?)(dataReader["Diagram"] is DBNull ? null : dataReader["Diagram"]);
+            
+            if(!(dataReader["Diagram"] is DBNull))
+            {
+                var xml = new XmlDocument();
+                xml.LoadXml((string)dataReader["Diagram"]);
+                result.Diagram = xml;
+            }
              result.ModifiedDate = (DateTime)(dataReader["ModifiedDate"]);
             return result;
         }

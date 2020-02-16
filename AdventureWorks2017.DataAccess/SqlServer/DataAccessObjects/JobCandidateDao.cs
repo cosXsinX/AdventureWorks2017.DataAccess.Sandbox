@@ -1,6 +1,7 @@
 
 using System;
 using System.Data.SqlClient;
+using System.Xml;
 using AdventureWorks2017.Models;
 
 namespace AdventureWorks2017.SqlServer.DataAccessObjects
@@ -19,7 +20,12 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
             var result = new JobCandidateModel();
              result.JobCandidateID = (int)(dataReader["JobCandidateID"]);
              result.BusinessEntityID = (int?)(dataReader["BusinessEntityID"] is DBNull ? null : dataReader["BusinessEntityID"]);
-             result.Resume = (System.Xml.XmlDocument?)(dataReader["Resume"] is DBNull ? null : dataReader["Resume"]);
+            if (!(dataReader["Resume"] is DBNull))
+            {
+                var xml = new XmlDocument();
+                xml.LoadXml((string)dataReader["Resume"]);
+                result.Resume = xml;
+            }
              result.ModifiedDate = (DateTime)(dataReader["ModifiedDate"]);
             return result;
         }
