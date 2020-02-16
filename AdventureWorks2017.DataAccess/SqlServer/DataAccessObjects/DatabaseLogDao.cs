@@ -28,7 +28,9 @@ namespace AdventureWorks2017.SqlServer.DataAccessObjects
              result.Schema = (string?)(dataReader["Schema"] is DBNull ? null : dataReader["Schema"]);
              result.Object = (string?)(dataReader["Object"] is DBNull ? null : dataReader["Object"]);
              result.TSQL = (string)(dataReader["TSQL"]);
-             result.XmlEvent = (System.Xml.XmlDocument)(dataReader["XmlEvent"]);
+            var xml = new System.Xml.XmlDocument();
+            xml.LoadXml((string)dataReader["XmlEvent"]);
+             result.XmlEvent = xml;
             return result;
         }
         

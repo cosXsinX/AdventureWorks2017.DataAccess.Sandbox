@@ -7,6 +7,7 @@ using System;
 using System.Data.SqlClient;
 using System.Linq;
 using AdventureWorks2017.DataAccess.IntegrationTests.SqlServer.DataAccessObjects;
+using System.Xml;
 
 namespace AdventureWorks2017.DataAccess.IntegrationTests
 {
@@ -45,7 +46,19 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             inserted.Schema = TestSession.Random.RandomString(128);
             inserted.Object = TestSession.Random.RandomString(128);
             inserted.TSQL = TestSession.Random.RandomString(-1);
-            inserted.XmlEvent = null; //TODO define how to generate random xml;
+            var xml = new XmlDocument();
+            xml.LoadXml(@"<EVENT_INSTANCE><EventType>CREATE_TABLE</EventType><PostTime>2017-10-27T14:33:01.373</PostTime><SPID>56</SPID><ServerName>BARBKESS24\MSSQL2017RTM</ServerName><LoginName>REDMOND\barbkess</LoginName><UserName>dbo</UserName><DatabaseName>AdventureWorks2017</DatabaseName><SchemaName>dbo</SchemaName><ObjectName>ErrorLog</ObjectName><ObjectType>TABLE</ObjectType><TSQLCommand><SetOptions ANSI_NULLS=""ON"" ANSI_NULL_DEFAULT=""ON"" ANSI_PADDING=""ON"" QUOTED_IDENTIFIER=""ON"" ENCRYPTED=""FALSE"" /><CommandText>CREATE TABLE [dbo].[ErrorLog](
+    [ErrorLogID][int] IDENTITY(1, 1) NOT NULL,
+    [ErrorTime][datetime] NOT NULL CONSTRAINT[DF_ErrorLog_ErrorTime] DEFAULT(GETDATE()),
+    [UserName][sysname] NOT NULL,
+    [ErrorNumber][int] NOT NULL,
+    [ErrorSeverity][int] NULL,
+    [ErrorState][int] NULL,
+    [ErrorProcedure][nvarchar](126) NULL,
+    [ErrorLine][int] NULL,
+    [ErrorMessage][nvarchar](4000) NOT NULL
+) ON[PRIMARY] </CommandText></TSQLCommand></EVENT_INSTANCE>");
+            inserted.XmlEvent = xml;
 
             _tested.Insert(connection,new[] { inserted });
 
@@ -63,7 +76,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             Assert.AreEqual(inserted.Schema,selectedAfterInsert.Schema);
             Assert.AreEqual(inserted.Object,selectedAfterInsert.Object);
             Assert.AreEqual(inserted.TSQL,selectedAfterInsert.TSQL);
-            Assert.AreEqual(inserted.XmlEvent,selectedAfterInsert.XmlEvent);
+            Assert.AreEqual(inserted.XmlEvent.ToString(),selectedAfterInsert.XmlEvent.ToString());
 
             #endregion
 
@@ -74,7 +87,19 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             inserted.Schema = TestSession.Random.RandomString(128);
             inserted.Object = TestSession.Random.RandomString(128);
             inserted.TSQL = TestSession.Random.RandomString(-1);
-            inserted.XmlEvent = null; //TODO define how to generate random xml;
+            var updatedXml = new XmlDocument();
+            updatedXml.LoadXml(@"<EVENT_INSTANCE><EventType>DROP_TABLE</EventType><PostTime>2017-10-27T14:33:01.373</PostTime><SPID>56</SPID><ServerName>BARBKESS24\MSSQL2017RTM</ServerName><LoginName>REDMOND\barbkess</LoginName><UserName>dbo</UserName><DatabaseName>AdventureWorks2017</DatabaseName><SchemaName>dbo</SchemaName><ObjectName>ErrorLog</ObjectName><ObjectType>TABLE</ObjectType><TSQLCommand><SetOptions ANSI_NULLS=""ON"" ANSI_NULL_DEFAULT=""ON"" ANSI_PADDING=""ON"" QUOTED_IDENTIFIER=""ON"" ENCRYPTED=""FALSE"" /><CommandText>CREATE TABLE [dbo].[ErrorLog](
+    [ErrorLogID][int] IDENTITY(1, 1) NOT NULL,
+    [ErrorTime][datetime] NOT NULL CONSTRAINT[DF_ErrorLog_ErrorTime] DEFAULT(GETDATE()),
+    [UserName][sysname] NOT NULL,
+    [ErrorNumber][int] NOT NULL,
+    [ErrorSeverity][int] NULL,
+    [ErrorState][int] NULL,
+    [ErrorProcedure][nvarchar](126) NULL,
+    [ErrorLine][int] NULL,
+    [ErrorMessage][nvarchar](4000) NOT NULL
+) ON[PRIMARY] </CommandText></TSQLCommand></EVENT_INSTANCE>");
+            inserted.XmlEvent = updatedXml;
 
             _tested.Update(connection, new[] { inserted });
 
@@ -92,7 +117,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             Assert.AreEqual(inserted.Schema, selectedAfterUpdate.Schema);
             Assert.AreEqual(inserted.Object, selectedAfterUpdate.Object);
             Assert.AreEqual(inserted.TSQL, selectedAfterUpdate.TSQL);
-            Assert.AreEqual(inserted.XmlEvent, selectedAfterUpdate.XmlEvent);
+            Assert.AreEqual(inserted.XmlEvent.ToString(), selectedAfterUpdate.XmlEvent.ToString());
 
             #endregion
 
