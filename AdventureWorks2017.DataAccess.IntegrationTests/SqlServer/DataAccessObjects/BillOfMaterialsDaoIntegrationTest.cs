@@ -45,7 +45,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             inserted.EndDate = TestSession.Random.RandomDateTime();
             inserted.UnitMeasureCode = TestSession.Random.RandomString(3);
             inserted.BOMLevel = TestSession.Random.RandomShort();
-            inserted.PerAssemblyQty = TestSession.Random.RandomDecimal(3,1);
+            inserted.PerAssemblyQty = TestSession.Random.RandomDecimal(8,2);
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 
             _tested.Insert(connection,new[] { inserted });
@@ -76,7 +76,7 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
             inserted.EndDate = TestSession.Random.RandomDateTime();
             inserted.UnitMeasureCode = TestSession.Random.RandomString(3);
             inserted.BOMLevel = TestSession.Random.RandomShort();
-            inserted.PerAssemblyQty = TestSession.Random.RandomDecimal(3,1);
+            inserted.PerAssemblyQty = TestSession.Random.RandomDecimal(8,2);
             inserted.ModifiedDate = TestSession.Random.RandomDateTime();
 
             _tested.Update(connection, new[] { inserted });

@@ -88,13 +88,12 @@ namespace AdventureWorks2017.DataAccess.IntegrationTests
 
             public decimal RandomDecimal(int precision,int scale)
             {
-                var randomValue = Next((int)Math.Pow(2, precision)-1) * Math.Pow(10,scale);
+                var randomValue = Next((int)Math.Pow(10, precision)-1);
                 var higherBound = (int)((randomValue / (int)Math.Pow(2, 64))); 
                 var midBound = (int)((randomValue - higherBound)/ (int)Math.Pow(2, 32));
                 var lowerBound =(int)(randomValue - higherBound - midBound);
 
                 var scaleAsByt = scale * (int)Math.Pow(2, 16);
-                var scaleAsBytHexaString = string.Format("0x{0:X}", scaleAsByt);
                 var bits = new int[] { lowerBound, midBound, higherBound, scaleAsByt };
                 return new decimal(bits);
             }
